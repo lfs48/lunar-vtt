@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const users = require("./routes/api/users");
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const db = require('./config/keys').mongoURI;
 mongoose
@@ -13,9 +15,6 @@ mongoose
 
 app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/users", users);
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 const port = process.env.PORT || 5000;
 
