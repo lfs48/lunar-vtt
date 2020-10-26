@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
 
 router.post('/register', (req, res) => {
     User.findOne({ username: req.body.username })
@@ -19,7 +21,20 @@ router.post('/register', (req, res) => {
                     if (err) {throw err;}
                     newUser.password = hash;
                     newUser.save()
-                    .then( (user) => res.json(user) )
+                    .then( (user) => {
+                        const payload = {id: user.id, username: user.username};
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey,
+                            {expiresIn: 86400},
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: 'Bearer ' + token
+                                });
+                            }
+                        );
+                    })
                     .catch( (err) => console.log(err) );
                 })
             });
@@ -38,7 +53,18 @@ router.post('/login', (req, res) => {
         bcrypt.compare(password, user.password)
         .then( (isMatch) => {
             if (isMatch) {
-                res.json({msg: "Login success"});
+                const payload = {id: user.id, username: user.username};
+                jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {expiresIn: 86400},
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: 'Bearer ' + token
+                        });
+                    }
+                );
             } else {
                 return res.status(400).json({error: "Incorrect username or password"});
             }
