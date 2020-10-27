@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
+// Register new user
 router.post('/register', (req, res) => {
     User.findOne({ username: req.body.username })
     .then( (user) => {
@@ -44,6 +45,7 @@ router.post('/register', (req, res) => {
 
 });
 
+// Log in existing user
 router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -73,6 +75,7 @@ router.post('/login', (req, res) => {
     });
 });
 
+// Get current user
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.json({msg: "Success"});
 });
