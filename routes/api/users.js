@@ -5,9 +5,18 @@ const User = require('../../models/Users');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const validateLoginInput = require('../../validation/login');
+const validateRegisterInput = require('../../validation/register');
 
 // Register new user
 router.post('/register', (req, res) => {
+
+    const {errors, isValid} = validateRegisterInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     User.findOne({ username: req.body.username })
     .then( (user) => {
         if (user) {
@@ -47,6 +56,13 @@ router.post('/register', (req, res) => {
 
 // Log in existing user
 router.post('/login', (req, res) => {
+
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const username = req.body.username;
     const password = req.body.password;
 
