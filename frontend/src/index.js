@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from './components/root';
+import Root from './root';
 import configureStore from './store';
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from './util/api/session_api_util';
