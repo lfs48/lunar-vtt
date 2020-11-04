@@ -1,4 +1,4 @@
-import * as APIUtil from '../util/session_api_util';
+import * as APIUtil from '../util/api/session_api_util';
 import jwt_decode from 'jwt-decode';
 
 import {RECEIVE_USER_LOGOUT} from './types';
