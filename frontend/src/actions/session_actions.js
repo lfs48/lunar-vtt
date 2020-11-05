@@ -1,17 +1,13 @@
 import * as APIUtil from '../util/api/session_api_util';
 import jwt_decode from 'jwt-decode';
 
-import {RECEIVE_USER_LOGIN, RECEIVE_CURRENT_USER, RECEIVE_USER_LOGOUT} from './types';
+import {RECEIVE_USER_LOGIN, RECEIVE_USER_LOGOUT} from './types';
 
 // Standard actions
 
-export const receiveCurrentUser = (user) => ({
-    type: RECEIVE_CURRENT_USER,
+export const receiveUserLogin = (user) => ({
+    type: RECEIVE_USER_LOGIN,
     user
-});
-
-export const receiveUserLogin = () => ({
-    type: RECEIVE_USER_LOGIN
 });
 
 export const logoutUser = () => ({
@@ -21,9 +17,13 @@ export const logoutUser = () => ({
 // Thunk actions
 
 export const signup = (user) => (dispatch) => (
-    APIUtil.signup(user).then( () => (
-        dispatch(receiveUserLogin())
-    ))
+    APIUtil.signup(user).then( (res) => {
+        const { token } = res.data;
+        localStorage.setItem('jwtToken', token);
+        APIUtil.setAuthToken(token);
+        const decoded = jwt_decode(token);
+        dispatch(receiveUserLogin(decoded))
+    })
 );
 
 export const login = (user) => (dispatch) => (
@@ -32,7 +32,7 @@ export const login = (user) => (dispatch) => (
         localStorage.setItem('jwtToken', token);
         APIUtil.setAuthToken(token);
         const decoded = jwt_decode(token);
-        dispatch(receiveCurrentUser(decoded))
+        dispatch(receiveUserLogin(decoded))
     })
 );
 
