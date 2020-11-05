@@ -9,8 +9,7 @@ const Login = () => {
 
     const [inputs, setInputs] = useState({
         username: "",
-        password: "",
-        password2: ""
+        password: ""
     });
 
     const handleInput = (event, field) => {
@@ -36,11 +35,6 @@ const Login = () => {
                 type="password"
                 value={inputs.password}
                 onChange={e => handleInput(e, 'password')}
-            ></input>
-            <input
-                type="password"
-                value={inputs.password2}
-                onChange={e => handleInput(e, 'password2')}
             ></input>
             <button onClick={e => handleLogin(e)}>Log In</button>
         </form>
