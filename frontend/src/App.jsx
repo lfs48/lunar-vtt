@@ -5,6 +5,7 @@ import { Switch } from 'react-router-dom';
 import Landing from './components/landing';
 import Login from './components/login';
 import Navbar from './components/navbar';
+import Register from './components/register';
 
 const App = () => {
     return(
@@ -13,6 +14,7 @@ const App = () => {
       <Switch>
           <AuthRoute exact path="/" component={Landing} />
           <AuthRoute path="/login" component={Login} />
+          <AuthRoute path="/register" component={Register} />
       </Switch>
     </main>
     );
