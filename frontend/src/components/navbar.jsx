@@ -9,9 +9,10 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const {isLoggedIn} = useSelector(
+    const {isLoggedIn, user} = useSelector(
         state => ({
-            isLoggedIn: state.session.isLoggedIn
+            isLoggedIn: state.session.isLoggedIn,
+            user: state.session.user
         })
     );
 
@@ -28,7 +29,10 @@ const Navbar = () => {
     return(
         <nav>
             {isLoggedIn ?
-                <button onClick={e => handleLogout(e)}>Log Out</button>
+                <section>
+                    <h1>{user.username}</h1>
+                    <button onClick={e => handleLogout(e)}>Log Out</button>
+                </section>
             :
                 <button onClick={e => handleLogin(e)}>Log In</button>
             }
