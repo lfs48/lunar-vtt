@@ -25,19 +25,29 @@ const Login = () => {
     };
 
     return(
-        <form>
-            <input
+        <form className="session-form">
+            <div>
+                <input
+                id="username-input"
                 type="text"
                 value={inputs.username}
                 onChange={e => handleInput(e, 'username')}
                 autoComplete="true"
-            ></input>
-            <input
+                required="true"
+                ></input>
+                <label htmlFor="username-input">Username</label>
+            </div>
+            <div>
+                <input
+                id="password-input"
                 type="password"
                 value={inputs.password}
                 onChange={e => handleInput(e, 'password')}
                 autoComplete="true"
-            ></input>
+                required="true"
+                ></input>
+                <label htmlFor="password-input">Password</label>
+            </div>
             <button onClick={e => handleLogin(e)}>Log In</button>
         </form>
     );
