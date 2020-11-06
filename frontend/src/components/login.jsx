@@ -30,11 +30,13 @@ const Login = () => {
                 type="text"
                 value={inputs.username}
                 onChange={e => handleInput(e, 'username')}
+                autoComplete="true"
             ></input>
             <input
                 type="password"
                 value={inputs.password}
                 onChange={e => handleInput(e, 'password')}
+                autoComplete="true"
             ></input>
             <button onClick={e => handleLogin(e)}>Log In</button>
         </form>
