@@ -26,6 +26,11 @@ const Navbar = () => {
         history.push("/login");
     }
 
+    const handleRegister = (event) => {
+        event.preventDefault();
+        history.push("/register");
+    }
+
     return(
         <nav>
             {isLoggedIn ?
@@ -34,7 +39,11 @@ const Navbar = () => {
                     <button onClick={e => handleLogout(e)}>Log Out</button>
                 </section>
             :
-                <button onClick={e => handleLogin(e)}>Log In</button>
+                <section>
+                    <button onClick={e => handleLogin(e)}>Log In</button>
+                    <button onClick={e => handleRegister(e)}>Register</button>
+                </section>
+
             }
         </nav>
     );
