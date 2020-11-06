@@ -26,22 +26,40 @@ const Register = () => {
     };
 
     return(
-        <form>
-            <input
+        <form className="session-form">
+            <div>
+                <input
+                id="username-input"
                 type="text"
                 value={inputs.username}
                 onChange={e => handleInput(e, 'username')}
-            ></input>
-            <input
+                required="true"
+                ></input>
+                <label htmlFor="username-input">Username</label>
+            </div>
+
+            <div>
+                <input
+                id="password-input"
                 type="password"
                 value={inputs.password}
                 onChange={e => handleInput(e, 'password')}
-            ></input>
-            <input
+                required="true"
+                ></input>
+                <label htmlFor="password-input">Password</label>
+            </div>
+
+            <div>
+                <input
+                id="password2-input"
                 type="password"
                 value={inputs.password2}
                 onChange={e => handleInput(e, 'password2')}
-            ></input>
+                required="true"
+                ></input>
+                <label htmlFor="password2-input">Confirm Password</label>
+            </div>
+
             <button onClick={e => handleSignup(e)}>Sign Up</button>
         </form>
     );
