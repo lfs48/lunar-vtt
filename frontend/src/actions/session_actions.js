@@ -1,7 +1,7 @@
 import * as APIUtil from '../util/api/session_api_util';
 import jwt_decode from 'jwt-decode';
 
-import {RECEIVE_USER_LOGIN, RECEIVE_USER_LOGOUT} from './types';
+import {RECEIVE_USER_LOGIN, RECEIVE_USER_LOGOUT, RECEIVE_SESSION_ERRORS} from './types';
 
 // Standard actions
 
@@ -14,6 +14,11 @@ export const logoutUser = () => ({
     type: RECEIVE_USER_LOGOUT
 });
 
+export const receiveSessionErrors = (errors) => ({
+    type: RECEIVE_SESSION_ERRORS,
+    errors
+});
+
 // Thunk actions
 
 export const signup = (user) => (dispatch) => (
@@ -24,6 +29,9 @@ export const signup = (user) => (dispatch) => (
         const decoded = jwt_decode(token);
         dispatch(receiveUserLogin(decoded))
     })
+    .catch(err => {
+        dispatch(receiveSessionErrors(err.response.data));
+    })
 );
 
 export const login = (user) => (dispatch) => (
@@ -33,6 +41,9 @@ export const login = (user) => (dispatch) => (
         APIUtil.setAuthToken(token);
         const decoded = jwt_decode(token);
         dispatch(receiveUserLogin(decoded))
+    })
+    .catch(err => {
+        dispatch(receiveSessionErrors(err.response.data));
     })
 );
 
