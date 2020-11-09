@@ -13,7 +13,7 @@ frontend/node_modules
 /build
 
 # keys
-config/keys.js
+config/keys_dev.js
 
 # misc
 .DS_Store
