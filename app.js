@@ -1,11 +1,14 @@
 const express = require("express");
 const path = require('path');
+const cors = require('cors');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require('passport');
 const users = require("./routes/api/users");
 
 const app = express();
+
+app.use(cors())
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
