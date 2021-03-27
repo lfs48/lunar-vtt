@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { userLoginRequested } from '../../store/reducers/session/sessionReducer';
 import { BgButton1, Header, Input, Label, TextButton1 } from '../../styles/components';
-import { apiLogin} from '../../util/api/apiAuthUtil'
 import { handleInput } from '../../util/functions/utilFunctions';
 
 export default function Landing() {
     
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -15,8 +17,12 @@ export default function Landing() {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        apiLogin(inputs);
-    }
+        const action = {
+            type: userLoginRequested.type,
+            payload: inputs
+        };
+        dispatch(action);
+    };
 
     return(
         <>

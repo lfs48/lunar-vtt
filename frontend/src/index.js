@@ -5,10 +5,23 @@ import configureAppStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
+import jwt_decode from 'jwt-decode';
 
 async function cb() {
 
-  const store = configureAppStore();
+  const token = localStorage.getItem('jwtToken');
+  let preloadedState = {};
+  if (token) {
+    const user = jwt_decode(token);
+    preloadedState = {
+      session: {
+        loggedIn: true,
+        user: user
+      }
+    };
+  }
+
+  const store = configureAppStore(preloadedState);
 
   ReactDOM.render(
     <React.StrictMode>

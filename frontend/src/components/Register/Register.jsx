@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { BgButton, BgButton1, Header, Input, Label, TextButton1 } from '../../styles/components';
-import { apiRegister } from '../../util/api/apiAuthUtil'
+import { BgButton1, Header, Input, Label, TextButton1 } from '../../styles/components';
+import { userRegisterRequested } from '../../store/reducers/session/sessionReducer';
 import { handleInput } from '../../util/functions/utilFunctions';
+import { useDispatch } from 'react-redux';
 
 export default function Register() {
     
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [inputs, setInputs] = useState({
         username: "",
@@ -16,7 +18,11 @@ export default function Register() {
 
     const handleRegister = (event) => {
         event.preventDefault();
-        apiRegister(inputs);
+        const action = {
+            type: userRegisterRequested.type,
+            payload: inputs
+        };
+        dispatch(action);
     }
 
     return(

@@ -11,10 +11,9 @@ export async function apiRegister({username, password, password2}) {
             password2: password2
         })
     };
-    fetch(url, req)
-    .then( (res) => res.json() )
-    .then( (data) => console.log(data) )
-    .catch( (err) => console.log(err) );
+    return fetch(url, req)
+    .then( (res) => res )
+    .catch( (err) => err );
 }
 
 export async function apiLogin({username, password}) {
@@ -29,8 +28,7 @@ export async function apiLogin({username, password}) {
             password: password
         })
     };
-    fetch(url, req)
-    .then( (res) => res.json() )
-    .then( (data) => console.log(data) )
-    .catch( (err) => console.log(err) );
+    return fetch(url, req)
+    .then( (res) => res )
+    .catch( (err) => err );
 }
