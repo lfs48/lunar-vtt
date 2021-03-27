@@ -25,7 +25,9 @@ const sessionSlice = createSlice({
       state.errors = action.payload;
     },
     logoutUser: (state) => {
-      state = initialState;
+      state.loggedIn = false;
+      state.user = null;
+      state.errors = null;
     }
   }
 });
