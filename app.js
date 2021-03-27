@@ -8,14 +8,7 @@ const users = require("./routes/api/users");
 
 const app = express();
 
-app.use(cors())
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('frontend/build'));
-    app.get('/', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-    })
-  }
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
