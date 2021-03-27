@@ -12,10 +12,7 @@ app.use(cors())
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
-    app.get('/', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
-    });
-    app.get('/register', (req, res) => {
+    app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
     });
   }
