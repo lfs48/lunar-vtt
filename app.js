@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(`${__dirname}/frontend/build/${path}`);
     } else {
       // Otherwise, redirect to /build/index.html
-      res.sendFile(`${__dirname}/frontend/build/index.html`);
+      res.sendFile(`${__dirname}/frontend/public/index.html`);
     }
   });
 }
