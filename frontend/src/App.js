@@ -6,6 +6,7 @@ import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import Landing from './components/Landing/Landing';
 import Register from './components/Register/Register';
 import Navbar from './components/Navbar/Navbar';
+import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
       <div className={`w-screen h-screen ${ loggedIn ? "pt-16" : ""}`}>
       <Switch>
         <AuthRoute exact path="/register" component={Register} />
-        <AuthRoute path="/" component={Landing} />
+        <AuthRoute exact path="/" component={Landing} />
+        <Route component={NotFoundPage} />
       </Switch>
       </div>
     </BrowserRouter>
