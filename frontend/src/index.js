@@ -4,6 +4,7 @@ import App from './App';
 import configureAppStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import './index.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 async function cb() {
 
@@ -12,7 +13,9 @@ async function cb() {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root')
