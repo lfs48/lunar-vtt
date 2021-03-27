@@ -16,7 +16,8 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4",
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.35"
+    "postcss": "^7.0.35",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "craco start",
@@ -39,7 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "redux-logger": "^3.0.6"
-  }
+  "devDependencies": {}
 }
