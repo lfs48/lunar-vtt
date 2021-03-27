@@ -5,23 +5,42 @@ export const Header = tw.header`
     font-bold
 `
 
+export const Label = tw.label`
+    text-sm
+    font-bold
+`
+
 export const Input = tw.input`
     bg-gray-100
     rounded
-    px-2
-    py-1
-`
+    px-4
+    py-2
+    border
+    border-black
+`;
 
 export const Button = tw.button`
+    font-bold
     focus:outline-none
+    transition-colors
+    duration-200
 `
 export const BgButton = tw(Button)`
     rounded
-    p-4
+    p-2
+`;
+
+export const BgButton1 = tw(BgButton)`
+    bg-blue-300
+    active:bg-blue-400
 `
 
 export const TextButton = tw(Button)`
-    font-bold
     bg-none
     text-sm
+`;
+
+export const TextButton1 = tw(TextButton)`
+    text-blue-400
+    active:text-blue-500
 `

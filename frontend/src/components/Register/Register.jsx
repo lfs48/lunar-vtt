@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { BgButton, Header, Input, TextButton } from '../../styles/components';
+import { BgButton, BgButton1, Header, Input, Label, TextButton1 } from '../../styles/components';
 import { apiRegister } from '../../util/api/apiAuthUtil'
 import { handleInput } from '../../util/functions/utilFunctions';
 
@@ -23,27 +23,30 @@ export default function Register() {
         <>
         <div className="flex h-full flex-col justify-center items-center">
             <Header className="mb-6">Create Account</Header>
-            <div className="flex flex-col w-96">
+            <div className="flex flex-col w-72">
+                <Label className="mb-1">Username</Label>
                 <Input
                     type="text"
                     value={inputs.username}
                     onChange={e => handleInput(e, 'username', inputs, setInputs)}
                     className="mb-4"
                 ></Input>
+                <Label className="mb-1">Password</Label>
                 <Input
                     type="password"
                     value={inputs.password}
                     onChange={e => handleInput(e, 'password', inputs, setInputs)}
                     className="mb-4"
                 ></Input>
+                <Label className="mb-1">Confirm Password</Label>
                 <Input
                     type="password"
                     value={inputs.password2}
                     onChange={e => handleInput(e, 'password2', inputs, setInputs)}
-                    className="mb-4"
+                    className="mb-6"
                 ></Input>
-                <BgButton onClick={e => handleRegister(e)}>Register</BgButton>
-                <TextButton onClick={() => history.push("/")}>Have an Account? Log In</TextButton>
+                <BgButton1 className="mb-4" onClick={e => handleRegister(e)}>Register</BgButton1>
+                <TextButton1 onClick={() => history.push("/")}>Have an Account? Log In</TextButton1>
             </div>
         </div>
         </>
