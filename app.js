@@ -14,7 +14,10 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
     app.get('/', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
-    })
+    });
+    app.get('/register', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
+    });
   }
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +31,6 @@ mongoose
     .then( () => console.log("MongoDB connected"))
     .catch( (err) => console.log(err) );
 
-app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/users", users);
 
 const port = process.env.PORT || 5000;
