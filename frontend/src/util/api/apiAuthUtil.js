@@ -1,4 +1,4 @@
-export async function apiSignup({username, password}) {
+export async function apiRegister({username, password, password2}) {
     const url = '/api/users/register';
     const req = {
         method: 'POST',
@@ -7,7 +7,8 @@ export async function apiSignup({username, password}) {
         },
         body: JSON.stringify({
             username: username,
-            password: password
+            password: password,
+            password2: password2
         })
     };
     fetch(url, req)

@@ -13,6 +13,15 @@ export const Input = tw.input`
 `
 
 export const Button = tw.button`
+    focus:outline-none
+`
+export const BgButton = tw(Button)`
     rounded
     p-4
+`
+
+export const TextButton = tw(Button)`
+    font-bold
+    bg-none
+    text-sm
 `

@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Button, Header, Input, TextButton } from '../../styles/components';
-import { apiLogin} from '../../util/api/apiAuthUtil'
+import { BgButton, Header, Input, TextButton } from '../../styles/components';
+import { apiRegister } from '../../util/api/apiAuthUtil'
 import { handleInput } from '../../util/functions/utilFunctions';
 
-export default function Landing() {
+export default function Register() {
     
     const history = useHistory();
 
     const [inputs, setInputs] = useState({
         username: "",
-        password: ""
+        password: "",
+        password2: ""
     });
 
-    const handleLogin = (event) => {
+    const handleRegister = (event) => {
         event.preventDefault();
-        apiLogin(inputs);
+        apiRegister(inputs);
     }
 
     return(
         <>
         <div className="flex h-full flex-col justify-center items-center">
-            <Header className="mb-6">Lunar VTT</Header>
+            <Header className="mb-6">Create Account</Header>
             <div className="flex flex-col w-96">
                 <Input
                     type="text"
@@ -35,8 +36,14 @@ export default function Landing() {
                     onChange={e => handleInput(e, 'password', inputs, setInputs)}
                     className="mb-4"
                 ></Input>
-                <Button onClick={e => handleLogin(e)}>Log In</Button>
-                <TextButton onClick={() => history.push("/register")}>New User? Sign Up</TextButton>
+                <Input
+                    type="password"
+                    value={inputs.password2}
+                    onChange={e => handleInput(e, 'password2', inputs, setInputs)}
+                    className="mb-4"
+                ></Input>
+                <BgButton onClick={e => handleRegister(e)}>Register</BgButton>
+                <TextButton onClick={() => history.push("/")}>Have an Account? Log In</TextButton>
             </div>
         </div>
         </>
