@@ -11,11 +11,11 @@ const app = express();
 app.use(cors())
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('frontend/build'));
-    app.get('/*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
-    });
-  }
+  app.use(express.static('frontend/build'));
+  app.get('/register', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'public/index.html'));
+  });
+}
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,9 +24,9 @@ require('./config/passport')(passport);
 
 const db = require('./config/keys').mongoURI;
 mongoose
-    .connect(db, {useNewUrlParser: true})
-    .then( () => console.log("MongoDB connected"))
-    .catch( (err) => console.log(err) );
+.connect(db, {useNewUrlParser: true})
+.then( () => console.log("MongoDB connected"))
+.catch( (err) => console.log(err) );
 
 app.use("/api/users", users);
 
