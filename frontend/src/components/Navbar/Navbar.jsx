@@ -35,6 +35,9 @@ export default function Navbar() {
 }
 
 const Nav = tw.nav`
+    absolute 
+    top-0 
+    left-0
     w-full
     h-12
     bg-blue-300
