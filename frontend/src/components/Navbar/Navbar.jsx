@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import tw from 'tailwind-styled-components';
 import { logoutUser } from '../../store/reducers/session/sessionReducer';
 import { TextButton1 } from '../../styles/components';
@@ -7,6 +8,7 @@ import { TextButton1 } from '../../styles/components';
 export default function Navbar() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const {user} = useSelector( (state) => ({
         user: state.session.user
@@ -18,6 +20,7 @@ export default function Navbar() {
             type: logoutUser.type
         };
         dispatch(action);
+        history.push("/");
     }
 
     return(

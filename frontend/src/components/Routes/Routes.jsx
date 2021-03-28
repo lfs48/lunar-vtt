@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 
 // Route for components that should only be accessed when unauthenticated, e.g. login form
 export const AuthRoute = ({ component: Component, ...rest }) => {
@@ -18,7 +18,7 @@ export const AuthRoute = ({ component: Component, ...rest }) => {
           <Component {...props} />
         ) : (
           // Redirect to dashboard if user is already authenticated
-          <Redirect to="/dashboard" />
+          <Redirect push to="/dashboard" />
         )
       )} />
     );
@@ -27,9 +27,8 @@ export const AuthRoute = ({ component: Component, ...rest }) => {
 // Route for components that should only be accessed when authenticated, e.g. dashboard
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
 
-  const {loggedIn, registered} = useSelector( (state) => ({
+  const {loggedIn} = useSelector( (state) => ({
     loggedIn: state.session.loggedIn,
-    registered: state.session.registered
   }));
 
   return(
@@ -41,7 +40,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
             <Component {...props} />
         ) : (
           // Redirect to the landing page if the user is unauthenticated
-          <Redirect to="/" />
+          <Redirect push to="/" />
         )
       }
     />
