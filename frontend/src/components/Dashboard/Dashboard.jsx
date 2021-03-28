@@ -3,6 +3,8 @@ import Sidebar from '../Sidebar/Sidebar';
 
 export default function Dashboard() {
     return(
-        <Sidebar />
+        <div className="overflow-hidden">
+            <Sidebar />
+        </div>
     )
 }

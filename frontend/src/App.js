@@ -22,12 +22,14 @@ function App() {
         defaultTitle="Lunar VTT"
       >
       </Helmet>
+      <div className="overflow-hidden">
       <Switch>
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <AuthRoute exact path="/register" component={Register} />
         <AuthRoute exact path="/" component={Landing} />
         <Route component={NotFoundPage} />
       </Switch>
+      </div>
     </BrowserRouter>
   );
 }

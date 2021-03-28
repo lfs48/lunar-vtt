@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faAddressBook, faDiceD20, faHatWizard, faRing, faMeteor, faDragon, faCog, faMale } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faAddressBook, faDiceD20, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale } from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
 import tabTypes from './tabTypes';
 import { Button } from '../../styles/components';
@@ -32,7 +32,7 @@ const tabData = [
     },
     {
         name: tabTypes.MONSTERS,
-        icon: faDragon
+        icon: faSpider
     },
     {
         name: tabTypes.SETTINGS,
@@ -52,7 +52,7 @@ export default function SidebarTabs({state, setState}) {
     });
 
     return(
-        <div className="flex justify-evenly py-2 border-b border-black">
+        <div className="w-full h-12 flex sticky top-0 left-0 justify-evenly py-2 border-b border-black">
             {tabs}
         </div>
     );
