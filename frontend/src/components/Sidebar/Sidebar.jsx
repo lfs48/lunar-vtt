@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
+import ClassesTab from './ClassesTab';
 import SidebarTabs from './SidebarTabs';
 import tabTypes from './tabTypes';
 
@@ -16,7 +17,7 @@ export default function Sidebar() {
             activeTab = <p>CHARACTERS</p>;
             break;
         case(tabTypes.CLASSES):
-            activeTab = <p>CLASSES</p>;
+            activeTab = <ClassesTab />
             break;
         case(tabTypes.SPELLS):
             activeTab = <p>SPELLS</p>;
@@ -48,7 +49,7 @@ export default function Sidebar() {
 const StyledSidebar = tw.div`
     fixed
     right-0
-    top-12
+    top-0
     h-screen
     w-96
     bg-blue-300
