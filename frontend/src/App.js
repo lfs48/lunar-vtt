@@ -7,6 +7,7 @@ import Landing from './components/Landing/Landing';
 import Register from './components/Register/Register';
 import Navbar from './components/Navbar/Navbar';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
 
@@ -24,8 +25,9 @@ function App() {
       {loggedIn ?
         <Navbar />
       :<></>}
-      <div className={`w-screen h-screen ${ loggedIn ? "pt-16" : ""}`}>
+      <div className={`h-screen ${ loggedIn ? "pt-12" : ""}`}>
       <Switch>
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <AuthRoute exact path="/register" component={Register} />
         <AuthRoute exact path="/" component={Landing} />
         <Route component={NotFoundPage} />
