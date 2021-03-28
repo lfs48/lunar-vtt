@@ -42,7 +42,7 @@ export default function Sidebar() {
         <StyledSidebar>
             <div className="relative">
                 <SidebarTabs state={tab} setState={setTab}/>
-                <div className="px-6 py-2">
+                <div className="">
                     {activeTab}
                 </div>
             </div>
@@ -56,7 +56,8 @@ const StyledSidebar = tw.div`
     top-0
     h-screen
     w-96
-    bg-blue-300
+    border-l
+    border-black
     overflow-y-scroll
     overflow-x-hidden
 `

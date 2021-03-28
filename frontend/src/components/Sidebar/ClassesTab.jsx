@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { SidebarLi } from './styles';
 
 export default function ClassesTab() {
 
@@ -8,7 +9,7 @@ export default function ClassesTab() {
     }));
 
     const classLis = Object.values(dndClasses).map( (dndClass, i) => {
-        return <li key={i}>{dndClass.name}</li>
+        return <SidebarLi key={i}>{dndClass.name}</SidebarLi>
     })
 
     return(

@@ -6,9 +6,12 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['active', 'disabled'],
+      backgroundColor: ['active', 'even', 'odd', 'disabled'],
+      backgroundOpacity: ['even', 'odd'],
       cursor: ['disabled'],
-      textColor: ['active']
+      textColor: ['active'],
+      margin: ['first', 'last'],
+      padding: ['first', 'last', 'hover']
     },
   },
   plugins: [],
