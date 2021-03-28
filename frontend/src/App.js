@@ -22,17 +22,12 @@ function App() {
         defaultTitle="Lunar VTT"
       >
       </Helmet>
-      {loggedIn ?
-        <Navbar />
-      :<></>}
-      <div className={`h-screen ${ loggedIn ? "pt-12" : ""}`}>
       <Switch>
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <AuthRoute exact path="/register" component={Register} />
         <AuthRoute exact path="/" component={Landing} />
         <Route component={NotFoundPage} />
       </Switch>
-      </div>
     </BrowserRouter>
   );
 }
