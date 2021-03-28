@@ -5,6 +5,7 @@ const tabTypes = {
     SPELLS: "Spells",
     ITEMS: "Items",
     RULES: "Rules",
+    MONSTERS: "Monsters",
     SETTINGS: "Settings"
 };
 

@@ -27,6 +27,9 @@ export default function Sidebar() {
         case(tabTypes.RULES):
             activeTab = <p>RULES</p>;
             break;
+        case(tabTypes.MONSTERS):
+            activeTab = <p>MONSTERS</p>;
+            break;
         case(tabTypes.SETTINGS):
             activeTab = <p>SETTINGS</p>;
             break;
