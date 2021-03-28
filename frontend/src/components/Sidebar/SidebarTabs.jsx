@@ -1,15 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faAddressBook, faScroll, faHatWizard, faRing, faBook, faDragon, faUserCog } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faAddressBook, faDiceD20, faHatWizard, faRing, faMeteor, faDragon, faCog, faMale } from '@fortawesome/free-solid-svg-icons';
 import tw from 'tailwind-styled-components';
 import tabTypes from './tabTypes';
 import { Button } from '../../styles/components';
 
 const tabData = [
-    {
-        name: tabTypes.CHAT,
-        icon: faComment
-    },
     {
         name: tabTypes.CHARACTERS,
         icon: faAddressBook
@@ -19,8 +15,12 @@ const tabData = [
         icon: faHatWizard
     },
     {
+        name: tabTypes.RACES,
+        icon: faMale
+    },
+    {
         name: tabTypes.SPELLS,
-        icon: faScroll
+        icon: faMeteor
     },
     {
         name: tabTypes.ITEMS,
@@ -28,7 +28,7 @@ const tabData = [
     },
     {
         name: tabTypes.RULES,
-        icon: faBook
+        icon: faDiceD20
     },
     {
         name: tabTypes.MONSTERS,
@@ -36,7 +36,7 @@ const tabData = [
     },
     {
         name: tabTypes.SETTINGS,
-        icon: faUserCog
+        icon: faCog
     },
 ];
 

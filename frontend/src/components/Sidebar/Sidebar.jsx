@@ -6,18 +6,18 @@ import tabTypes from './tabTypes';
 
 export default function Sidebar() {
 
-    const [tab, setTab] = useState(tabTypes.CHAT);
+    const [tab, setTab] = useState(tabTypes.CHARACTERS);
 
     let activeTab = <></>;
     switch(tab) {
-        case(tabTypes.CHAT):
-            activeTab = <p>CHAT</p>;
-            break;
         case(tabTypes.CHARACTERS):
             activeTab = <p>CHARACTERS</p>;
             break;
         case(tabTypes.CLASSES):
             activeTab = <ClassesTab />
+            break;
+        case(tabTypes.RACES):
+            activeTab = <p>RACES</p>
             break;
         case(tabTypes.SPELLS):
             activeTab = <p>SPELLS</p>;

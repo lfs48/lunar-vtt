@@ -1,7 +1,7 @@
 const tabTypes = {
-    CHAT: "Chat",
     CHARACTERS: "Characters",
     CLASSES: "Classes",
+    RACES: "Races",
     SPELLS: "Spells",
     ITEMS: "Items",
     RULES: "Rules",
