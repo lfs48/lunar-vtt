@@ -23,6 +23,16 @@ async function cb() {
 
   const store = configureAppStore(preloadedState);
 
+  document.addEventListener("dragstart", function( event ) {
+    var img = new Image();
+    event.dataTransfer.setDragImage(img, 0, 0);
+  }, false);
+
+  document.addEventListener('drag', () => {
+    document.body.style.cursor = 'grabbing';
+  }, true);
+
+
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
