@@ -4,8 +4,8 @@ import { merge } from 'lodash';
 export default function Panel({data}) {
 
     const [styleData, setStyleData] = useState({
-        left: 0,
-        top: 0,
+        left: Math.max( Math.random() * window.innerWidth - 500, 0),
+        top: Math.max( Math.random() * window.innerHeight - 400, 0),
         width: 500,
         height: 400,
         minHeight: 50,
