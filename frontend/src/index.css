@@ -3,19 +3,104 @@
 @tailwind utilities;
 
 @layer utilities {
-    .tooltip {
-        @apply 
-            invisible
-             absolute 
-             text-xs
-             font-normal
-             p-1
-             border
-             border-black
-             bg-white
-      }
-      
-      .has-tooltip:hover .tooltip {
-        @apply visible z-50
-      }
+  .tooltip {
+    @apply 
+      invisible
+      absolute 
+      text-xs
+      font-normal
+      p-1
+      border
+      border-black
+      bg-white
+  }
+    
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50
+  }
+
+  .resizable {
+    position: fixed;
+  }
+
+  .resize-area {
+    position: absolute;
+  }
+
+  .resize-top {
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 6px;
+  }
+
+  .resize-right {
+    top: 0;
+    right: -3px;
+    width: 6px;
+    height: 100%;
+  }
+
+  .resize-bottom {
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 6px;
+  }
+
+  .resize-left {
+    top: 0;
+    left: -3px;
+    width: 6px;
+    height: 100%;
+  }
+
+  .resize-corner {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .resize-bottomright {
+    bottom: -3px;
+    right: -3px;
+  }
+
+  .resize-bottomleft {
+    bottom: -3px;
+    left: -3px;
+  }
+
+  .resize-topright {
+    top: -3px;
+    right: -3px;
+  }
+
+  .resize-topleft {
+    top: -3px;
+    left: -3px;
+  }
+
+  .resize-top:hover, .resize-bottom:hover {
+    cursor: n-resize;
+  }
+
+  .resize-left:hover, .resize-right:hover {
+    cursor: e-resize;
+  }
+
+  .resize-bottomright:hover {
+    cursor: se-resize;
+  }
+
+  .resize-bottomleft:hover {
+    cursor: sw-resize;
+  }
+
+  .resize-topright:hover {
+    cursor: ne-resize;
+  }
+
+  .resize-topleft:hover {
+    cursor: nw-resize;
+  }
 }
