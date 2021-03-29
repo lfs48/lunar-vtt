@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { merge } from 'lodash';
 
-export default function Panel() {
+export default function Panel({data}) {
 
     const [styleData, setStyleData] = useState({
         left: 0,
@@ -14,19 +14,21 @@ export default function Panel() {
         dragPrevX: null,
         dragPrevY: null,
         stage: 0,
+        opacity: 0,
         cursor: 'auto'
     });
 
     useEffect(() => {
         const newState = merge({}, styleData);
         newState.left += 100;
+        newState.opacity = 1;
         newState.stage = 1;
         setStyleData(newState);
         setTimeout( () => {
             const newerState = merge({}, newState);
             newerState.stage = 2;
             setStyleData(newerState);
-        }, 550);
+        }, 720);
     }, []);
 
     const handleDragStart = (event) => {
@@ -73,11 +75,11 @@ export default function Panel() {
     };
     
     return(
-        <article draggable="true" className="absolute cursor-move border border-black" style={styleData}>
+        <article draggable="true" className={`absolute cursor-move border border-black bg-white z-50 ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""}`} style={styleData}>
 
             <header draggable="true" onDrag={e => handleDrag(e)} 
             onDragEnd={e => handleDragEnd(e)}>
-                Placeholder
+                {data.name}
             </header>
             <p>Bodytext</p>
         </article>

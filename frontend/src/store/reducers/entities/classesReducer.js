@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     1: {
+        id: 1,
         name: 'Barbarian',
         description: '',
         features: {
@@ -11,6 +12,7 @@ const initialState = {
         }
     },
     2: {
+        id: 2,
         name: 'Fighter',
         description: '',
         features: {
@@ -18,6 +20,7 @@ const initialState = {
         }
     },
     3: {
+        id: 3,
         name: 'Artificer',
         description: '',
         features: {
@@ -27,6 +30,7 @@ const initialState = {
         }
     },
     4: {
+        id: 4,
         name: 'Bard',
         description: '',
         features: {
@@ -36,6 +40,7 @@ const initialState = {
         }
     },
     5: {
+        id: 5,
         name: 'Cleric',
         description: '',
         features: {
@@ -45,6 +50,7 @@ const initialState = {
         }
     },
     6: {
+        id: 6,
         name: 'Druid',
         description: '',
         features: {
