@@ -54,7 +54,7 @@ export default function Panel({data}) {
             }
             if (event.pageY > 0) {
                 newState.top += event.pageY - styleData.dragPrevY;
-                newState.top = Math.min(newState.top, window.innerHeight - styleData.height);
+                newState.top = Math.min(newState.top, window.innerHeight - styleData.height - 5);
                 newState.top = Math.max(newState.top, 0);
                 newState.dragPrevY = event.pageY;
             }
@@ -78,7 +78,7 @@ export default function Panel({data}) {
         event.preventDefault();
         const newState = merge({}, styleData);
 
-        if(event.pageX > 0 && event.pageX < window.innerWidth - 10) {
+        if(event.pageX > 0 && event.pageX < window.innerWidth - 1) {
             if ("right" in dirs) {
                 const newWidth = event.pageX - newState.left
                 newState.width =  Math.max( newWidth, newState.minWidth );
@@ -89,7 +89,7 @@ export default function Panel({data}) {
             }
         }
 
-        if(event.pageY > 0) {
+        if(event.pageY > 0 && event.pageY < window.innerHeight - 1) {
             if ("top" in dirs) {
                 const newHeight = newState.height + newState.top - event.pageY;
                 newState.height = Math.max(newHeight, newState.minHeight);
