@@ -28,11 +28,6 @@ async function cb() {
     event.dataTransfer.setDragImage(img, 0, 0);
   }, false);
 
-  document.addEventListener('drag', () => {
-    document.body.style.cursor = 'grabbing';
-  }, true);
-
-
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
