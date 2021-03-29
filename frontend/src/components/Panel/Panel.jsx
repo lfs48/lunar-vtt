@@ -1,7 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { merge } from 'lodash';
+import { Button } from '../../styles/components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { togglePanel } from '../../store/reducers/UI/panelsReducer';
+import { useDispatch } from 'react-redux';
+import tw from 'tailwind-styled-components';
 
-export default function Panel({data}) {
+export default function Panel({data, panelType}) {
+
+    const dispatch = useDispatch();
 
     const [styleData, setStyleData] = useState({
         left: Math.max( Math.random() * window.innerWidth - 500, 0),
@@ -13,7 +21,7 @@ export default function Panel({data}) {
         dragging: false,
         dragPrevX: null,
         dragPrevY: null,
-        stage: 0,
+        stage: 1,
         opacity: 0,
         cursor: 'auto'
     });
@@ -22,7 +30,6 @@ export default function Panel({data}) {
         const newState = merge({}, styleData);
         newState.left += 100;
         newState.opacity = 1;
-        newState.stage = 1;
         setStyleData(newState);
         setTimeout( () => {
             const newerState = merge({}, newState);
@@ -101,10 +108,29 @@ export default function Panel({data}) {
         }
 
         setStyleData(newState);
-    }
+    };
+
+    const handleClose = (event) => {
+        event.preventDefault();
+        const newState = merge({}, styleData);
+        newState.stage = 1;
+        newState.opacity = 0;
+        newState.left -= 100;
+        setStyleData(newState);
+        setTimeout( () => {
+            const action = {
+                type: togglePanel.type,
+                payload: {
+                    id: data.id,
+                    panelType: panelType
+                }
+            };
+            dispatch(action);
+        }, 720);
+    };
     
     return(
-        <article draggable="true" className={`absolute cursor-move border border-black bg-white shadow-xl z-50 ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""}`} style={styleData}>
+        <article draggable="true" className={`${panelClass} ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} style={styleData}>
 
             <div className="resize-areas-container">
                 <div draggable="true" className="resize-area resize-top" onDrag={ e => resize(e, {top: true} ) } ></div>
@@ -117,12 +143,25 @@ export default function Panel({data}) {
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true} ) }></div>
             </div>
 
-            <header draggable="true" onDrag={e => handleDrag(e)} 
-            onDragEnd={e => handleDragEnd(e)}>
+            <header draggable="true" onDrag={e => handleDrag(e)} onDragEnd={e => handleDragEnd(e)} className="flex justify-between">
                 {data.name}
+                <Button onClick={e => handleClose(e)}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </Button>
             </header>
             <p>Bodytext</p>
         </article>
     );
 
 }
+
+const panelClass = `
+    absolute
+    border
+    border-black
+    bg-white
+    shadow-xl
+    z-50
+    px-6
+    py-2
+`

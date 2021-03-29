@@ -9,7 +9,7 @@ export default function Dashboard() {
         classes: Object.values(state.entities.dndClasses).filter( (dndClass) => state.UI.panels.dndClass.includes(dndClass.id) )
     }));
     const classPanels = classes.map( (dndClass) => {
-        return <Panel data={dndClass}/>
+        return <Panel data={dndClass} panelType="dndClass"/>
     })
 
     return(
