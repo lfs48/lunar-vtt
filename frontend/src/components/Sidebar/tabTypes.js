@@ -6,7 +6,10 @@ const tabTypes = {
     ITEMS: "Items",
     RULES: "Rules",
     MONSTERS: "Monsters",
-    SETTINGS: "Settings"
+    SETTINGS: "Settings",
+    ROLLABLE: "Rollable Tables",
+    FEATURES: "Features",
+    FEATS: "Feats"
 };
 
 export default tabTypes;

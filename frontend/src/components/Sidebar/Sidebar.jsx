@@ -55,7 +55,7 @@ const StyledSidebar = tw.div`
     right-0
     top-0
     h-screen
-    w-96
+    w-120
     border-l
     border-black
     overflow-y-scroll
