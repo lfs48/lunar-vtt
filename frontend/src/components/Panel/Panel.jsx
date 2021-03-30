@@ -25,7 +25,6 @@ export default function Panel({data, panelType}) {
         dragPrevY: null,
         stage: 1,
         opacity: 0,
-        cursor: 'auto'
     });
 
     useEffect(() => {
@@ -67,7 +66,6 @@ export default function Panel({data, panelType}) {
                 newState.top = Math.max(newState.top, 0);
                 newState.dragPrevY = event.pageY;
             }
-            newState.cursor = 'move';
             setStyleData(newState);
         } else {
             handleDragStart(event);
