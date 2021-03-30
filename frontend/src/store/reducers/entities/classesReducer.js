@@ -4,7 +4,18 @@ const initialState = {
     1: {
         id: 1,
         name: 'Barbarian',
-        description: '',
+        description: 'For some, their rage springs from a communion with fierce animal spirits. Others draw from a roiling reservoir of anger at a world full of pain. For every barbarian, rage is a power that fuels not just a battle frenzy but also uncanny reflexes, resilience, and feats of strength.',
+        hitDie: '1d12',
+        armor: 'Light armor, medium armor, shields',
+        weapons: 'All weapons',
+        tools: 'None',
+        saves: 'Fortitude, Reflex',
+        skills: '8',
+        equipment: [
+            ['A heavy martial weapon', 'a versatile martial weapon and a shield', 'two light martial weapons'],
+            ['Any simple ranged weapon', 'two simple light weapons'],
+            ["An explorer's pack"]
+        ],
         features: {
             1: [3],
             2: [2],
@@ -14,7 +25,7 @@ const initialState = {
     2: {
         id: 2,
         name: 'Fighter',
-        description: '',
+        description: 'Fighty boi',
         features: {
             5: [1]
         }
@@ -22,7 +33,7 @@ const initialState = {
     3: {
         id: 3,
         name: 'Artificer',
-        description: '',
+        description: 'placeholder',
         features: {
             1: [3],
             2: [2],
@@ -32,7 +43,7 @@ const initialState = {
     4: {
         id: 4,
         name: 'Bard',
-        description: '',
+        description: 'roll to seduce dragon harhar',
         features: {
             1: [3],
             2: [2],
@@ -42,7 +53,7 @@ const initialState = {
     5: {
         id: 5,
         name: 'Cleric',
-        description: '',
+        description: 'catholic',
         features: {
             1: [3],
             2: [2],
@@ -52,7 +63,7 @@ const initialState = {
     6: {
         id: 6,
         name: 'Druid',
-        description: '',
+        description: 'nature boi',
         features: {
             1: [3],
             2: [2],
