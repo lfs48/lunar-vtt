@@ -8,6 +8,51 @@ import { useDispatch } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import ClassPanel from './ClassPanel';
 import { PanelHeader, PanelHeaderContainer } from './styles';
+import {throttle} from 'lodash';
+
+const handleDragStart = (event, styleData, setStyleData) => {
+    event.preventDefault();
+    if (!styleData.dragging) {
+        const newState = merge({}, styleData);
+        newState.dragPrevX = event.pageX;
+        newState.dragPrevY = event.pageY;
+        newState.dragging = true;
+        setStyleData(newState);
+    }
+};
+
+const _handleDrag = (event, styleData, setStyleData) => {
+    event.preventDefault();
+    const newState = merge({}, styleData);
+    if (styleData.dragging) {
+        if (event.pageX > 0) {
+            newState.left += event.pageX - styleData.dragPrevX;
+            newState.left = Math.max(newState.left, 0);
+            newState.left = Math.min(newState.left, window.innerWidth - newState.width - 20);
+            newState.dragPrevX = event.pageX;
+        }
+        if (event.pageY > 0) {
+            newState.top += event.pageY - styleData.dragPrevY;
+            newState.top = Math.min(newState.top, window.innerHeight - styleData.height - 5);
+            newState.top = Math.max(newState.top, 0);
+            newState.dragPrevY = event.pageY;
+        }
+        setStyleData(newState);
+    } else {
+        handleDragStart(event, styleData, setStyleData);
+    }
+};
+
+const handleDrag = throttle(_handleDrag, 20);
+
+const handleDragEnd = (event, styleData, setStyleData) => {
+    event.preventDefault();
+    const newState = merge({}, styleData);
+    newState.dragPrevX = 0;
+    newState.dragPrevY = 0;
+    newState.dragging = false;
+    setStyleData(newState);
+};
 
 export default function Panel({data, panelType}) {
 
@@ -38,48 +83,6 @@ export default function Panel({data, panelType}) {
             setStyleData(newerState);
         }, 720);
     }, []);
-
-    const handleDragStart = (event) => {
-        event.preventDefault();
-        if (!styleData.dragging) {
-            const newState = merge({}, styleData);
-            newState.dragPrevX = event.pageX;
-            newState.dragPrevY = event.pageY;
-            newState.dragging = true;
-            setStyleData(newState);
-        }
-    };
-
-    const handleDrag = (event) => {
-        event.preventDefault();
-        const newState = merge({}, styleData);
-        if (styleData.dragging) {
-            if (event.pageX > 0) {
-                newState.left += event.pageX - styleData.dragPrevX;
-                newState.left = Math.max(newState.left, 0);
-                newState.left = Math.min(newState.left, window.innerWidth - newState.width - 20);
-                newState.dragPrevX = event.pageX;
-            }
-            if (event.pageY > 0) {
-                newState.top += event.pageY - styleData.dragPrevY;
-                newState.top = Math.min(newState.top, window.innerHeight - styleData.height - 5);
-                newState.top = Math.max(newState.top, 0);
-                newState.dragPrevY = event.pageY;
-            }
-            setStyleData(newState);
-        } else {
-            handleDragStart(event);
-        }
-    };
-
-    const handleDragEnd = (event) => {
-        event.preventDefault();
-        const newState = merge({}, styleData);
-        newState.dragPrevX = 0;
-        newState.dragPrevY = 0;
-        newState.dragging = false;
-        setStyleData(newState);
-    };
 
     const resize = (event, dirs) => {
         event.preventDefault();
@@ -149,14 +152,14 @@ export default function Panel({data, panelType}) {
                 <div draggable="true" className="resize-area resize-corner resize-topright" onDrag={ e => resize(e, {top: true, right: true} ) }></div>
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true} ) }></div>
 
-                <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e)} onDragEnd={e => handleDragEnd(e)}>
+                <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
                     <PanelHeader>{data.name}</PanelHeader>
                     <Button onClick={e => handleClose(e)}>
                         <FontAwesomeIcon icon={faTimes} />
                     </Button>
                 </PanelHeaderContainer>
                 {content}
-                
+
             </div>
         </article>
     );
