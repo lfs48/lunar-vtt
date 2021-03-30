@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { DiceRoll } from 'rpg-dice-roller';
+import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from './styles';
 
 export default function ClassPanel({dndClass, styleData}) {
@@ -38,6 +39,7 @@ export default function ClassPanel({dndClass, styleData}) {
     return(
         <div style={styleData} className={panelContentClasses}>
             <p className="italic mb-2">{dndClass.description}</p>
+            <ClassTable dndClass={dndClass} />
             <PanelSectionHeader>Class Features</PanelSectionHeader>
             <p className="mb-2">As a barbarian, you get the following class features.</p>
             <PanelSubsectionHeader>Hit Points</PanelSubsectionHeader>
