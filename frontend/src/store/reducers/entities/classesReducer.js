@@ -16,11 +16,11 @@ const initialState = {
             ['Any simple ranged weapon', 'two simple light weapons'],
             ["An explorer's pack"]
         ],
-        features: {
-            1: [3],
-            2: [2],
-            5: [1]
-        }
+        features: [
+            [3],
+            [2],
+            [1]
+        ]
     },
     2: {
         id: 2,
