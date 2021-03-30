@@ -8,8 +8,8 @@ export default function Dashboard() {
     const {classes} = useSelector( (state) => ({
         classes: Object.values(state.entities.dndClasses).filter( (dndClass) => state.UI.panels.dndClass.includes(dndClass.id) )
     }));
-    const classPanels = classes.map( (dndClass) => {
-        return <Panel data={dndClass} panelType="dndClass"/>
+    const classPanels = classes.map( (dndClass, i) => {
+        return <Panel key={i} data={dndClass} panelType="dndClass"/>
     })
 
     return(

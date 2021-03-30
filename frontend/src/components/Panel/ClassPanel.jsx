@@ -55,7 +55,7 @@ export default function ClassPanel({dndClass, styleData}) {
                 <ul className="list-disc">
                     {dndClass.equipment.map( (line, i) => {
                         const options = line.join(" OR ");
-                        return <li>{options}</li>
+                        return <li key={i}>{options}</li>
                     })}
                 </ul>
             </Block>
