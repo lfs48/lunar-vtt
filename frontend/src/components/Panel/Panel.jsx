@@ -6,6 +6,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { togglePanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch } from 'react-redux';
 import tw from 'tailwind-styled-components';
+import ClassPanel from './ClassPanel';
+import { PanelHeader, PanelHeaderContainer } from './styles';
 
 export default function Panel({data, panelType}) {
 
@@ -128,6 +130,13 @@ export default function Panel({data, panelType}) {
             dispatch(action);
         }, 720);
     };
+
+    let content = <></>;
+    switch(panelType) {
+        case('dndClass'):
+        content = <ClassPanel dndClass={data} styleData={{height: styleData.height - 50}}/>
+        break;
+    }
     
     return(
         <article draggable="true" className={`${panelClass} ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} style={styleData}>
@@ -143,13 +152,15 @@ export default function Panel({data, panelType}) {
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true} ) }></div>
             </div>
 
-            <header draggable="true" onDrag={e => handleDrag(e)} onDragEnd={e => handleDragEnd(e)} className="flex justify-between">
-                {data.name}
-                <Button onClick={e => handleClose(e)}>
-                    <FontAwesomeIcon icon={faTimes} />
-                </Button>
-            </header>
-            <p>Bodytext</p>
+            <div className="relative">
+                <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e)} onDragEnd={e => handleDragEnd(e)}>
+                    <PanelHeader>{data.name}</PanelHeader>
+                    <Button onClick={e => handleClose(e)}>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                </PanelHeaderContainer>
+                {content}
+            </div>
         </article>
     );
 
@@ -162,6 +173,6 @@ const panelClass = `
     bg-white
     shadow-xl
     z-50
-    px-6
-    py-2
+    overflow-y-hidden
+    overflow-x-hidden
 `
