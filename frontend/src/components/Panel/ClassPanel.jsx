@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { DiceRoll } from 'rpg-dice-roller';
-import { Block, PanelContent, PanelSectionHeader, PanelSubsectionHeader, panelContentClassnames } from './styles';
+import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from './styles';
 
 export default function ClassPanel({dndClass, styleData}) {
-    const roll = new DiceRoll(dndClass.hitDie)
+
+    const roll = new DiceRoll(dndClass.hitDie);
+
+    const featureIds = [];
+    dndClass.features.forEach( (level) => {
+        level.forEach( (featureID) => featureIds.push(featureID));
+    });
+    const {features} = useSelector( (state) => ({
+        features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature.id))
+    }));
+    
+    const sortedFeatures = features.sort( (a, b) => {
+        if (featureIds.indexOf(a.id) < featureIds.indexOf(b.id)) {
+            return -1;
+        } else if (featureIds.indexOf(a.id) > featureIds.indexOf(b.id)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    })
+    const featureSections = sortedFeatures.map( (feature) => {
+        return(
+            <div key={feature.id} className="pb-2">
+                <FeatureHeader>{feature.name} <FeatureHeaderSub>{` (${feature.featureType})`}</FeatureHeaderSub> </FeatureHeader>
+                <div>
+                    <p>{feature.description}</p>
+                </div>
+            </div>
+        );
+    });
+
     return(
-        <div style={styleData} className={panelContentClassnames}>
+        <div style={styleData} className={panelContentClasses}>
             <p className="italic mb-2">{dndClass.description}</p>
             <PanelSectionHeader>Class Features</PanelSectionHeader>
             <p className="mb-2">As a barbarian, you get the following class features.</p>
@@ -52,13 +83,16 @@ export default function ClassPanel({dndClass, styleData}) {
                 <p>
                     You start with the following equipment, in addition to the equipment granted by your background.
                 </p>
-                <ul className="list-disc">
-                    {dndClass.equipment.map( (line, i) => {
-                        const options = line.join(" OR ");
-                        return <li key={i}>{options}</li>
-                    })}
-                </ul>
+                <div className="ml-8">
+                    <ul className="list-disc">
+                        {dndClass.equipment.map( (line, i) => {
+                            const options = line.join(" OR ");
+                            return <li key={i}>{options}</li>
+                        })}
+                    </ul>
+                </div>
             </Block>
+            {featureSections}
         </div>
     )
 }
