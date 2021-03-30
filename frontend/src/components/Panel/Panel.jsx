@@ -16,8 +16,8 @@ export default function Panel({data, panelType}) {
     const [styleData, setStyleData] = useState({
         left: Math.max( Math.random() * window.innerWidth - 500, 0),
         top: Math.max( Math.random() * window.innerHeight - 400, 0),
-        width: 500,
-        height: 400,
+        width: 800,
+        height: 600,
         minHeight: 50,
         minWidth: 500,
         dragging: false,
@@ -148,9 +148,7 @@ export default function Panel({data, panelType}) {
                 <div draggable="true" className="resize-area resize-corner resize-bottomleft" onDrag={ e => resize(e, {bottom: true, left: true} ) }></div>
                 <div draggable="true" className="resize-area resize-corner resize-topright" onDrag={ e => resize(e, {top: true, right: true} ) }></div>
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true} ) }></div>
-            </div>
 
-            <div className="relative">
                 <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e)} onDragEnd={e => handleDragEnd(e)}>
                     <PanelHeader>{data.name}</PanelHeader>
                     <Button onClick={e => handleClose(e)}>
@@ -158,6 +156,7 @@ export default function Panel({data, panelType}) {
                     </Button>
                 </PanelHeaderContainer>
                 {content}
+                
             </div>
         </article>
     );
