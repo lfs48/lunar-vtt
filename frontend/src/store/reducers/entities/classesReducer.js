@@ -128,32 +128,7 @@ const initialState = {
                 rageDmg: '+4'
             },
         ]
-    },
-    2: {
-        id: 2,
-        name: 'Fighter',
-        description: 'Fighty boi',
-    },
-    3: {
-        id: 3,
-        name: 'Artificer',
-        description: 'placeholder',
-    },
-    4: {
-        id: 4,
-        name: 'Bard',
-        description: 'roll to seduce dragon harhar',
-    },
-    5: {
-        id: 5,
-        name: 'Cleric',
-        description: 'catholic',
-    },
-    6: {
-        id: 6,
-        name: 'Druid',
-        description: 'nature boi',
-    },
+    }
 };
 
 const classesSlice = createSlice({
