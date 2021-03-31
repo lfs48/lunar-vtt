@@ -10,6 +10,7 @@ import ClassPanel from './ClassPanel';
 import { PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './FeaturePanel';
+import entityTypes from '../../util/types/entityTypes';
 
 const handleDragStart = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -88,18 +89,18 @@ const resize = throttle(_resize, 20);
 
 const getInitialWidth = (panelType) => {
     switch(panelType) {
-        case('dndClass'):
+        case(entityTypes.CLASSES):
             return 800;
-        case('feature'):
+        case(entityTypes.FEATURES):
             return 500;
     }
 }
 
 const getInitialHeight = (panelType) => {
     switch(panelType) {
-        case('dndClass'):
+        case(entityTypes.CLASSES):
             return 600;
-        case('feature'):
+        case(entityTypes.FEATURES):
             return 300;
     }
 }
@@ -155,10 +156,10 @@ export default function Panel({data, panelType}) {
 
     let content = <></>;
     switch(panelType) {
-        case('dndClass'):
+        case(entityTypes.CLASSES):
             content = <ClassPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
             break;
-        case('feature'):
+        case(entityTypes.FEATURES):
             content = <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
             break;
     }

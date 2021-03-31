@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 import { getLevelProf, intToOrdinal } from '../../util/functions/utilFunctions';
+import entityTypes from '../../util/types/entityTypes';
 import PanelLink from './PanelLink';
 
 export default function ClassTable({dndClass, features}) {
@@ -13,7 +14,7 @@ export default function ClassTable({dndClass, features}) {
         const level = n+1;
         const levelFeatures = dndClass.classTable[n].features.map( (id) => {
             const feature = features.find(feat => feat.id === id);
-            return <PanelLink key={id} panelType='feature' id={id} text={feature.name}/>
+            return <PanelLink key={id} panelType={entityTypes.FEATURES} id={id} text={feature.name}/>
         });
         const extraCols = dndClass.classTableCols.map( (col, i) => {
             return <ClassTableRow key={i}>{dndClass.classTable[n][col.key]}</ClassTableRow>

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    dndClass: [],
-    feature: []
+    dndClasses: [],
+    features: []
 };
 
 const panelsSlice = createSlice({

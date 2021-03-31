@@ -1,52 +1,19 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
-import ClassesTab from './ClassesTab';
-import FeaturesTab from './FeaturesTab';
 import SidebarTabs from './SidebarTabs';
-import tabTypes from './tabTypes';
+import entityTypes from '../../util/types/entityTypes';
+import Tab from './Tab';
 
 export default function Sidebar() {
 
-    const [tab, setTab] = useState(tabTypes.CHARACTERS);
-
-    let activeTab = <></>;
-    switch(tab) {
-        case(tabTypes.CHARACTERS):
-            activeTab = <p>CHARACTERS</p>;
-            break;
-        case(tabTypes.CLASSES):
-            activeTab = <ClassesTab />
-            break;
-        case(tabTypes.RACES):
-            activeTab = <p>RACES</p>
-            break;
-        case(tabTypes.SPELLS):
-            activeTab = <p>SPELLS</p>;
-            break;
-        case(tabTypes.ITEMS):
-            activeTab = <p>ITEMS</p>;
-            break;
-        case(tabTypes.RULES):
-            activeTab = <p>RULES</p>;
-            break;
-        case(tabTypes.MONSTERS):
-            activeTab = <p>MONSTERS</p>;
-            break;
-        case(tabTypes.SETTINGS):
-            activeTab = <p>SETTINGS</p>;
-            break;
-        case(tabTypes.FEATURES):
-            activeTab = <FeaturesTab />
-        default:
-            activeTab: <></>;
-    }
+    const [tab, setTab] = useState(entityTypes.CLASSES);
 
     return(
         <StyledSidebar>
             <div className="relative">
                 <SidebarTabs state={tab} setState={setTab}/>
                 <div className="">
-                    {activeTab}
+                    <Tab entityType={tab} />
                 </div>
             </div>
         </StyledSidebar>

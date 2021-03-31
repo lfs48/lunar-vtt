@@ -3,35 +3,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { togglePanel } from '../../store/reducers/UI/panelsReducer';
 import { SidebarLi } from './styles';
 
-export default function FeaturesTab() {
+export default function Tab({entityType}) {
 
     const dispatch = useDispatch();
 
-    const {features, openFeatures} = useSelector( (state) => ({
-        features: state.entities.features,
-        openFeatures: state.UI.panels.feature
+    const {entities, openEntities} = useSelector( (state) => ({
+        entities: state.entities[entityType],
+        openEntities: state.UI.panels[entityType]
     }));
+    console.log(entityType);
 
     const handleLiClick = (event, id) => {
         event.preventDefault();
         const action = {
             type: togglePanel.type,
             payload: {
-                panelType: 'feature',
+                panelType: entityType,
                 id: id
             }
         };
         dispatch(action);
     }
 
-    const featureLis = Object.values(features).map( (feature, i) => {
-        return <SidebarLi key={i} open={openFeatures.includes(feature.id)} onClick={(e) => handleLiClick(e, feature.id)}>{feature.name}</SidebarLi>
+    const lis = Object.values(entities).map( (entity, i) => {
+        return <SidebarLi key={i} open={openEntities.includes(entity.id)} onClick={(e) => handleLiClick(e, entity.id)}>{entity.name}</SidebarLi>
     })
 
     return(
         <div>
             <ul>
-                {featureLis}
+                {lis}
             </ul>
         </div>
     )
