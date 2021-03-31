@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tw from 'tailwind-styled-components';
 import { Button } from '../../styles/components';
 import entityTypes, { getEntityIcon, getEntityName } from '../../util/types/entityTypes';
-import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised } from '@fortawesome/free-solid-svg-icons';
 
 export default function SidebarTabs({state, setState}) {
 
