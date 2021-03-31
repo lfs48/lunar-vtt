@@ -5,13 +5,13 @@ const entityTypes = {
     CLASSES: "dndClasses",
     RACES: "races",
     SPELLS: "spells",
-    ITEMS: "items",
-    RULES: "rules",
-    MONSTERS: "monsters",
-    SETTINGS: "settings",
-    ROLLABLE: "rollables",
     FEATURES: "features",
-    FEATS: "feats"
+    FEATS: "feats",
+    ITEMS: "items",
+    MONSTERS: "monsters",
+    ROLLABLE: "rollables",
+    RULES: "rules",
+    SETTINGS: "settings"
 };
 
 export default entityTypes;
@@ -88,6 +88,7 @@ export function getEntityName(entityType) {
             break;
         case(entityTypes.FEATURES):
             res = 'Features'
+            break;
         case(entityTypes.FEATS):
             res = 'Feats';
             break;
