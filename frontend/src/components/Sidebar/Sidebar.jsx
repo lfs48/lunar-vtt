@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import ClassesTab from './ClassesTab';
+import FeaturesTab from './FeaturesTab';
 import SidebarTabs from './SidebarTabs';
 import tabTypes from './tabTypes';
 
@@ -34,6 +35,8 @@ export default function Sidebar() {
         case(tabTypes.SETTINGS):
             activeTab = <p>SETTINGS</p>;
             break;
+        case(tabTypes.FEATURES):
+            activeTab = <FeaturesTab />
         default:
             activeTab: <></>;
     }
