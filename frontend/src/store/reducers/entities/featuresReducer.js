@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import entityTypes from "../../../util/types/entityTypes";
 
 const initialState = {
     1: {
@@ -22,7 +23,7 @@ const initialState = {
 };
 
 const featuresSlice = createSlice({
-  name: 'features',
+  name: entityTypes.FEATURES,
   initialState: initialState,
   reducers: {
   }

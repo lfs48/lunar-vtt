@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import entityTypes from "../../../util/types/entityTypes";
 
 const initialState = {
     1: {
@@ -132,7 +133,7 @@ const initialState = {
 };
 
 const classesSlice = createSlice({
-  name: 'dndClasses',
+  name: entityTypes.CLASSES,
   initialState: initialState,
   reducers: {
     classesFetchRequested: state => state,
