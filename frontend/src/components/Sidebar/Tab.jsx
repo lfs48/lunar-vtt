@@ -11,7 +11,6 @@ export default function Tab({entityType}) {
         entities: state.entities[entityType],
         openEntities: state.UI.panels[entityType]
     }));
-    console.log(entityType);
 
     const handleLiClick = (event, id) => {
         event.preventDefault();
