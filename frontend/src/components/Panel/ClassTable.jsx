@@ -15,8 +15,8 @@ export default function ClassTable({dndClass, features}) {
             const feature = features.find(feat => feat.id === id);
             return <PanelLink key={id} panelType='feature' id={id} text={feature.name}/>
         });
-        const extraCols = dndClass.classTableCols.map( (col) => {
-            return <ClassTableRow>{dndClass.classTable[n][col.key]}</ClassTableRow>
+        const extraCols = dndClass.classTableCols.map( (col, i) => {
+            return <ClassTableRow key={i}>{dndClass.classTable[n][col.key]}</ClassTableRow>
         })
         return(
             <tr key={n} className="border-b border-gray-400">
