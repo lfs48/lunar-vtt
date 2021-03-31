@@ -42,7 +42,7 @@ export default function ClassPanel({dndClass, styleData}) {
             <p className="italic mb-6">{dndClass.description}</p>
             <ClassTable dndClass={dndClass} features={features}/>
             <PanelSectionHeader>Class Features</PanelSectionHeader>
-            <p className="mb-2">As a barbarian, you get the following class features.</p>
+            <p className="mb-2">{`As a ${dndClass.name.toLowerCase()}, you get the following class features.`}</p>
             <PanelSubsectionHeader>Hit Points</PanelSubsectionHeader>
             <Block>
             <p>
