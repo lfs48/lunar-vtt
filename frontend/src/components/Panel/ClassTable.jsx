@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
 import { getLevelProf, intToOrdinal } from '../../util/functions/utilFunctions';
+import PanelLink from './PanelLink';
 
 export default function ClassTable({dndClass, features}) {
 
@@ -10,10 +11,9 @@ export default function ClassTable({dndClass, features}) {
 
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
-        const levelFeatures = [];
-        dndClass.classTable[n].features.forEach( (id) => {
+        const levelFeatures = dndClass.classTable[n].features.map( (id) => {
             const feature = features.find(feat => feat.id === id);
-            levelFeatures.push(feature.name);
+            return <PanelLink key={id} panelType='feature' id={id} text={feature.name}/>
         });
         const extraCols = dndClass.classTableCols.map( (col) => {
             return <ClassTableRow>{dndClass.classTable[n][col.key]}</ClassTableRow>
@@ -22,7 +22,7 @@ export default function ClassTable({dndClass, features}) {
             <tr key={n} className="border-b border-gray-400">
                 <ClassTableRow>{intToOrdinal(level)}</ClassTableRow>
                 <ClassTableRow>{`+ ${getLevelProf(level)}`}</ClassTableRow>
-                <ClassTableRow>{levelFeatures.join(", ")}</ClassTableRow>
+                <ClassTableRow>{levelFeatures}</ClassTableRow>
                 {extraCols}
             </tr>
         )
@@ -33,7 +33,7 @@ export default function ClassTable({dndClass, features}) {
             <thead className="border-b-2 border-black">
                 <tr>
                     <ClassTableHeader>Level</ClassTableHeader>
-                    <ClassTableHeader>Proficiency Bonus</ClassTableHeader>
+                    <ClassTableHeader>Prof</ClassTableHeader>
                     <ClassTableHeader>Features</ClassTableHeader>
                     {extraHeaders}
                 </tr>

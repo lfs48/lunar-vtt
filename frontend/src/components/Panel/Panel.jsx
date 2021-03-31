@@ -9,6 +9,7 @@ import tw from 'tailwind-styled-components';
 import ClassPanel from './ClassPanel';
 import { PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
+import FeaturePanel from './FeaturePanel';
 
 const handleDragStart = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -85,6 +86,24 @@ const _resize = (event, dirs, styleData, setStyleData) => {
 
 const resize = throttle(_resize, 20);
 
+const getInitialWidth = (panelType) => {
+    switch(panelType) {
+        case('dndClass'):
+            return 800;
+        case('feature'):
+            return 500;
+    }
+}
+
+const getInitialHeight = (panelType) => {
+    switch(panelType) {
+        case('dndClass'):
+            return 600;
+        case('feature'):
+            return 300;
+    }
+}
+
 export default function Panel({data, panelType}) {
 
     const dispatch = useDispatch();
@@ -92,10 +111,10 @@ export default function Panel({data, panelType}) {
     const [styleData, setStyleData] = useState({
         left: Math.max( Math.random() * window.innerWidth - 800, 0),
         top: Math.max( Math.random() * window.innerHeight - 600, 0),
-        width: 800,
-        height: 600,
+        width: getInitialWidth(panelType),
+        height: getInitialHeight(panelType),
         minHeight: 50,
-        minWidth: 500,
+        minWidth: 200,
         dragging: false,
         dragPrevX: null,
         dragPrevY: null,
@@ -137,8 +156,11 @@ export default function Panel({data, panelType}) {
     let content = <></>;
     switch(panelType) {
         case('dndClass'):
-        content = <ClassPanel dndClass={data} styleData={{height: styleData.height - 50}}/>
-        break;
+            content = <ClassPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            break;
+        case('feature'):
+            content = <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
+            break;
     }
     
     return(

@@ -48,6 +48,6 @@ export const Block = tw.div`
 export const panelContentClasses = `
     px-6
     py-2
-    overflow-y-scroll
+    overflow-y-auto
     overflow-x-hidden
 `
