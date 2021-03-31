@@ -127,77 +127,32 @@ const initialState = {
                 rages: 'Unlimited',
                 rageDmg: '+4'
             },
-        ],
-        features: [
-            [3],
-            [],
-            [1, 2],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
         ]
     },
     2: {
         id: 2,
         name: 'Fighter',
         description: 'Fighty boi',
-        features: {
-            5: [1]
-        }
     },
     3: {
         id: 3,
         name: 'Artificer',
         description: 'placeholder',
-        features: {
-            1: [3],
-            2: [2],
-            5: [1]
-        }
     },
     4: {
         id: 4,
         name: 'Bard',
         description: 'roll to seduce dragon harhar',
-        features: {
-            1: [3],
-            2: [2],
-            5: [1]
-        }
     },
     5: {
         id: 5,
         name: 'Cleric',
         description: 'catholic',
-        features: {
-            1: [3],
-            2: [2],
-            5: [1]
-        }
     },
     6: {
         id: 6,
         name: 'Druid',
         description: 'nature boi',
-        features: {
-            1: [3],
-            2: [2],
-            5: [1]
-        }
     },
 };
 
