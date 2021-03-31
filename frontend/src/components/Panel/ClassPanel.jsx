@@ -39,7 +39,7 @@ export default function ClassPanel({dndClass, styleData}) {
     return(
         <div style={styleData} className={panelContentClasses}>
             <p className="italic mb-2">{dndClass.description}</p>
-            <ClassTable dndClass={dndClass} />
+            <ClassTable dndClass={dndClass} features={features}/>
             <PanelSectionHeader>Class Features</PanelSectionHeader>
             <p className="mb-2">As a barbarian, you get the following class features.</p>
             <PanelSubsectionHeader>Hit Points</PanelSubsectionHeader>
