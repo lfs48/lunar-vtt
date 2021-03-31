@@ -16,6 +16,118 @@ const initialState = {
             ['Any simple ranged weapon', 'two simple light weapons'],
             ["An explorer's pack"]
         ],
+        classTableCols: [
+            {
+                name: 'Rages',
+                key: 'rages'
+            },
+            {
+                name: 'Rage Damage',
+                key: 'rageDmg'
+            }
+        ],
+        classTable: [
+            {
+                features: [3],
+                rages: '2',
+                rageDmg: '+2'
+            },
+            {
+                features: [2],
+                rages: '2',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '3',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '3',
+                rageDmg: '+2'
+            },
+            {
+                features: [1],
+                rages: '3',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+2'
+            },
+            {
+                features: [],
+                rages: '4',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '5',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '5',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '5',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '5',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '5',
+                rageDmg: '+3'
+            },
+            {
+                features: [1],
+                rages: '6',
+                rageDmg: '+4'
+            },
+            {
+                features: [1],
+                rages: '6',
+                rageDmg: '+4'
+            },
+            {
+                features: [1],
+                rages: '6',
+                rageDmg: '+4'
+            },
+            {
+                features: [1],
+                rages: 'Unlimited',
+                rageDmg: '+4'
+            },
+        ],
         features: [
             [3],
             [],
