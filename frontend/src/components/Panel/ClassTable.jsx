@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import tw from 'tailwind-styled-components';
 import { getLevelProf, intToOrdinal } from '../../util/functions/utilFunctions';
 
 export default function ClassTable({dndClass, features}) {
 
     const extraHeaders = dndClass.classTableCols.map( (col) => {
-        return <th>{col.name}</th>
+        return <ClassTableHeader>{col.name}</ClassTableHeader>
     });
 
     const trows = [...Array(20).keys()].map( (n) => {
@@ -15,25 +16,25 @@ export default function ClassTable({dndClass, features}) {
             levelFeatures.push(feature.name);
         });
         const extraCols = dndClass.classTableCols.map( (col) => {
-            return <td>{dndClass.classTable[n][col.key]}</td>
+            return <ClassTableRow>{dndClass.classTable[n][col.key]}</ClassTableRow>
         })
         return(
-            <tr key={n}>
-                <td>{intToOrdinal(level)}</td>
-                <td>{`+ ${getLevelProf(level)}`}</td>
-                <td>{levelFeatures.join(", ")}</td>
+            <tr key={n} className="border-b border-gray-400">
+                <ClassTableRow>{intToOrdinal(level)}</ClassTableRow>
+                <ClassTableRow>{`+ ${getLevelProf(level)}`}</ClassTableRow>
+                <ClassTableRow>{levelFeatures.join(", ")}</ClassTableRow>
                 {extraCols}
             </tr>
         )
     });
 
     return(
-        <table>
-            <thead>
+        <table className="w-full mb-6">
+            <thead className="border-b-2 border-black">
                 <tr>
-                    <th>Level</th>
-                    <th>Proficiency Bonus</th>
-                    <th>Features</th>
+                    <ClassTableHeader>Level</ClassTableHeader>
+                    <ClassTableHeader>Proficiency Bonus</ClassTableHeader>
+                    <ClassTableHeader>Features</ClassTableHeader>
                     {extraHeaders}
                 </tr>
             </thead>
@@ -43,3 +44,12 @@ export default function ClassTable({dndClass, features}) {
         </table>
     )
 }
+
+const ClassTableHeader = tw.th`
+    text-left
+    pl-4
+`
+const ClassTableRow = tw.td`
+    pl-4
+    py-1
+`
