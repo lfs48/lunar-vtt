@@ -34,5 +34,5 @@ const panelsSlice = createSlice({
   }
 });
 
-export const {togglePanel} = panelsSlice.actions;
+export const {togglePanel, setPanelEdit, setPanelView} = panelsSlice.actions;
 export default panelsSlice.reducer;

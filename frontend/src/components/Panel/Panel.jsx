@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { merge } from 'lodash';
 import { Button } from '../../styles/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { togglePanel } from '../../store/reducers/UI/panelsReducer';
+import { faEdit, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { togglePanel, setPanelEdit, setPanelView } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import ClassViewPanel from './Class/ClassViewPanel';
@@ -109,12 +109,25 @@ const getInitialHeight = (panelType) => {
     }
 }
 
+const getContent = (panelType, edit, data, styleData) => {
+    switch(panelType) {
+        case(entityTypes.CLASSES):
+            if (edit) {
+                return <ClassFormPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            } else {
+                return <ClassViewPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            }
+        case(entityTypes.FEATURES):
+            return <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
+    }
+}
+
 export default function Panel({data, panelType}) {
 
     const dispatch = useDispatch();
 
     const {edit} = useSelector( (state) => ({
-        mode: state.UI.panels[panelType][data.id]
+        edit: state.UI.panels[panelType][data.id].edit
     }));
 
     const [styleData, setStyleData] = useState({
@@ -146,6 +159,30 @@ export default function Panel({data, panelType}) {
         }, 720);
     }, []);
 
+    const handleEdit = (event) => {
+        event.preventDefault();
+        const action = {
+            type: setPanelEdit.type,
+            payload: {
+                id: data.id,
+                panelType: panelType
+            }
+        };
+        dispatch(action);
+    };
+
+    const handleSave = (event) => {
+        event.preventDefault();
+        const action = {
+            type: setPanelView.type,
+            payload: {
+                id: data.id,
+                panelType: panelType
+            }
+        };
+        dispatch(action);
+    };
+
     const handleClose = (event) => {
         event.preventDefault();
         const newState = merge({}, styleData);
@@ -164,20 +201,6 @@ export default function Panel({data, panelType}) {
             dispatch(action);
         }, 720);
     };
-
-    let content = <></>;
-    switch(panelType) {
-        case(entityTypes.CLASSES):
-            if (edit) {
-                content = <ClassFormPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
-            } else {
-                content = <ClassViewPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
-            }
-            break;
-        case(entityTypes.FEATURES):
-            content = <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
-            break;
-    }
     
     return(
         <article draggable="true" className={`${panelClass} ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} style={styleData}>
@@ -194,11 +217,22 @@ export default function Panel({data, panelType}) {
 
                 <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
                     <PanelHeader>{data.name}</PanelHeader>
-                    <Button onClick={e => handleClose(e)}>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </Button>
+                    <div>
+                        {edit ? (
+                            <Button onClick={e => handleSave(e)}>
+                            <FontAwesomeIcon icon={faSave} />
+                            </Button>
+                        ) : (
+                            <Button onClick={e => handleEdit(e)}>
+                                <FontAwesomeIcon icon={faEdit} />
+                            </Button>
+                        )}
+                        <Button className="ml-2" onClick={e => handleClose(e)}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </Button>
+                    </div>
                 </PanelHeaderContainer>
-                {content}
+                {getContent(panelType, edit, data, styleData)}
 
             </div>
         </article>
