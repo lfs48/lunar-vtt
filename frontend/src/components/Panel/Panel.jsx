@@ -4,13 +4,14 @@ import { Button } from '../../styles/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { togglePanel } from '../../store/reducers/UI/panelsReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
-import ClassPanel from './ClassPanel';
+import ClassViewPanel from './Class/ClassViewPanel';
 import { PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
+import ClassFormPanel from './Class/ClassFormPanel';
 
 const handleDragStart = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -54,6 +55,9 @@ const handleDragEnd = (event, styleData, setStyleData) => {
     newState.dragPrevY = 0;
     newState.dragging = false;
     setStyleData(newState);
+    setTimeout( () => {
+        setStyleData(newState);
+    }, 20);
 };
 
 const _resize = (event, dirs, styleData, setStyleData) => {
@@ -109,9 +113,13 @@ export default function Panel({data, panelType}) {
 
     const dispatch = useDispatch();
 
+    const {edit} = useSelector( (state) => ({
+        mode: state.UI.panels[panelType][data.id]
+    }));
+
     const [styleData, setStyleData] = useState({
-        left: Math.max( Math.random() * window.innerWidth - 800, 0),
-        top: Math.max( Math.random() * window.innerHeight - 600, 0),
+        left: Math.random() * (window.innerWidth - getInitialWidth(panelType) - 20),
+        top: Math.random() * (window.innerHeight - getInitialHeight(panelType) - 10),
         width: getInitialWidth(panelType),
         height: getInitialHeight(panelType),
         minHeight: 50,
@@ -119,15 +127,18 @@ export default function Panel({data, panelType}) {
         dragging: false,
         dragPrevX: null,
         dragPrevY: null,
-        stage: 1,
+        stage: 0,
         opacity: 0,
     });
 
     useEffect(() => {
         const newState = merge({}, styleData);
         newState.left += 100;
+        newState.stage = 1;
         newState.opacity = 1;
-        setStyleData(newState);
+        setTimeout( () => {
+            setStyleData(newState);
+        }, 0);
         setTimeout( () => {
             const newerState = merge({}, newState);
             newerState.stage = 2;
@@ -157,7 +168,11 @@ export default function Panel({data, panelType}) {
     let content = <></>;
     switch(panelType) {
         case(entityTypes.CLASSES):
-            content = <ClassPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            if (edit) {
+                content = <ClassFormPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            } else {
+                content = <ClassViewPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+            }
             break;
         case(entityTypes.FEATURES):
             content = <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;

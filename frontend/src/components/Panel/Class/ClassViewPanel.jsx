@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { DiceRoll } from 'rpg-dice-roller';
 import ClassTable from './ClassTable';
-import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from './styles';
+import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 
-export default function ClassPanel({dndClass, styleData}) {
+export default function ClassViewPanel({dndClass, styleData}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 

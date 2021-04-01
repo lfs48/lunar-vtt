@@ -9,7 +9,7 @@ export default function Tab({entityType}) {
 
     const {entities, openEntities} = useSelector( (state) => ({
         entities: state.entities[entityType],
-        openEntities: state.UI.panels[entityType]
+        openEntities: Object.keys(state.UI.panels[entityType])
     }));
 
     const handleLiClick = (event, id) => {

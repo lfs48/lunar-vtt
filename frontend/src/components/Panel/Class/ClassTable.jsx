@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import tw from 'tailwind-styled-components';
-import { getLevelProf, intToOrdinal } from '../../util/functions/utilFunctions';
-import entityTypes from '../../util/types/entityTypes';
-import PanelLink from './PanelLink';
+import { getLevelProf, intToOrdinal } from '../../../util/functions/utilFunctions';
+import entityTypes from '../../../util/types/entityTypes';
+import PanelLink from '../PanelLink';
 
 export default function ClassTable({dndClass, features}) {
 

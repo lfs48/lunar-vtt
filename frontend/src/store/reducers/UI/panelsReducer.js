@@ -1,8 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    dndClasses: [],
-    features: []
+    dndClasses: {},
+    features: {},
+    characters: {},
+    feats: {},
+    items: {},
+    monsters: {},
+    races: {},
+    rollables: {},
+    rules: {},
+    spells: {}
 };
 
 const panelsSlice = createSlice({
@@ -10,11 +18,18 @@ const panelsSlice = createSlice({
   initialState: initialState,
   reducers: {
       togglePanel: (state, action) => {
-        if (state[action.payload.panelType].includes(action.payload.id)) {
-            state[action.payload.panelType] = state[action.payload.panelType].filter( (id) => id !== action.payload.id );
+        if ( state[action.payload.panelType][action.payload.id] ) {
+          delete state[action.payload.panelType][action.payload.id];
         } else {
-            state[action.payload.panelType].push(action.payload.id);
+            state[action.payload.panelType][action.payload.id] = {
+              edit: false
+            }
         }
+      },
+      setPanelView: (state, action) => {
+        state[action.payload.panelType][action.payload.id].edit = false;
+      }, setPanelEdit: (state, action) => {
+        state[action.payload.panelType][action.payload.id].edit = true;
       }
   }
 });
