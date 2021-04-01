@@ -229,7 +229,7 @@ export default function Panel({data, panelType}) {
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true}, styleData, setStyleData ) }></div>
 
                 <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
-                    <PanelHeader>{data.name}</PanelHeader>
+                    <PanelHeader className="font-fancy">{data.name}</PanelHeader>
                     <div>
                         {edit ? (
                             <Button onClick={e => handleSave(e)}>
