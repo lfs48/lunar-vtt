@@ -113,7 +113,20 @@ const getContent = (panelType, edit, data, styleData) => {
     switch(panelType) {
         case(entityTypes.CLASSES):
             if (edit) {
-                return <ClassFormPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+                const preloadedInputs = {
+                    name: data.name,
+                    description: data.description,
+                    hitdie: data.hitDie,
+                    armor: data.armor,
+                    weapons: data.weapons,
+                    tools: data.tools,
+                    saves: data.saves,
+                    skills: data.skills,
+                    equipment: data.equipment,
+                    classTableCols: data.classTableCols,
+                    classTable: data.classTable
+                }
+                return <ClassFormPanel dndClass={data} preloadedInputs={preloadedInputs} styleData={{height: styleData.height - 50}}/>;
             } else {
                 return <ClassViewPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
             }

@@ -5,7 +5,7 @@ import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import DieSelect from '../../Util/DieSelect';
 
-export default function ClassFormPanel({dndClass, styleData}) {
+export default function ClassFormPanel({dndClass, styleData, preloadedInputs=null}) {
 
     const [inputs, setInputs] = useState({
         name: "",
@@ -20,6 +20,12 @@ export default function ClassFormPanel({dndClass, styleData}) {
         classTableCols: [],
         classTable: [...Array(20).keys()].map( (_) => ({features: []}))
     });
+
+    useEffect( () => {
+        if (preloadedInputs) {
+            setInputs(preloadedInputs);
+        }
+    }, []);
 
     const roll = new DiceRoll(dndClass.hitDie);
     
