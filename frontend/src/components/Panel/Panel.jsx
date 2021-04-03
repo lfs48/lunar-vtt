@@ -219,14 +219,6 @@ export default function Panel({data, panelType}) {
         <article draggable="true" className={`${panelClass} ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} style={styleData}>
 
             <div className="resize-areas-container">
-                <div draggable="true" className="resize-area resize-top" onDrag={ e => resize(e, {top: true}, styleData, setStyleData ) } ></div>
-                <div draggable="true" className="resize-area resize-left" onDrag={ e => resize(e, {left: true}, styleData, setStyleData ) }></div>
-                <div draggable="true" className="resize-area resize-bottom" onDrag={ e => resize(e, {bottom: true}, styleData, setStyleData ) } ></div>
-                <div draggable="true" className="resize-area resize-right" onDrag={ e => resize(e, {right: true}, styleData, setStyleData ) }></div>
-                <div draggable="true" className="resize-area resize-corner resize-bottomright" onDrag={ e => resize(e, {bottom: true, right: true}, styleData, setStyleData ) }></div>
-                <div draggable="true" className="resize-area resize-corner resize-bottomleft" onDrag={ e => resize(e, {bottom: true, left: true}, styleData, setStyleData ) }></div>
-                <div draggable="true" className="resize-area resize-corner resize-topright" onDrag={ e => resize(e, {top: true, right: true}, styleData, setStyleData ) }></div>
-                <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true}, styleData, setStyleData ) }></div>
 
                 <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
                     <PanelHeader className="font-fancy">{data.name}</PanelHeader>
@@ -246,6 +238,15 @@ export default function Panel({data, panelType}) {
                     </div>
                 </PanelHeaderContainer>
                 {getContent(panelType, edit, data, styleData)}
+
+                <div draggable="true" className="resize-area resize-top" onDrag={ e => resize(e, {top: true}, styleData, setStyleData ) } ></div>
+                <div draggable="true" className="resize-area resize-left" onDrag={ e => resize(e, {left: true}, styleData, setStyleData ) }></div>
+                <div draggable="true" className="resize-area resize-bottom" onDrag={ e => resize(e, {bottom: true}, styleData, setStyleData ) } ></div>
+                <div draggable="true" className="resize-area resize-right" onDrag={ e => resize(e, {right: true}, styleData, setStyleData ) }></div>
+                <div draggable="true" className="resize-area resize-corner resize-bottomright" onDrag={ e => resize(e, {bottom: true, right: true}, styleData, setStyleData ) }></div>
+                <div draggable="true" className="resize-area resize-corner resize-bottomleft" onDrag={ e => resize(e, {bottom: true, left: true}, styleData, setStyleData ) }></div>
+                <div draggable="true" className="resize-area resize-corner resize-topright" onDrag={ e => resize(e, {top: true, right: true}, styleData, setStyleData ) }></div>
+                <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true}, styleData, setStyleData ) }></div>
 
             </div>
         </article>
