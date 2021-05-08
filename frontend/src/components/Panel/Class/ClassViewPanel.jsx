@@ -9,8 +9,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
     const roll = new DiceRoll(dndClass.hitDie);
 
     const featureIds = [];
-    dndClass.classTable.forEach( (level) => {
-        const levelFeatures = level.features;
+    dndClass.features.forEach( (levelFeatures) => {
         levelFeatures.forEach( (id) => featureIds.push(id));
     });
     const {features} = useSelector( (state) => ({
@@ -89,8 +88,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
                 <div className="ml-8">
                     <ul className="list-disc">
                         {dndClass.equipment.map( (line, i) => {
-                            const options = line.join(" OR ");
-                            return <li key={i}>{options}</li>
+                            return <li key={i}>{line}</li>
                         })}
                     </ul>
                 </div>

@@ -11,123 +11,80 @@ const initialState = {
         weapons: 'All weapons',
         tools: 'None',
         saves: 'Fortitude, Reflex',
-        skills: '8',
+        spellcasting: 'None',
+        skills: 'Choose any five',
         equipment: [
-            ['A heavy martial weapon', 'a versatile martial weapon and a shield', 'two light martial weapons'],
-            ['Any simple ranged weapon', 'two simple light weapons'],
-            ["An explorer's pack"]
+            "(a) A heavy martial weapon or (b) a versatile martial weapon and a shield or (c) two light martial weapons",
+            "(a) Any simple ranged weapon or (b) two simple light weapons",
+            "An explorer's pack"
         ],
-        classTableCols: [
-            {
-                name: 'Rages',
-                key: 'rages'
-            },
-            {
-                name: 'Rage Damage',
-                key: 'rageDmg'
-            }
-        ],
-        classTable: [
-            {
-                features: [3],
-                rages: '2',
-                rageDmg: '+2'
-            },
-            {
-                features: [2],
-                rages: '2',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '3',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '3',
-                rageDmg: '+2'
-            },
-            {
-                features: [1],
-                rages: '3',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+2'
-            },
-            {
-                features: [],
-                rages: '4',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '5',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '5',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '5',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '5',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '5',
-                rageDmg: '+3'
-            },
-            {
-                features: [1],
-                rages: '6',
-                rageDmg: '+4'
-            },
-            {
-                features: [1],
-                rages: '6',
-                rageDmg: '+4'
-            },
-            {
-                features: [1],
-                rages: '6',
-                rageDmg: '+4'
-            },
-            {
-                features: [1],
-                rages: 'Unlimited',
-                rageDmg: '+4'
-            },
+        classTableCols: {
+            "Rages" : [
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2',
+                '2'
+            ],
+            "Rage Damage": [
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2',
+                '+2'
+            ]
+        },
+        features: [
+            [3],
+            [2],
+            [],
+            [1],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
         ]
     }
 };
