@@ -1,12 +1,14 @@
-import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised, faMonument, faDna, faStar, faTheaterMasks } from '@fortawesome/free-solid-svg-icons';
 
 const entityTypes = {
     CHARACTERS: "characters",
     CLASSES: "dndClasses",
+    SUBCLASSES: 'subclasses',
     RACES: "races",
-    SPELLS: "spells",
-    FEATURES: "features",
+    BACKGROUNDS: 'backgrounds',
     FEATS: "feats",
+    FEATURES: "features",
+    SPELLS: "spells",
     ITEMS: "items",
     MONSTERS: "monsters",
     ROLLABLE: "rollables",
@@ -26,7 +28,7 @@ export function getEntityIcon(entityType) {
             res = faHatWizard;
             break;
         case(entityTypes.RACES):
-            res = faMale;
+            res = faDna;
             break;
         case(entityTypes.SPELLS):
             res = faMeteor;
@@ -44,13 +46,19 @@ export function getEntityIcon(entityType) {
             res = faCog;
             break;
         case(entityTypes.FEATURES):
-            res = faFistRaised;
+            res = faStar;
             break;
         case(entityTypes.FEATS):
             res = faAward;
             break;
         case(entityTypes.ROLLABLE):
             res = faDiceD20;
+            break;
+        case(entityTypes.SUBCLASSES):
+            res = faTheaterMasks;
+            break;
+        case(entityTypes.BACKGROUNDS):
+            res = faMonument;
             break;
         default:
             res = <></>;
@@ -94,6 +102,12 @@ export function getEntityName(entityType) {
             break;
         case(entityTypes.ROLLABLE):
             res = 'Rollable Tables';
+            break;
+        case(entityTypes.BACKGROUNDS):
+            res = 'Backgrounds';
+            break;
+        case(entityTypes.SUBCLASSES):
+            res = 'Subclasses';
             break;
         default:
             res = '';
