@@ -44,3 +44,16 @@ export const TextButton1 = tw(TextButton)`
     text-blue-400
     active:text-blue-500
 `
+
+export const TextArea = tw.textarea`
+    resize-none
+    w-full
+    h-32
+    overflow-auto
+    bg-gray-300
+    py-2
+    px-4
+    rounded
+    border
+    border-black
+`
