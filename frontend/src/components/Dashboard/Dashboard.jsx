@@ -7,8 +7,8 @@ import Sidebar from '../Sidebar/Sidebar';
 export default function Dashboard() {
 
     const {classes, features} = useSelector( (state) => ({
-        classes: Object.values(state.entities.dndClasses).filter( (dndClass) => state.UI.panels.dndClasses[dndClass.id] ),
-        features: Object.values(state.entities.features).filter( (feature) => state.UI.panels.features[feature.id] )
+        classes: Object.values(state.entities.dndClasses).filter( (dndClass) => state.UI.panels.dndClasses[dndClass._id] ),
+        features: Object.values(state.entities.features).filter( (feature) => state.UI.panels.features[feature._id] )
     }));
     const classPanels = classes.map( (dndClass) => {
         return <Panel key={dndClass.id} data={dndClass} panelType={entityTypes.CLASSES}/>

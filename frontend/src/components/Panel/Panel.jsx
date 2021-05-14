@@ -140,7 +140,7 @@ export default function Panel({data, panelType}) {
     const dispatch = useDispatch();
 
     const {edit} = useSelector( (state) => ({
-        edit: state.UI.panels[panelType][data.id].edit
+        edit: state.UI.panels[panelType][data._id].edit
     }));
 
     const [styleData, setStyleData] = useState({
@@ -177,7 +177,7 @@ export default function Panel({data, panelType}) {
         const action = {
             type: setPanelEdit.type,
             payload: {
-                id: data.id,
+                id: data._id,
                 panelType: panelType
             }
         };
@@ -189,7 +189,7 @@ export default function Panel({data, panelType}) {
         const action = {
             type: setPanelView.type,
             payload: {
-                id: data.id,
+                id: data._id,
                 panelType: panelType
             }
         };
@@ -207,7 +207,7 @@ export default function Panel({data, panelType}) {
             const action = {
                 type: togglePanel.type,
                 payload: {
-                    id: data.id,
+                    id: data._id,
                     panelType: panelType
                 }
             };

@@ -58,4 +58,21 @@ const DndClassSchema = new Schema({
     timestamps: true
 });
 
+DndClassSchema.post("findOneAndDelete", async (document) => {
+    const classId = document._id;
+      const res = await Feature.updateMany(
+          { 
+              sources: { 
+                  $in: [classId] 
+              } 
+          },
+          { 
+              $pull: {
+                  sources: classId
+              } 
+          }
+      )
+});
+
 module.exports = DndClass = mongoose.model('DndClass', DndClassSchema);
+

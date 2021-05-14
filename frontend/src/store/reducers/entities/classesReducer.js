@@ -92,11 +92,14 @@ const initialState = {
 
 const classesSlice = createSlice({
   name: entityTypes.CLASSES,
-  initialState: initialState,
+  initialState: {},
   reducers: {
-    classesFetchRequested: state => state,
+    fetchAllClassesRequested: state => state,
+    receiveAllClasses: (state, action) => {
+        return action.payload.classes;
+    }
   }
 });
 
-export const {} = classesSlice.actions;
+export const { fetchAllClassesRequested, receiveAllClasses } = classesSlice.actions;
 export default classesSlice.reducer;

@@ -8,13 +8,14 @@ export default function ClassViewPanel({dndClass, styleData}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 
-    const featureIds = [];
-    dndClass.features.forEach( (levelFeatures) => {
-        levelFeatures.forEach( (id) => featureIds.push(id));
+    const featureIds = [...Array(20)];
+    dndClass.features.forEach( (f) => {
+        featureIds.push(f.feature);
     });
     const {features} = useSelector( (state) => ({
-        features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature.id))
+        features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature._id))
     }));
+    console.log(features);
     
     const sortedFeatures = features.sort( (a, b) => {
         if (featureIds.indexOf(a.id) < featureIds.indexOf(b.id)) {
@@ -27,7 +28,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
     })
     const featureSections = sortedFeatures.map( (feature) => {
         return(
-            <div key={feature.id} className="pb-2">
+            <div key={feature._id} className="pb-2">
                 <FeatureHeader>{feature.name} <FeatureHeaderSub>{` (${feature.featureType})`}</FeatureHeaderSub> </FeatureHeader>
                 <div>
                     <p>{feature.description}</p>

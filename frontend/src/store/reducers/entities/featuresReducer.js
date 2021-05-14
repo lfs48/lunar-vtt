@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import entityTypes from "../../../util/types/entityTypes";
+import { receiveAllClasses } from "./classesReducer";
 
 const initialState = {
     1: {
@@ -24,8 +25,15 @@ const initialState = {
 
 const featuresSlice = createSlice({
   name: entityTypes.FEATURES,
-  initialState: initialState,
+  initialState: {},
   reducers: {
+  },
+  extraReducers: {
+    [receiveAllClasses.type]: (state, action) => {
+        action.payload.features.forEach( (feature) => {
+            state[feature._id] = feature;
+        });
+    }
   }
 });
 

@@ -8,6 +8,7 @@ import Register from './components/Register/Register';
 import Navbar from './components/Navbar/Navbar';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Dashboard from './components/Dashboard/Dashboard';
+import Wrapper from './components/Wrapper/Wrapper';
 
 function App() {
 
@@ -23,12 +24,14 @@ function App() {
       >
       </Helmet>
       <div className="overflow-hidden">
-      <Switch>
-        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-        <AuthRoute exact path="/register" component={Register} />
-        <AuthRoute exact path="/" component={Landing} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <Wrapper>
+        <Switch>
+          <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+          <AuthRoute exact path="/register" component={Register} />
+          <AuthRoute exact path="/" component={Landing} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Wrapper>
       </div>
     </BrowserRouter>
   );

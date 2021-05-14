@@ -26,4 +26,7 @@ router.post('/', DndClassController.create);
 // Update existing class
 router.patch('/:classId', DndClassController.update);
 
+// Delete class
+router.delete('/:classId', DndClassController.delete);
+
 module.exports = router;
