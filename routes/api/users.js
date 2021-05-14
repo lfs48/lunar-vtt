@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
 const jwt = require('jsonwebtoken');
@@ -7,6 +6,8 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 const validateLoginInput = require('../../validation/login');
 const validateRegisterInput = require('../../validation/register');
+
+const router = express.Router();
 
 // Register new user
 router.post('/register', (req, res) => {

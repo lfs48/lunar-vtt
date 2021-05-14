@@ -2,6 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Feature = require('./Feature');
 
+// const ClassFeaturesSchema = new Schema({
+//     features: [{
+//         type: Schema.Types.ObjectId,
+//         ref: 'Feature'
+//     }]
+// });
+
+// const ClassFeature = mongoose.model('DndClass', ClassFeaturesSchema);
+
 const DndClassSchema = new Schema({
     name: {
         type: String,
@@ -29,28 +38,24 @@ const DndClassSchema = new Schema({
     skills: {
         type: String
     },
-    equipment: {
-        type: [String]
+    equipment: [{
+        type: String
+    }],
+    tableCols: {
+        type: Map,
+        of: [String]
     },
-    features: {
-        type: [ClassTableSchema]
-    },
-    classTable: {
-        type: [Map]
-    }
-
+    features: [{
+        feature: {
+            type: Schema.Types.ObjectId,
+            ref: 'Feature'
+        },
+        level: {
+            type: Number
+        }
+    }]
 }, {
     timestamps: true
 });
 
-const ClassFeaturesSchema = new Schema({
-    type: Map,
-    of: Feature
-})
-
-const ClassTableSchema = new Schema({
-    type: Map,
-    of: String
-})
-
-module.exports = mongoose.model('DndClass', DndClassSchema);
+module.exports = DndClass = mongoose.model('DndClass', DndClassSchema);

@@ -17,15 +17,19 @@ const FeatureSchema = new Schema({
         required: true,
         enum: ['Action', 'Bonus Action', 'Reaction', 'Passive', 'Triggered', 'Other']
     },
-    sources: {
-        type: [Schema.Types.ObjectId],
+    sources: [{
+        type: Schema.Types.ObjectId,
         required: true,
         refPath: 'sourceModel'
-    },
+    }],
     sourceModel: {
         type: String,
         required: true,
         enum: ['DndClass', 'Subclass', 'Race', 'Background', 'Feat']
+    },
+    level: {
+        type: Number,
+        required: false
     }
 
 }, {

@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require('passport');
 const users = require("./routes/api/users");
+const classes = require("./routes/api/classes");
+const features = require("./routes/api/features");
 
 const app = express();
 
@@ -29,6 +31,8 @@ mongoose
 .catch( (err) => console.log(err) );
 
 app.use("/api/users", users);
+app.use("/api/classes", classes);
+app.use("/api/features", features);
 
 const port = process.env.PORT || 5000;
 
