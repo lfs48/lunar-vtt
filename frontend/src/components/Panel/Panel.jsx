@@ -71,7 +71,7 @@ const _resize = (event, dirs, styleData, setStyleData) => {
         } else if ("left" in dirs) {
             const newWidth = newState.width + newState.left - event.pageX;
             newState.width = Math.max(newWidth, newState.minWidth);
-            if (newState.width != styleData.width) {newState.left = event.pageX; }
+            if (newState.width !== styleData.width) {newState.left = event.pageX; }
         }
     }
 
@@ -79,7 +79,7 @@ const _resize = (event, dirs, styleData, setStyleData) => {
         if ("top" in dirs) {
             const newHeight = newState.height + newState.top - event.pageY;
             newState.height = Math.max(newHeight, newState.minHeight);
-            if (newState.height != styleData.height) {newState.top = event.pageY};
+            if (newState.height !== styleData.height) {newState.top = event.pageY};
         } else if ("bottom" in dirs) {
             const newHeight = event.pageY - newState.top;
             newState.height = Math.max(newHeight, newState.minHeight);
@@ -221,7 +221,10 @@ export default function Panel({data, panelType}) {
             <div className="resize-areas-container">
 
                 <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
-                    <PanelHeader className="font-fancy">{data.name}</PanelHeader>
+                    <PanelHeader className="font-fancy flex items-center">
+                        <i className={`mr-2 fas fa-${data.icon}`}></i>
+                        <p>{data.name}</p>
+                    </PanelHeader>
                     <div>
                         {edit ? (
                             <Button onClick={e => handleSave(e)}>

@@ -20,8 +20,8 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
         saves: "",
         skills: "",
         equipment: [],
-        classTableCols: [],
-        classTable: [...Array(20).keys()].map( (_) => ({features: []}))
+        tableCols: [],
+        features: [...Array(20).keys()].map( (_) => ({features: []}))
     });
 
     useEffect( () => {

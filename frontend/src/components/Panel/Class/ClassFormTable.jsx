@@ -9,8 +9,8 @@ export default function ClassFormTable({dndClass}) {
 
     const [addingCol, setAddingCol] = useState(false);
 
-    const extraHeaders = dndClass.classTableCols.map( (col) => {
-        return <ClassTableHeader>{col.name}</ClassTableHeader>
+    const extraHeaders = Object.keys(dndClass.tableCols).map( (col, i) => {
+        return <ClassTableHeader key={i}>{col}</ClassTableHeader>
     });
 
     return(

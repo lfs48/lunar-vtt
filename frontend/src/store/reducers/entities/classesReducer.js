@@ -5,6 +5,7 @@ const initialState = {
     1: {
         id: 1,
         name: 'Barbarian',
+        icon: 'axe-battle',
         description: 'For some, their rage springs from a communion with fierce animal spirits. Others draw from a roiling reservoir of anger at a world full of pain. For every barbarian, rage is a power that fuels not just a battle frenzy but also uncanny reflexes, resilience, and feats of strength.',
         hitDie: '1d12',
         armor: 'Light armor, medium armor, shields',
@@ -18,7 +19,7 @@ const initialState = {
             "(a) Any simple ranged weapon or (b) two simple light weapons",
             "An explorer's pack"
         ],
-        classTableCols: {
+        tableCols: {
             "Rages" : [
                 '2',
                 '2',

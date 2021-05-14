@@ -9,7 +9,7 @@ export default function SidebarTabs({state, setState}) {
     const tabs = Object.values(entityTypes).map( (type, i) => {
         return(
             <TabButton key={i} className="has-tooltip" onClick={() => setState(type)}>
-                <FontAwesomeIcon icon={getEntityIcon(type)} />
+                <i class={`${getEntityIcon(type)}`}></i>
                 <p className="tooltip">{getEntityName(type)}</p>
             </TabButton>
         )

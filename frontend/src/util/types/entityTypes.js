@@ -22,43 +22,43 @@ export function getEntityIcon(entityType) {
     let res;
     switch(entityType) {
         case(entityTypes.CHARACTERS):
-            res = faAddressBook;
+            res = 'fas fa-address-book';
             break;
         case(entityTypes.CLASSES):
-            res = faHatWizard;
+            res = 'fas fa-sword';
             break;
         case(entityTypes.RACES):
-            res = faDna;
+            res = 'fas fa-skull-cow';
             break;
         case(entityTypes.SPELLS):
-            res = faMeteor;
+            res = 'fas fa-meteor';
             break;
         case(entityTypes.ITEMS):
-            res = faRing;
+            res = 'fas fa-flask-potion';
             break;
         case(entityTypes.RULES):
-            res = faBookReader;
+            res = 'fas fa-books';
             break;
         case(entityTypes.MONSTERS):
-            res = faSpider;
+            res = 'fas fa-spider';
             break;
         case(entityTypes.SETTINGS):
-            res = faCog;
+            res = 'fas fa-user-cog';
             break;
         case(entityTypes.FEATURES):
-            res = faStar;
+            res = 'fas fa-star';
             break;
         case(entityTypes.FEATS):
-            res = faAward;
+            res = 'fas fa-award';
             break;
         case(entityTypes.ROLLABLE):
-            res = faDiceD20;
+            res = 'fas fa-scroll-old';
             break;
         case(entityTypes.SUBCLASSES):
-            res = faTheaterMasks;
+            res = 'fas fa-swords';
             break;
         case(entityTypes.BACKGROUNDS):
-            res = faMonument;
+            res = 'fas fa-landmark';
             break;
         default:
             res = <></>;
@@ -66,6 +66,55 @@ export function getEntityIcon(entityType) {
     }
     return res;
 };
+
+// export function getEntityIcon(entityType) {
+//     let res;
+//     switch(entityType) {
+//         case(entityTypes.CHARACTERS):
+//             res = faAddressBook;
+//             break;
+//         case(entityTypes.CLASSES):
+//             res = faHatWizard;
+//             break;
+//         case(entityTypes.RACES):
+//             res = faDna;
+//             break;
+//         case(entityTypes.SPELLS):
+//             res = faMeteor;
+//             break;
+//         case(entityTypes.ITEMS):
+//             res = faRing;
+//             break;
+//         case(entityTypes.RULES):
+//             res = faBookReader;
+//             break;
+//         case(entityTypes.MONSTERS):
+//             res = faSpider;
+//             break;
+//         case(entityTypes.SETTINGS):
+//             res = faCog;
+//             break;
+//         case(entityTypes.FEATURES):
+//             res = faStar;
+//             break;
+//         case(entityTypes.FEATS):
+//             res = faAward;
+//             break;
+//         case(entityTypes.ROLLABLE):
+//             res = faDiceD20;
+//             break;
+//         case(entityTypes.SUBCLASSES):
+//             res = faTheaterMasks;
+//             break;
+//         case(entityTypes.BACKGROUNDS):
+//             res = faMonument;
+//             break;
+//         default:
+//             res = <></>;
+//             break;
+//     }
+//     return res;
+// };
 
 export function getEntityName(entityType) {
     let res;

@@ -6,8 +6,8 @@ import PanelLink from '../PanelLink';
 
 export default function ClassTable({dndClass, features}) {
 
-    const extraHeaders = Object.keys(dndClass.classTableCols).map( (col) => {
-        return <ClassTableHeader>{col}</ClassTableHeader>
+    const extraHeaders = Object.keys(dndClass.tableCols).map( (col, i) => {
+        return <ClassTableHeader key={i} className="text-center">{col}</ClassTableHeader>
     });
 
     const trows = [...Array(20).keys()].map( (n) => {
@@ -16,8 +16,8 @@ export default function ClassTable({dndClass, features}) {
             const feature = features.find(feat => feat.id === id);
             return <PanelLink key={id} panelType={entityTypes.FEATURES} id={id} text={feature.name}/>
         });
-        const extraCols = Object.keys(dndClass.classTableCols).map( (col, i) => {
-            return <ClassTableRow key={i}>{dndClass.classTableCols[col][n]}</ClassTableRow>
+        const extraCols = Object.keys(dndClass.tableCols).map( (col, i) => {
+            return <ClassTableRow key={i} className="text-center">{dndClass.tableCols[col][n]}</ClassTableRow>
         })
         return(
             <tr key={n} className="border-b border-gray-400">
