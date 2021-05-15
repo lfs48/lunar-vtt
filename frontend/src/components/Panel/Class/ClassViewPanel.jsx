@@ -3,50 +3,39 @@ import { useSelector } from 'react-redux';
 import { DiceRoll } from 'rpg-dice-roller';
 import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
+import { intToOrdinal } from '../../../util/functions/utilFunctions';
+import { ClassFeatureView } from './ClassFeatureView';
 
 export default function ClassViewPanel({dndClass, styleData}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 
-    let featureIds = [];
-    Object.values(dndClass.features).forEach( (arr) => {
-        featureIds = featureIds.concat(arr);
-    });;
+    let classFeatures = [];
+    let featureSections = [];
+
     const {features} = useSelector( (state) => ({
-        features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature._id))
+        features: state.entities.features
     }));
-    
-    const sortedFeatures = features.sort( (a, b) => {
-        if (featureIds.indexOf(a.id) < featureIds.indexOf(b.id)) {
-            return -1;
-        } else if (featureIds.indexOf(a.id) > featureIds.indexOf(b.id)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    })
-    const featureSections = sortedFeatures.map( (feature) => {
-        return(
-            <div key={feature._id} className="pb-2">
-                <FeatureHeader>{feature.name} <FeatureHeaderSub>{` (${feature.featureType})`}</FeatureHeaderSub> </FeatureHeader>
-                <div>
-                    <p>{feature.description}</p>
-                </div>
-            </div>
-        );
-    });
+
+    Object.entries(dndClass.features).forEach( ([key, arr]) => {
+        arr.forEach( (id) => {
+            const feature = features[id];
+            classFeatures.push(feature);
+            featureSections.push(<ClassFeatureView key={feature._id} feature={feature} level={key} />)
+        })
+    });;
 
     return(
         <div style={styleData} className={panelContentClasses}>
             <p className="italic mb-6">{dndClass.description}</p>
-            <ClassTable dndClass={dndClass} features={features}/>
+            <ClassTable dndClass={dndClass} features={classFeatures}/>
             <PanelSectionHeader>Class Features</PanelSectionHeader>
             <p className="mb-2">{`As a ${dndClass.name.toLowerCase()}, you get the following class features.`}</p>
             <PanelSubsectionHeader>Hit Points</PanelSubsectionHeader>
             <Block>
             <p>
                 <strong>Hit Dice: </strong>
-                {dndClass.hitDie + "per barbarian level"}
+                {dndClass.hitDie + " per barbarian level"}
             </p>
             <p>
                 <strong>Hit Points at 1st Level: </strong>
@@ -81,7 +70,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
                 </p>
             </Block>
             <PanelSubsectionHeader>Equipment</PanelSubsectionHeader>
-            <Block>
+            <Block className="mb-6">
                 <p>
                     You start with the following equipment, in addition to the equipment granted by your background.
                 </p>

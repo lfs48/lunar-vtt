@@ -11,10 +11,10 @@ export default function Dashboard() {
         features: Object.values(state.entities.features).filter( (feature) => state.UI.panels.features[feature._id] )
     }));
     const classPanels = classes.map( (dndClass) => {
-        return <Panel key={dndClass.id} data={dndClass} panelType={entityTypes.CLASSES}/>
+        return <Panel key={dndClass._id} data={dndClass} panelType={entityTypes.CLASSES}/>
     });
     const featurePanels = features.map( (feature) => {
-        return <Panel key={feature.id} data={feature} panelType={entityTypes.FEATURES} />
+        return <Panel key={feature._id} data={feature} panelType={entityTypes.FEATURES} />
     })
 
     return(

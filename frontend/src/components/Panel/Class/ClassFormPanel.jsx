@@ -28,7 +28,7 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
             <ClassFormTable dndClass={dndClass}/>
             <div>
                 <label>Hit Die: </label>
-                <DieSelect field={'hitdie'} state={inputs} setState={setInputs} />
+                <DieSelect field={'hitDie'} state={inputs} setState={setInputs} />
             </div>
         </div>
     )

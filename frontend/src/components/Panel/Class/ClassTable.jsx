@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import { getLevelProf, intToOrdinal } from '../../../util/functions/utilFunctions';
 import entityTypes from '../../../util/types/entityTypes';

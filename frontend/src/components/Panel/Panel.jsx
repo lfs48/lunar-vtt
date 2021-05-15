@@ -138,7 +138,7 @@ const initialInputs = (data, panelType) => {
             return({
                 name: data.name,
                 description: data.description,
-                hitdie: data.hitDie,
+                hitDie: data.hitDie,
                 armor: data.armor,
                 weapons: data.weapons,
                 tools: data.tools,
