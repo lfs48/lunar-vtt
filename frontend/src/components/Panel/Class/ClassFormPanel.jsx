@@ -8,21 +8,7 @@ import { handleInput } from '../../../util/functions/utilFunctions';
 import { TextArea } from '../../../styles/components';
 import ClassFormTable from './ClassFormTable';
 
-export default function ClassFormPanel({dndClass, styleData, preloadedInputs=null}) {
-
-    const [inputs, setInputs] = useState({
-        name: "",
-        description: "",
-        hitdie: "1d6",
-        armor: "",
-        weapons: "",
-        tools: "",
-        saves: "",
-        skills: "",
-        equipment: [],
-        tableCols: [],
-        features: [...Array(20).keys()].map( (_) => ({features: []}))
-    });
+export default function ClassFormPanel({dndClass, styleData, preloadedInputs=null, inputs, setInputs}) {
 
     useEffect( () => {
         if (preloadedInputs) {

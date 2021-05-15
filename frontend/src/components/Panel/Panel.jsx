@@ -7,11 +7,12 @@ import { togglePanel, setPanelEdit, setPanelView } from '../../store/reducers/UI
 import { useDispatch, useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import ClassViewPanel from './Class/ClassViewPanel';
-import { PanelHeader, PanelHeaderContainer } from './styles';
+import { DraggableArea, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
 import ClassFormPanel from './Class/ClassFormPanel';
+import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
 
 const handleDragStart = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -109,29 +110,51 @@ const getInitialHeight = (panelType) => {
     }
 }
 
-const getContent = (panelType, edit, data, styleData) => {
+const getContent = (panelType, edit, data, inputs, setInputs, styleData) => {
     switch(panelType) {
         case(entityTypes.CLASSES):
             if (edit) {
-                const preloadedInputs = {
-                    name: data.name,
-                    description: data.description,
-                    hitdie: data.hitDie,
-                    armor: data.armor,
-                    weapons: data.weapons,
-                    tools: data.tools,
-                    saves: data.saves,
-                    skills: data.skills,
-                    equipment: data.equipment,
-                    classTableCols: data.classTableCols,
-                    classTable: data.classTable
-                }
-                return <ClassFormPanel dndClass={data} preloadedInputs={preloadedInputs} styleData={{height: styleData.height - 50}}/>;
+                return <ClassFormPanel 
+                    dndClass={data} 
+                    inputs={inputs}
+                    setInputs={setInputs}
+                    preloadedInputs={initialInputs(data, panelType, true)} 
+                    styleData={{height: styleData.height - 50}}
+                />;
             } else {
-                return <ClassViewPanel dndClass={data} styleData={{height: styleData.height - 50}}/>;
+                return <ClassViewPanel 
+                    dndClass={data} 
+                    styleData={{height: styleData.height - 50}}
+                />;
             }
         case(entityTypes.FEATURES):
             return <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
+    }
+}
+
+const initialInputs = (data, panelType) => {
+    switch(panelType) {
+        case(entityTypes.CLASSES):
+            return({
+                name: data.name,
+                description: data.description,
+                hitdie: data.hitDie,
+                armor: data.armor,
+                weapons: data.weapons,
+                tools: data.tools,
+                saves: data.saves,
+                skills: data.skills,
+                equipment: data.equipment,
+                classTableCols: data.classTableCols,
+                classTable: data.classTable
+            });
+    }
+}
+
+const saveType = (panelType) => {
+    switch(panelType) {
+        case(entityTypes.CLASSES):
+            return editClass.type
     }
 }
 
@@ -157,6 +180,8 @@ export default function Panel({data, panelType}) {
         opacity: 0,
     });
 
+    const [inputs, setInputs] = useState(initialInputs(data, panelType, false));
+
     useEffect(() => {
         const newState = merge({}, styleData);
         newState.left += 100;
@@ -174,6 +199,7 @@ export default function Panel({data, panelType}) {
 
     const handleEdit = (event) => {
         event.preventDefault();
+        setInputs(initialInputs(data, panelType, true));
         const action = {
             type: setPanelEdit.type,
             payload: {
@@ -187,6 +213,13 @@ export default function Panel({data, panelType}) {
     const handleSave = (event) => {
         event.preventDefault();
         const action = {
+            type: saveType(panelType),
+            payload: {
+                id: data._id,
+                formData: inputs
+            }
+        };
+        const otherAction = {
             type: setPanelView.type,
             payload: {
                 id: data._id,
@@ -194,6 +227,7 @@ export default function Panel({data, panelType}) {
             }
         };
         dispatch(action);
+        dispatch(otherAction);
     };
 
     const handleClose = (event) => {
@@ -240,7 +274,7 @@ export default function Panel({data, panelType}) {
                         </Button>
                     </div>
                 </PanelHeaderContainer>
-                {getContent(panelType, edit, data, styleData)}
+                {getContent(panelType, edit, data, inputs, setInputs, styleData, setStyleData)}
 
                 <div draggable="true" className="resize-area resize-top" onDrag={ e => resize(e, {top: true}, styleData, setStyleData ) } ></div>
                 <div draggable="true" className="resize-area resize-left" onDrag={ e => resize(e, {left: true}, styleData, setStyleData ) }></div>

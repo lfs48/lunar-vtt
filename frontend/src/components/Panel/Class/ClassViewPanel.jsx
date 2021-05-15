@@ -15,7 +15,6 @@ export default function ClassViewPanel({dndClass, styleData}) {
     const {features} = useSelector( (state) => ({
         features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature._id))
     }));
-    console.log(features);
     
     const sortedFeatures = features.sort( (a, b) => {
         if (featureIds.indexOf(a.id) < featureIds.indexOf(b.id)) {

@@ -95,11 +95,21 @@ const classesSlice = createSlice({
   initialState: {},
   reducers: {
     fetchAllClassesRequested: state => state,
+    createClass: state => state,
+    editClass: state => state,
     receiveAllClasses: (state, action) => {
-        return action.payload.classes;
+        const newState = {};
+        action.payload.classes.forEach( (dndClass) => {
+            newState[dndClass._id] = dndClass;
+        });
+        return newState;
+    },
+    receiveClass: (state, action) => {
+        const dndClass = action.payload.dndClass
+        state[dndClass._id] = dndClass;
     }
   }
 });
 
-export const { fetchAllClassesRequested, receiveAllClasses } = classesSlice.actions;
+export const { fetchAllClassesRequested, receiveAllClasses, createClass, editClass, receiveClass } = classesSlice.actions;
 export default classesSlice.reducer;

@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { getAllClasses } from '../../../util/api/apiClassesUtil';
-import { fetchAllClassesRequested, receiveAllClasses } from '../../reducers/entities/classesReducer';
+import { getAllClasses, patchClass } from '../../../util/api/apiClassesUtil';
+import { editClass, fetchAllClassesRequested, receiveAllClasses, receiveClass } from '../../reducers/entities/classesReducer';
 
 function* fetchClassesWorker(action) {
     try {
@@ -19,14 +19,33 @@ function* fetchClassesWorker(action) {
     }
 };
 
+function* editClassWorker(action) {
+    try {
+        const res = yield call(patchClass, action.payload);
+        if (res.success) {
+            yield put({
+                type: receiveClass.type,
+                payload: res
+            });
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 // Handle userLogout actions by calling logoutUser worker
 function* fetchClassesSaga() {
     yield takeLatest(fetchAllClassesRequested.type, fetchClassesWorker);
 };
 
+function* editClassSaga() {
+    yield takeLatest(editClass.type, editClassWorker);
+}
+
 // Run all user sagas
 export function* classesSaga() {
     yield all([
-        fetchClassesSaga()
+        fetchClassesSaga(),
+        editClassSaga()
     ])
 };

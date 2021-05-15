@@ -13,6 +13,14 @@ export const PanelHeaderContainer = tw.header`
     cursor-move
 `
 
+export const DraggableArea = tw.div`
+    absolute
+    top-0
+    left-0
+    h-12
+    w-full
+`
+
 export const PanelHeader = tw.h1`
     font-bold
     text-2xl
