@@ -45,7 +45,12 @@ const DndClassController = {
         }
         await foundClass.update(classParams(req.body));
         const newClass = await DndClassModel.findById(req.params.classId);
-        res.json(newClass);
+        res
+        .status(200)
+        .json({
+            success: true,
+            dndClass: newClass
+        });
     },
     delete: async (req, res) => {
         try {
