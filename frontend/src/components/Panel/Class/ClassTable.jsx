@@ -12,10 +12,8 @@ export default function ClassTable({dndClass, features}) {
 
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
-        const levelFeatures = dndClass.features
-        .filter( (feature) => feature.level === level )
-        .map( (f) => {
-            const id = f.feature;
+        const levelFeatures = dndClass.features[level]
+        .map( (id) => {
             const feature = features.find(feat => feat._id === id);
             return <PanelLink key={id} panelType={entityTypes.FEATURES} id={id} text={feature.name}/>
         });

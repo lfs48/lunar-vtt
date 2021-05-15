@@ -15,42 +15,87 @@ const DndClassController = {
         });
     },
     create: async (req, res) => {
-        const newClass = new DndClass(classParams(req.body));
-        const savedClass = await newClass.save();
-        res.json(savedClass);
+        try {
+            const newClass = await DndClass.create(classParams(req.body));
+            res
+            .status(201)
+            .json({
+                success: true,
+                dndClass: newClass
+            });
+        } catch (e) {
+            res
+            .status(400)
+            .json({
+                success: false,
+                error: e.message
+            })
+        }
     },
     update: async (req, res) => {
-        const params = classParams(req.body);
-        const foundClass = await DndClassModel.findById(req.params.classId);
-        if ("features" in params) {
-            // Remove class from feature source list if it's been updated to no longer have that feature
-            foundClass.features.forEach( async (id) => {
-                const feature = await FeatureModel.findById(id);
-                const sources = feature.sources;
-                if (!feature.sources.includes(feature.id)) {
-                    const i = sources.indexOf(req.params.classId)
-                    sources.splice(i, 1);
-                    await feature.updateOne({sources: sources});
-                }
+        try {
+            // Update class with request params
+            const params = classParams(req.body);
+            const foundClass = await DndClassModel.findById(req.params.classId);
+            await foundClass.update(classParams(req.body));
+            const newClass = await DndClassModel.findById(req.params.classId);
+
+            // Cascade updates to features added/removed in update
+            if ("features" in params) {
+                // Generate list of features added & removed in update
+                let oldFeatures = [];
+                let newFeatures = [];
+                [...foundClass.features.values()].forEach( (arr) => arr.forEach( (el) => oldFeatures.push(el._id) ) );
+                [...newClass.features.values()].forEach( (arr) => arr.forEach( (el) => newFeatures.push(el._id) ) );
+                const oldIds = oldFeatures.map( (feature) => String(feature));
+                const newIds = newFeatures.map( (feature) => String(feature));
+                const addedFeatures = newFeatures.filter(feature => !oldIds.includes(String(feature) ) );
+                const removedFeatures = oldFeatures.filter(feature => !newIds.includes(String(feature) ) );
+
+                // Remove class from feature source list if it's been updated to no longer have that feature
+                await FeatureModel.updateMany(
+                    {
+                        _id: {
+                            $in: removedFeatures
+                        }
+                    },
+                    {
+                        $pull: {
+                            sources: foundClass._id
+                        }
+                    }
+                )
+                // Add class to feature source list if it's been updated to have that feature
+                await FeatureModel.updateMany(
+                    {
+                        _id: {
+                            $in: addedFeatures
+                        }
+                    },
+                    {
+                        $addToSet: {
+                            sources: foundClass._id
+                        }
+                    }
+                )
+            }
+            // Load class's associated features
+            const classFeatures = await FeatureModel.find({"sources": newClass._id})
+            res
+            .status(200)
+            .json({
+                success: true,
+                dndClass: newClass,
+                features: classFeatures
             });
-            // Add class to feature source list if it's been updated to have that feature
-            params.features.forEach( async (id) => {
-                const feature = await FeatureModel.findById(id);
-                const sources = feature.sources;
-                if (!features.includes(req.params.featureId)) {
-                    features.push(req.params.featureId);
-                    await source.updateOne({features: features});
-                }
-            });
+        } catch(e) {
+            res
+            .status(400)
+            .json({
+                success: false,
+                error: e.message
+            })
         }
-        await foundClass.update(classParams(req.body));
-        const newClass = await DndClassModel.findById(req.params.classId);
-        res
-        .status(200)
-        .json({
-            success: true,
-            dndClass: newClass
-        });
     },
     delete: async (req, res) => {
         try {
@@ -70,9 +115,15 @@ const DndClassController = {
             });
         }
     },
-    getClassFeatures: async (req, res) => {
-        const foundClass = await DndClassModel.findById(req.params.classId).populate("features");
-        res.json(foundClass);
+    show: async (req, res) => {
+        const foundClass = await DndClassModel.findById(req.params.classId);
+        const foundFeatures = await FeatureModel.find({source: foundClass._id});
+        res
+        .status(200)
+        .json({
+            dndClass: foundClass,
+            features: foundFeatures
+        });
     }
 }
 

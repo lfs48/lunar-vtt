@@ -8,10 +8,10 @@ export default function ClassViewPanel({dndClass, styleData}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 
-    const featureIds = [...Array(20)];
-    dndClass.features.forEach( (f) => {
-        featureIds.push(f.feature);
-    });
+    let featureIds = [];
+    Object.values(dndClass.features).forEach( (arr) => {
+        featureIds = featureIds.concat(arr);
+    });;
     const {features} = useSelector( (state) => ({
         features: Object.values(state.entities.features).filter( feature => featureIds.includes(feature._id))
     }));

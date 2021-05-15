@@ -8,17 +8,7 @@ const router = express.Router();
 router.get('/', DndClassController.index);
 
 // Get existing class
-router.get('/:classId', (req, res) => {
-
-    DndClass.findById(req.params.classId)
-    .then( (dndClass) => {
-        if (dndClass) {
-            return res.status(200).json(dndClass);
-        } else {
-            return res.status(404).json({error: "No such class"});
-        }
-    });
-});
+router.get('/:classId', DndClassController.show);
 
 // Create new class
 router.post('/', DndClassController.create);

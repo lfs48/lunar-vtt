@@ -2,14 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Feature = require('./Feature');
 
-// const ClassFeaturesSchema = new Schema({
-//     features: [{
-//         type: Schema.Types.ObjectId,
-//         ref: 'Feature'
-//     }]
-// });
-
-// const ClassFeature = mongoose.model('DndClass', ClassFeaturesSchema);
+let defaultFeatures = {};
+[...Array(20).keys()].forEach( (n) => {
+    defaultFeatures[(n+1).toString()] = []
+});
 
 const DndClassSchema = new Schema({
     name: {
@@ -17,61 +13,68 @@ const DndClassSchema = new Schema({
         required: true
     },
     description: {
-        type: String
+        type: String,
+        default: ""
     },
     hitDie: {
         type: String,
-        required: true
+        default: "1d6"
     },
     armor: {
-        type: String
+        type: String,
+        default: ""
     },
     weapons: {
-        type: String
+        type: String,
+        default: ""
     },
     tools: {
-        type: String
+        type: String,
+        default: ""
     },
     saves: {
-        type: String
+        type: String,
+        default: ""
     },
     skills: {
-        type: String
+        type: String,
+        default: ""
     },
-    equipment: [{
-        type: String
-    }],
+    equipment: {
+        type: [String],
+        default: []
+    },
     tableCols: {
         type: Map,
-        of: [String]
+        of: [String],
+        default: {}
     },
-    features: [{
-        feature: {
-            type: Schema.Types.ObjectId,
+    features: {
+        type: Map,
+        of: {
+            type: [Schema.Types.ObjectId],
             ref: 'Feature'
         },
-        level: {
-            type: Number
-        }
-    }]
+        default: defaultFeatures
+    }
 }, {
     timestamps: true
 });
 
 DndClassSchema.post("findOneAndDelete", async (document) => {
     const classId = document._id;
-      const res = await Feature.updateMany(
-          { 
-              sources: { 
-                  $in: [classId] 
-              } 
-          },
-          { 
-              $pull: {
-                  sources: classId
-              } 
-          }
-      )
+    await Feature.updateMany(
+        { 
+            sources: { 
+                $in: [classId] 
+            }
+        },
+        { 
+            $pull: {
+                sources: classId
+            } 
+        }
+    )
 });
 
 module.exports = DndClass = mongoose.model('DndClass', DndClassSchema);
