@@ -13,6 +13,21 @@ export const PanelHeaderContainer = tw.header`
     cursor-move
 `
 
+export const PanelFooterContainer = tw.footer`
+    flex
+    flex-row-reverse
+    justify-between
+    sticky
+    bottom-0
+    bg-white
+    px-12
+    py-2
+    shadow-inner
+    border-t
+    border-gray-200
+    border-black
+`
+
 export const DraggableArea = tw.div`
     absolute
     top-0
