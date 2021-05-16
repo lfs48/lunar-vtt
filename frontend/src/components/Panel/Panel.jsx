@@ -14,7 +14,7 @@ import entityTypes from '../../util/types/entityTypes';
 import ClassFormPanel from './Class/ClassFormPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
 
-const handleDragStart = (event, styleData, setStyleData) => {
+const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
     if (!styleData.dragging) {
         const newState = merge({}, styleData);
@@ -23,9 +23,14 @@ const handleDragStart = (event, styleData, setStyleData) => {
         newState.dragging = true;
         setStyleData(newState);
     }
+    handleSelect({
+        event: event,
+        id: id,
+        dispatch: dispatch
+    });
 };
 
-const _handleDrag = (event, styleData, setStyleData) => {
+const _handleDrag = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
     const newState = merge({}, styleData);
     if (styleData.dragging) {
@@ -43,7 +48,13 @@ const _handleDrag = (event, styleData, setStyleData) => {
         }
         setStyleData(newState);
     } else {
-        handleDragStart(event, styleData, setStyleData);
+        handleDragStart({
+            event: event, 
+            styleData: styleData, 
+            setStyleData: setStyleData,
+            id: id,
+            dispatch: dispatch
+        });
     }
 };
 
@@ -158,6 +169,78 @@ const saveType = (panelType) => {
     }
 }
 
+const handleEdit = ({event, setInputs, data, panelType, dispatch}) => {
+    event.preventDefault();
+    setInputs(initialInputs(data, panelType, true));
+    const action = {
+        type: editPanel.type,
+        payload: {
+            id: data._id
+        }
+    };
+    dispatch(action);
+};
+
+const handleSave = ({event, inputs, id, panelType, dispatch}) => {
+    event.preventDefault();
+    const action = {
+        type: saveType(panelType),
+        payload: {
+            id: id,
+            formData: inputs
+        }
+    };
+    const otherAction = {
+        type: viewPanel.type,
+        payload: {
+            id: id
+        }
+    };
+    dispatch(action);
+    dispatch(otherAction);
+};
+
+const handleCancel = ({event, id, dispatch}) => {
+    event.preventDefault();
+    const action = {
+        type: viewPanel.type,
+        payload: {
+            id: id
+        }
+    };
+    dispatch(action);
+}
+
+const handleClose = ({event, styleData, setStyleData, dispatch, id}) => {
+    event.preventDefault();
+    const newState = merge({}, styleData);
+    newState.stage = 1;
+    newState.opacity = 0;
+    newState.left -= 100;
+    setStyleData(newState);
+    setTimeout( () => {
+        const action = {
+            type: closePanel.type,
+            payload: {
+                id: id
+            }
+        };
+        dispatch(action);
+    }, 720);
+};
+
+
+const handleSelect = ({event, id, dispatch}) => {
+    event.preventDefault();
+    const action = {
+        type: selectPanel.type,
+        payload: {
+            id: id
+        }
+    };
+    dispatch(action);
+}
+
 export default function Panel({data, panelType, edit}) {
 
     const dispatch = useDispatch();
@@ -193,93 +276,32 @@ export default function Panel({data, panelType, edit}) {
         }, 720);
     }, []);
 
-    const handleEdit = (event) => {
-        event.preventDefault();
-        setInputs(initialInputs(data, panelType, true));
-        const action = {
-            type: editPanel.type,
-            payload: {
-                id: data._id,
-                panelType: panelType
-            }
-        };
-        dispatch(action);
-    };
-
-    const handleSave = (event) => {
-        event.preventDefault();
-        const action = {
-            type: saveType(panelType),
-            payload: {
-                id: data._id,
-                formData: inputs
-            }
-        };
-        const otherAction = {
-            type: viewPanel.type,
-            payload: {
-                id: data._id,
-                panelType: panelType
-            }
-        };
-        dispatch(action);
-        dispatch(otherAction);
-    };
-
-    const handleCancel = (event) => {
-        event.preventDefault();
-        const action = {
-            type: viewPanel.type,
-            payload: {
-                id: data._id,
-                panelType: panelType
-            }
-        };
-        dispatch(action);
-    }
-
-    const handleClose = (event) => {
-        event.preventDefault();
-        const newState = merge({}, styleData);
-        newState.stage = 1;
-        newState.opacity = 0;
-        newState.left -= 100;
-        setStyleData(newState);
-        setTimeout( () => {
-            const action = {
-                type: closePanel.type,
-                payload: {
-                    id: data._id
-                }
-            };
-            dispatch(action);
-        }, 720);
-    };
-    
-
-    const handleSelect = (event) => {
-        event.preventDefault();
-        const action = {
-            type: selectPanel.type,
-            payload: {
-                id: data._id
-            }
-        };
-        dispatch(action);
-    }
-
     return(
         <article 
             draggable="true" 
             className={`${panelClass} 
             ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} 
             style={styleData}
-            onClick={(e) => handleSelect(e)}
+            onClick={(e) => handleSelect({
+                event: e,
+                id: data._id,
+                dispatch: dispatch
+            })}
         >
 
             <div className="resize-areas-container">
 
-                <PanelHeaderContainer draggable="true" onDrag={e => handleDrag(e, styleData, setStyleData)} onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}>
+                <PanelHeaderContainer 
+                    draggable="true" 
+                    onDrag={e => handleDrag({
+                        event: e,
+                        styleData: styleData, 
+                        setStyleData: setStyleData,
+                        id: data._id,
+                        dispatch: dispatch
+                    })} 
+                    onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}
+                >
                     <PanelHeader className="font-fancy flex items-center">
                         <i className={`mr-2 fas fa-${data.icon}`}></i>
                         <p>{data.name}</p>
@@ -287,19 +309,41 @@ export default function Panel({data, panelType, edit}) {
                     <div>
                         {edit ? (
                             <>
-                            <Button onClick={e => handleSave(e)}>
+                            <Button onClick={e => handleSave({
+                                event: e,
+                                inputs: inputs,
+                                id: data._id,
+                                panelType: panelType,
+                                dispatch: dispatch
+                            })}>
                             <i className="ml-4 fas fa-save text-lg"/>
                             </Button>
-                            <Button onClick={e => handleCancel(e)}>
+                            <Button onClick={e => handleCancel({
+                                event: e,
+                                id: data._id,
+                                dispatch: dispatch
+                            })}>
                                 <i className="ml-4 fas fa-undo text-lg"/>
                             </Button>
                             </>
                         ) : (
-                            <Button onClick={e => handleEdit(e)}>
+                            <Button onClick={e => handleEdit({
+                                event: e,
+                                setInputs: setInputs,
+                                data: data,
+                                panelType: panelType,
+                                dispatch: dispatch
+                            })}>
                                 <i className="ml-4 fas fa-edit text-lg"/>
                             </Button>
                         )}
-                        <Button onClick={e => handleClose(e)}>
+                        <Button onClick={e => handleClose({
+                            event: e,
+                            styleData: styleData,
+                            setStyleData: setStyleData,
+                            dispatch: dispatch,
+                            id: data._id
+                        })}>
                             <i className="ml-4 fas fa-times text-lg"/>
                         </Button>
                     </div>

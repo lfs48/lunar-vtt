@@ -9,6 +9,7 @@ export default function PanelLink({panelType, id, text}) {
     
     const handleClick = (event) => {
         event.preventDefault();
+        event.stopPropagation();
         const action = {
             type: openPanel.type,
             payload: {

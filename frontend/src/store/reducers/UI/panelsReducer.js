@@ -5,14 +5,19 @@ const panelsSlice = createSlice({
   initialState: [],
   reducers: {
       openPanel: (state, action) => {
-        state.push({
-          id: action.payload.id,
-          panelType: action.payload.panelType,
-          edit: false
-        });
+        const i = state.findIndex( (panel) => panel.id === action.payload.id);
+        if (i >= 0) {
+          state.push(state.splice(i, 1)[0]);
+        } else {
+          state.push({
+            id: action.payload.id,
+            panelType: action.payload.panelType,
+            edit: false
+          });
+        }
       },
       closePanel: (state, action) => {
-        state.filter( (panel) => panel.id !== action.payload.id);
+        return state.filter( (panel) => panel.id !== action.payload.id);
       },
       editPanel: (state, action) => {
         const i = state.findIndex( (panel) => panel.id === action.payload.id);

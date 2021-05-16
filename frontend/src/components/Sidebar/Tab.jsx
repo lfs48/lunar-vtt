@@ -26,7 +26,7 @@ export default function Tab({entityType}) {
 
     const lis = Object.values(entities).map( (entity, i) => {
         return (
-            <SidebarLi key={i} open={openEntities.includes(entity.id)} onClick={(e) => handleLiClick(e, entity._id)}>
+            <SidebarLi key={i} open={openEntities.includes(entity._id)} onClick={(e) => handleLiClick(e, entity._id)}>
                 {'icon' in entity ?
                     <i class={`fas fa-${entity.icon} mr-2`}></i>
                 :<></>}
