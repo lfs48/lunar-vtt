@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import { Button } from '../../styles/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { togglePanel, setPanelEdit, setPanelView } from '../../store/reducers/UI/panelsReducer';
+import { editPanel, viewPanel, closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import ClassViewPanel from './Class/ClassViewPanel';
@@ -158,13 +158,9 @@ const saveType = (panelType) => {
     }
 }
 
-export default function Panel({data, panelType}) {
+export default function Panel({data, panelType, edit}) {
 
     const dispatch = useDispatch();
-
-    const {edit} = useSelector( (state) => ({
-        edit: state.UI.panels[panelType][data._id].edit
-    }));
 
     const [styleData, setStyleData] = useState({
         left: Math.random() * (window.innerWidth - getInitialWidth(panelType) - 20),
@@ -201,7 +197,7 @@ export default function Panel({data, panelType}) {
         event.preventDefault();
         setInputs(initialInputs(data, panelType, true));
         const action = {
-            type: setPanelEdit.type,
+            type: editPanel.type,
             payload: {
                 id: data._id,
                 panelType: panelType
@@ -220,7 +216,7 @@ export default function Panel({data, panelType}) {
             }
         };
         const otherAction = {
-            type: setPanelView.type,
+            type: viewPanel.type,
             payload: {
                 id: data._id,
                 panelType: panelType
@@ -233,7 +229,7 @@ export default function Panel({data, panelType}) {
     const handleCancel = (event) => {
         event.preventDefault();
         const action = {
-            type: setPanelView.type,
+            type: viewPanel.type,
             payload: {
                 id: data._id,
                 panelType: panelType
@@ -251,18 +247,35 @@ export default function Panel({data, panelType}) {
         setStyleData(newState);
         setTimeout( () => {
             const action = {
-                type: togglePanel.type,
+                type: closePanel.type,
                 payload: {
-                    id: data._id,
-                    panelType: panelType
+                    id: data._id
                 }
             };
             dispatch(action);
         }, 720);
     };
     
+
+    const handleSelect = (event) => {
+        event.preventDefault();
+        const action = {
+            type: selectPanel.type,
+            payload: {
+                id: data._id
+            }
+        };
+        dispatch(action);
+    }
+
     return(
-        <article draggable="true" className={`${panelClass} ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} style={styleData}>
+        <article 
+            draggable="true" 
+            className={`${panelClass} 
+            ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} 
+            style={styleData}
+            onClick={(e) => handleSelect(e)}
+        >
 
             <div className="resize-areas-container">
 

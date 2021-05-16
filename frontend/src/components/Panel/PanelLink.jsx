@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { togglePanel } from '../../store/reducers/UI/panelsReducer';
+import { openPanel } from '../../store/reducers/UI/panelsReducer';
 import tw from 'tailwind-styled-components';
 
 export default function PanelLink({panelType, id, text}) {
@@ -10,7 +10,7 @@ export default function PanelLink({panelType, id, text}) {
     const handleClick = (event) => {
         event.preventDefault();
         const action = {
-            type: togglePanel.type,
+            type: openPanel.type,
             payload: {
                 panelType: panelType,
                 id: id

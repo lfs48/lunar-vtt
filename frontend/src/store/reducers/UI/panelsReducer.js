@@ -1,38 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    dndClasses: {},
-    features: {},
-    characters: {},
-    feats: {},
-    items: {},
-    monsters: {},
-    races: {},
-    rollables: {},
-    rules: {},
-    spells: {}
-};
-
 const panelsSlice = createSlice({
   name: 'panels',
-  initialState: initialState,
+  initialState: [],
   reducers: {
-      togglePanel: (state, action) => {
-        if ( state[action.payload.panelType][action.payload.id] ) {
-          delete state[action.payload.panelType][action.payload.id];
-        } else {
-            state[action.payload.panelType][action.payload.id] = {
-              edit: false
-            }
-        }
+      openPanel: (state, action) => {
+        state.push({
+          id: action.payload.id,
+          panelType: action.payload.panelType,
+          edit: false
+        });
       },
-      setPanelView: (state, action) => {
-        state[action.payload.panelType][action.payload.id].edit = false;
-      }, setPanelEdit: (state, action) => {
-        state[action.payload.panelType][action.payload.id].edit = true;
+      closePanel: (state, action) => {
+        state.filter( (panel) => panel.id !== action.payload.id);
+      },
+      editPanel: (state, action) => {
+        const i = state.findIndex( (panel) => panel.id === action.payload.id);
+        state[i].edit = true;
+      },
+      viewPanel: (state, action) => {
+        const i = state.findIndex( (panel) => panel.id === action.payload.id);
+        state[i].edit = false;
+      },
+      selectPanel: (state, action) => {
+        const i = state.findIndex( (panel) => panel.id === action.payload.id);
+        state.push(state.splice(i, 1)[0]);
       }
   }
 });
 
-export const {togglePanel, setPanelEdit, setPanelView} = panelsSlice.actions;
+export const {openPanel, closePanel, editPanel, viewPanel, selectPanel} = panelsSlice.actions;
 export default panelsSlice.reducer;

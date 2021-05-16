@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { togglePanel } from '../../store/reducers/UI/panelsReducer';
+import { openPanel, togglePanel } from '../../store/reducers/UI/panelsReducer';
 import { SidebarLi } from './styles';
 
 export default function Tab({entityType}) {
@@ -9,13 +9,13 @@ export default function Tab({entityType}) {
 
     const {entities, openEntities} = useSelector( (state) => ({
         entities: state.entities[entityType],
-        openEntities: Object.keys(state.UI.panels[entityType])
+        openEntities: state.UI.panels.filter( (panel) => panel.panelType === entityType ).map( (panel) => panel.id )
     }));
 
     const handleLiClick = (event, id) => {
         event.preventDefault();
         const action = {
-            type: togglePanel.type,
+            type: openPanel.type,
             payload: {
                 panelType: entityType,
                 id: id

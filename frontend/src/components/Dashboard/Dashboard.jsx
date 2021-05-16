@@ -6,21 +6,25 @@ import Sidebar from '../Sidebar/Sidebar';
 
 export default function Dashboard() {
 
-    const {classes, features} = useSelector( (state) => ({
-        classes: Object.values(state.entities.dndClasses).filter( (dndClass) => state.UI.panels.dndClasses[dndClass._id] ),
-        features: Object.values(state.entities.features).filter( (feature) => state.UI.panels.features[feature._id] )
+    const {panels, entities} = useSelector( (state) => ({
+        panels: state.UI.panels,
+        entities: state.entities
     }));
-    const classPanels = classes.map( (dndClass) => {
-        return <Panel key={dndClass._id} data={dndClass} panelType={entityTypes.CLASSES}/>
-    });
-    const featurePanels = features.map( (feature) => {
-        return <Panel key={feature._id} data={feature} panelType={entityTypes.FEATURES} />
+
+    const panelComponents = panels.map( (panel) => {
+        return (
+            <Panel 
+                key={panel.id} 
+                data={entities[panel.panelType][panel.id]} 
+                panelType={panel.panelType} 
+                edit={panel.edit}
+            />
+        )
     })
 
     return(
         <div className="overflow-hidden">
-            {classPanels}
-            {featurePanels}
+            {panelComponents}
             <Sidebar />
         </div>
     )
