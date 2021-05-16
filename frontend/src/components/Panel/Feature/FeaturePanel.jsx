@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from './styles';
+import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 
 export default function FeaturePanel({feature, styleData}) {
 

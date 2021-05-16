@@ -19,6 +19,12 @@ export const Input = tw.input`
     border-black
 `;
 
+export const ClearInput = tw.input`
+    px-2
+    py-1
+    focus:outline-none
+`
+
 export const Button = tw.button`
     font-bold
     focus:outline-none

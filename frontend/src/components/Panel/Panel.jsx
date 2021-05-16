@@ -9,7 +9,7 @@ import tw from 'tailwind-styled-components';
 import ClassViewPanel from './Class/ClassViewPanel';
 import { DraggableArea, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
-import FeaturePanel from './FeaturePanel';
+import FeaturePanel from './Feature/FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
 import ClassFormPanel from './Class/ClassFormPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
@@ -145,8 +145,8 @@ const initialInputs = (data, panelType) => {
                 saves: data.saves,
                 skills: data.skills,
                 equipment: data.equipment,
-                classTableCols: data.classTableCols,
-                classTable: data.classTable
+                tableCols: data.tableCols,
+                features: data.features
             });
     }
 }
@@ -230,6 +230,18 @@ export default function Panel({data, panelType}) {
         dispatch(otherAction);
     };
 
+    const handleCancel = (event) => {
+        event.preventDefault();
+        const action = {
+            type: setPanelView.type,
+            payload: {
+                id: data._id,
+                panelType: panelType
+            }
+        };
+        dispatch(action);
+    }
+
     const handleClose = (event) => {
         event.preventDefault();
         const newState = merge({}, styleData);
@@ -261,16 +273,21 @@ export default function Panel({data, panelType}) {
                     </PanelHeader>
                     <div>
                         {edit ? (
+                            <>
                             <Button onClick={e => handleSave(e)}>
-                            <FontAwesomeIcon icon={faSave} />
+                            <i className="ml-4 fas fa-save text-lg"/>
                             </Button>
+                            <Button onClick={e => handleCancel(e)}>
+                                <i className="ml-4 fas fa-undo text-lg"/>
+                            </Button>
+                            </>
                         ) : (
                             <Button onClick={e => handleEdit(e)}>
-                                <FontAwesomeIcon icon={faEdit} />
+                                <i className="ml-4 fas fa-edit text-lg"/>
                             </Button>
                         )}
-                        <Button className="ml-2" onClick={e => handleClose(e)}>
-                            <FontAwesomeIcon icon={faTimes} />
+                        <Button onClick={e => handleClose(e)}>
+                            <i className="ml-4 fas fa-times text-lg"/>
                         </Button>
                     </div>
                 </PanelHeaderContainer>

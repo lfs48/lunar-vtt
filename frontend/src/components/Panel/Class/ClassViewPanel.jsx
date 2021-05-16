@@ -53,7 +53,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
                     {dndClass.armor}
                 </p>
                 <p>
-                    <strong>Armor: </strong>
+                    <strong>Weapons: </strong>
                     {dndClass.weapons}
                 </p>
                 <p>
@@ -65,7 +65,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
                     {dndClass.saves}
                 </p>
                 <p>
-                    <strong>Skill Points: </strong>
+                    <strong>Skills: </strong>
                     {dndClass.skills}
                 </p>
             </Block>
