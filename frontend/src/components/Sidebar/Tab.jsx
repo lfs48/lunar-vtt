@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPanel, togglePanel } from '../../store/reducers/UI/panelsReducer';
-import { SidebarLi } from './styles';
+import { Button, Input } from '../../styles/components';
+import { getCreateEntityActionType, getEntityName} from '../../util/types/entityTypes';
+import { SidebarLi, TabHeader } from './styles';
 
 export default function Tab({entityType}) {
 
     const dispatch = useDispatch();
 
-    const {entities, openEntities} = useSelector( (state) => ({
+    const [creating, setCreating] = useState(false);
+    const [newName, setNewName] = useState("");
+
+    const {entities, openEntities, user} = useSelector( (state) => ({
         entities: state.entities[entityType],
-        openEntities: state.UI.panels.filter( (panel) => panel.panelType === entityType ).map( (panel) => panel.id )
+        openEntities: state.UI.panels.filter( (panel) => panel.panelType === entityType ).map( (panel) => panel.id ),
+        user: state.session.user
     }));
 
     const handleLiClick = (event, id) => {
@@ -33,10 +39,60 @@ export default function Tab({entityType}) {
                 {entity.name}
             </SidebarLi>
         )
-    })
+    });
+
+    const handleCreate = () => {
+        const action = {
+            type: getCreateEntityActionType(entityType),
+            payload: {
+                formData: {
+                    name: newName
+                }
+            }
+        };
+        dispatch(action);
+        handleCancelCreate();
+    }
+
+    const handleCancelCreate = () => {
+        setCreating(false);
+        setNewName("");
+    }
 
     return(
         <div>
+            <TabHeader>
+                {user.gm ?
+                    creating ? (
+                        <div>
+                            <Input
+                                type="text"
+                                value={newName}
+                                onChange={e => setNewName(e.target.value)}
+                                className=""
+                            >
+                            </Input>
+                            <Button
+                                className="mx-2"
+                                onClick={() => handleCancelCreate()}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => handleCreate()}
+                            >
+                                Create
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button
+                            onClick={() => setCreating(true)}
+                        >
+                            {`Add`}
+                        </Button>
+                    )
+                :<></>}
+            </TabHeader>
             <ul>
                 {lis}
             </ul>

@@ -11,6 +11,23 @@ export async function getAllClasses() {
   .catch( (err) => err );
 }
 
+// Create class
+// POST /classes
+export async function postClass({formData}) {
+  const url = `/api/classes`;
+  const req = {
+    method: 'POST',
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  };
+  return fetch(url, req)
+  .then( (res) => res.json() )
+  .then( data => data )
+  .catch( (err) => err );
+}
+
 // Edit class
 // PATCH /classes/:classId
 export async function patchClass({id, formData}) {

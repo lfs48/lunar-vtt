@@ -1,8 +1,9 @@
 import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised, faMonument, faDna, faStar, faTheaterMasks } from '@fortawesome/free-solid-svg-icons';
+import { classesSliceName, createClass } from '../../store/reducers/entities/classesReducer';
 
 const entityTypes = {
     CHARACTERS: "characters",
-    CLASSES: "dndClasses",
+    CLASSES: classesSliceName,
     SUBCLASSES: 'subclasses',
     RACES: "races",
     BACKGROUNDS: 'backgrounds',
@@ -19,52 +20,36 @@ const entityTypes = {
 export default entityTypes;
 
 export function getEntityIcon(entityType) {
-    let res;
     switch(entityType) {
         case(entityTypes.CHARACTERS):
-            res = 'fas fa-address-book';
-            break;
+            return 'fas fa-address-book';
         case(entityTypes.CLASSES):
-            res = 'fas fa-sword';
-            break;
+            return 'fas fa-sword';
         case(entityTypes.RACES):
-            res = 'fas fa-skull-cow';
-            break;
+            return 'fas fa-skull-cow';
         case(entityTypes.SPELLS):
-            res = 'fas fa-meteor';
-            break;
+            return 'fas fa-meteor';
         case(entityTypes.ITEMS):
-            res = 'fas fa-flask-potion';
-            break;
+            return 'fas fa-flask-potion';
         case(entityTypes.RULES):
-            res = 'fas fa-books';
-            break;
+            return 'fas fa-books';
         case(entityTypes.MONSTERS):
-            res = 'fas fa-spider';
-            break;
+            return 'fas fa-spider';
         case(entityTypes.SETTINGS):
-            res = 'fas fa-user-cog';
-            break;
+            return 'fas fa-user-cog';
         case(entityTypes.FEATURES):
-            res = 'fas fa-star';
-            break;
+            return 'fas fa-star';
         case(entityTypes.FEATS):
-            res = 'fas fa-award';
-            break;
+            return 'fas fa-award';
         case(entityTypes.ROLLABLE):
-            res = 'fas fa-scroll-old';
-            break;
+            return 'fas fa-scroll-old';
         case(entityTypes.SUBCLASSES):
-            res = 'fas fa-swords';
-            break;
+            return 'fas fa-swords';
         case(entityTypes.BACKGROUNDS):
-            res = 'fas fa-landmark';
-            break;
+            return 'fas fa-landmark';
         default:
-            res = <></>;
-            break;
+            return <></>;
     }
-    return res;
 };
 
 // export function getEntityIcon(entityType) {
@@ -117,50 +102,67 @@ export function getEntityIcon(entityType) {
 // };
 
 export function getEntityName(entityType) {
-    let res;
     switch(entityType) {
         case(entityTypes.CHARACTERS):
-            res = 'Characters';
-            break;
+            return 'Characters';
         case(entityTypes.CLASSES):
-            res = 'Classes';
-            break;
+            return 'Classes';
         case(entityTypes.RACES):
-            res = 'Races';
-            break;
+            return 'Races';
         case(entityTypes.SPELLS):
-            res = 'Spells';
-            break;
+            return 'Spells';
         case(entityTypes.ITEMS):
-            res = 'Items';
-            break;
+            return 'Items';
         case(entityTypes.RULES):
-            res = 'Rules';
-            break;
+            return 'Rules';
         case(entityTypes.MONSTERS):
-            res = 'Monsters';
-            break;
+            return 'Monsters';
         case(entityTypes.SETTINGS):
-            res = 'Settings';
-            break;
+            return 'Settings';
         case(entityTypes.FEATURES):
-            res = 'Features'
-            break;
+            return 'Features'
         case(entityTypes.FEATS):
-            res = 'Feats';
-            break;
+            return 'Feats';
         case(entityTypes.ROLLABLE):
-            res = 'Rollable Tables';
-            break;
+            return 'Rollable Tables';
         case(entityTypes.BACKGROUNDS):
-            res = 'Backgrounds';
-            break;
+            return 'Backgrounds';
         case(entityTypes.SUBCLASSES):
-            res = 'Subclasses';
-            break;
+            return 'Subclasses';
         default:
-            res = '';
-            break;
+            return '';
     }
-    return res;
+};
+
+export function getCreateEntityActionType(entityType) {
+    switch(entityType) {
+        case(entityTypes.CHARACTERS):
+            return 'Character';
+        case(entityTypes.CLASSES):
+            return createClass.type;
+        case(entityTypes.RACES):
+            return 'Race';
+        case(entityTypes.SPELLS):
+            return 'Spell';
+        case(entityTypes.ITEMS):
+            return 'Item';
+        case(entityTypes.RULES):
+            return 'Rule';
+        case(entityTypes.MONSTERS):
+            return 'Monster';
+        case(entityTypes.SETTINGS):
+            return 'Setting';
+        case(entityTypes.FEATURES):
+            return 'Feature'
+        case(entityTypes.FEATS):
+            return 'Feat';
+        case(entityTypes.ROLLABLE):
+            return 'Rollable Table';
+        case(entityTypes.BACKGROUNDS):
+            return 'Background';
+        case(entityTypes.SUBCLASSES):
+            return 'Subclass';
+        default:
+            return null;
+    }
 };

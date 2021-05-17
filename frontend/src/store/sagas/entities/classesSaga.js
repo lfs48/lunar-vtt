@@ -1,6 +1,8 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { getAllClasses, patchClass } from '../../../util/api/apiClassesUtil';
-import { editClass, fetchAllClassesRequested, receiveAllClasses, receiveClass } from '../../reducers/entities/classesReducer';
+import { getAllClasses, patchClass, postClass } from '../../../util/api/apiClassesUtil';
+import entityTypes from '../../../util/types/entityTypes';
+import { createClass, editClass, fetchAllClassesRequested, receiveAllClasses, receiveClass } from '../../reducers/entities/classesReducer';
+import { openPanel } from '../../reducers/UI/panelsReducer';
 
 function* fetchClassesWorker(action) {
     try {
@@ -33,6 +35,30 @@ function* editClassWorker(action) {
     }
 }
 
+function* createClassWorker(action) {
+    try {
+        const res = yield call(postClass, action.payload);
+        if (res.success) {
+            yield put({
+                type: receiveClass.type,
+                payload: {
+                    dndClass: res.dndClass
+                }
+            });
+            yield put({
+                type: openPanel.type,
+                payload: {
+                    id: res.dndClass._id,
+                    panelType: entityTypes.CLASSES,
+
+                }
+            });
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 // Handle userLogout actions by calling logoutUser worker
 function* fetchClassesSaga() {
     yield takeLatest(fetchAllClassesRequested.type, fetchClassesWorker);
@@ -42,10 +68,15 @@ function* editClassSaga() {
     yield takeLatest(editClass.type, editClassWorker);
 }
 
+function* createClassSaga() {
+    yield takeLatest(createClass.type, createClassWorker)
+}
+
 // Run all user sagas
 export function* classesSaga() {
     yield all([
         fetchClassesSaga(),
-        editClassSaga()
+        editClassSaga(),
+        createClassSaga()
     ])
 };

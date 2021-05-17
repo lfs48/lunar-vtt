@@ -11,3 +11,13 @@ export const SidebarLi = tw.li`
     border-b
     border-black
 `
+
+export const TabHeader = tw.div`
+    px-4
+    py-1
+    border-b-2
+    border-black
+    h-16
+    flex
+    items-center
+`

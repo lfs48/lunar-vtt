@@ -35,7 +35,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
             <Block>
             <p>
                 <strong>Hit Dice: </strong>
-                {dndClass.hitDie + " per barbarian level"}
+                {dndClass.hitDie + ` per ${dndClass.name.toLowerCase()} level`}
             </p>
             <p>
                 <strong>Hit Points at 1st Level: </strong>
@@ -43,7 +43,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
             </p>
             <p>
                 <strong>Hit Points at Higher Levels: </strong>
-                {Math.ceil(roll.averageTotal) + " + plus your Constitution modifier per barbarian level after 1st"}
+                {Math.ceil(roll.averageTotal) + ` + plus your Constitution modifier per ${dndClass.name.toLowerCase()} level after 1st`}
             </p>
             </Block>
             <PanelSubsectionHeader>Proficiencies</PanelSubsectionHeader>
