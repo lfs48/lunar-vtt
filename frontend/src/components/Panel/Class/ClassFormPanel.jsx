@@ -84,7 +84,7 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
                     <Label>Skills: </Label>
                     <ClearInput
                         type="text"
-                        value={inputs.saves}
+                        value={inputs.skills}
                         onChange={e => handleInput(e, 'skills', inputs, setInputs)}
                     ></ClearInput>
                 </div>
