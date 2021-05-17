@@ -33,4 +33,6 @@ const StyledPanelLink = tw.p`
     rounded
     inline-block
     px-2
+    font-bold
+    mr-2
 `

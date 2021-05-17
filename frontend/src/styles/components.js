@@ -63,3 +63,20 @@ export const TextArea = tw.textarea`
     border
     border-black
 `
+
+export const DropDown = tw.div`
+    absolute
+    box-border 
+    shadow-lg 
+    shadow-inner
+    bg-white 
+    text-black 
+    ring-1 
+    ring-black 
+    ring-opacity-5 
+    ${p => p.open ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+    z-50
+    top-full
+    w-full
+    border
+`

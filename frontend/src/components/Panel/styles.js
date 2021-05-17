@@ -26,6 +26,7 @@ export const PanelFooterContainer = tw.footer`
     border-t
     border-gray-200
     border-black
+    h-12
 `
 
 export const DraggableArea = tw.div`
@@ -70,7 +71,8 @@ export const Block = tw.div`
 `
 export const panelContentClasses = `
     px-6
-    py-2
+    pt-2
+    pb-8
     overflow-y-auto
     overflow-x-hidden
 `

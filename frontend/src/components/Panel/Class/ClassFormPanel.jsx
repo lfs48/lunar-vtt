@@ -21,20 +21,9 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
     const [gearInput, setGearInput] = useState("");
     const [addingGear, setAddingGear] = useState(false);
 
-    let classFeatures = [];
-    let featureSections = [];
-
     const {features} = useSelector( (state) => ({
         features: state.entities.features
     }));
-
-    Object.entries(inputs.features).forEach( ([key, arr]) => {
-        arr.forEach( (id) => {
-            const feature = features[id];
-            classFeatures.push(feature);
-            featureSections.push(<ClassFeatureForm key={feature._id} feature={feature} level={key} />)
-        })
-    });;
 
     const saveGearLine = (event) => {
         event.preventDefault();
