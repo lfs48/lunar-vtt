@@ -1,5 +1,6 @@
 import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised, faMonument, faDna, faStar, faTheaterMasks } from '@fortawesome/free-solid-svg-icons';
 import { classesSliceName, createClass } from '../../store/reducers/entities/classesReducer';
+import { featuresSliceName, createFeature } from '../../store/reducers/entities/featuresReducer';
 
 const entityTypes = {
     CHARACTERS: "characters",
@@ -153,7 +154,7 @@ export function getCreateEntityActionType(entityType) {
         case(entityTypes.SETTINGS):
             return 'Setting';
         case(entityTypes.FEATURES):
-            return 'Feature'
+            return createFeature.type
         case(entityTypes.FEATS):
             return 'Feat';
         case(entityTypes.ROLLABLE):
