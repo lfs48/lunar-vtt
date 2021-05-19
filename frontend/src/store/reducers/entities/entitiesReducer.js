@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import backgroundsReducer from "./backgroundsReducer";
 import charactersReducer from "./charactersReducer";
 import classesReducer from "./classesReducer";
 import featsReducer from "./featsReducer";
@@ -10,6 +11,7 @@ import rollablesReducer from "./rollablesReducer";
 import rulesReducer from "./rulesReducer";
 import settingsReducer from "./settingsReducer";
 import spellsReducer from "./spellsReducer";
+import subclassesReducer from "./subclassesReducer";
 
 const entitiesReducer = combineReducers({
     dndClasses: classesReducer,
@@ -22,7 +24,9 @@ const entitiesReducer = combineReducers({
     rollables: rollablesReducer,
     rules: rulesReducer,
     spells: spellsReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    subclasses: subclassesReducer,
+    backgrounds: backgroundsReducer
 });
 
 export default entitiesReducer;
