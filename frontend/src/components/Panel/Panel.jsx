@@ -13,6 +13,8 @@ import FeaturePanel from './Feature/FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
 import ClassFormPanel from './Class/ClassFormPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
+import FeatureForm from './Feature/FeaturForm';
+import { editFeature } from '../../store/reducers/entities/featuresReducer';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -58,7 +60,7 @@ const _handleDrag = ({event, styleData, setStyleData, id, dispatch}) => {
     }
 };
 
-const handleDrag = throttle(_handleDrag, 20);
+const handleDrag = throttle(_handleDrag, 30);
 
 const handleDragEnd = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -121,7 +123,7 @@ const getInitialHeight = (panelType) => {
     }
 }
 
-const getContent = (panelType, edit, data, inputs, setInputs, styleData) => {
+const getContent = (panelType, edit, data, inputs, setInputs, height) => {
     switch(panelType) {
         case(entityTypes.CLASSES):
             if (edit) {
@@ -130,16 +132,25 @@ const getContent = (panelType, edit, data, inputs, setInputs, styleData) => {
                     inputs={inputs}
                     setInputs={setInputs}
                     preloadedInputs={initialInputs(data, panelType, true)} 
-                    styleData={{height: styleData.height - 50}}
+                    styleData={{height: height}}
                 />;
             } else {
                 return <ClassViewPanel 
                     dndClass={data} 
-                    styleData={{height: styleData.height - 50}}
+                    styleData={{height: height}}
                 />;
             }
         case(entityTypes.FEATURES):
-            return <FeaturePanel feature={data} styleData={{height: styleData.height - 50}}/>;
+            if (edit) {
+                return <FeatureForm 
+                    inputs={inputs} 
+                    setInputs={setInputs} 
+                    preloadedInputs={initialInputs(data, panelType, true)}
+                    styleData={{height: height}}
+                    />
+            } else {
+                return <FeaturePanel feature={data} styleData={{height: height}}/>;
+            }
     }
 }
 
@@ -159,13 +170,22 @@ const initialInputs = (data, panelType) => {
                 tableCols: data.tableCols,
                 features: data.features
             });
+        case(entityTypes.FEATURES):
+            return({
+                name: data.name,
+                description: data.description,
+                featureType: data.featureType,
+                sourceModel: data.sourceModel
+            })
     }
 }
 
 const saveType = (panelType) => {
     switch(panelType) {
         case(entityTypes.CLASSES):
-            return editClass.type
+            return editClass.type;
+        case(entityTypes.FEATURES):
+            return editFeature.type;
     }
 }
 
@@ -322,7 +342,7 @@ export default function Panel({data, panelType, edit}) {
                         </Button>
                     </div>
                 </PanelHeaderContainer>
-                {getContent(panelType, edit, data, inputs, setInputs, styleData, setStyleData)}
+                {getContent(panelType, edit, data, inputs, setInputs, user.gm ? styleData.height - 100 : styleData.height -50)}
 
                 {user.gm ?
                     <PanelFooterContainer>

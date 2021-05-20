@@ -70,9 +70,7 @@ export const Block = tw.div`
     mb-2
 `
 export const panelContentClasses = `
-    px-6
-    pt-2
-    pb-16
+    p-6
     overflow-y-auto
     overflow-x-hidden
 `
