@@ -58,7 +58,7 @@ export default function ClassFormTable({inputs, setInputs}) {
         event.preventDefault();
         const newState = merge({}, inputs);
         const levelFeatures = newState.features[level];
-        if ( levelFeatures.findIndex( feature => feature._id === featureInput.id) === -1) {
+        if ( levelFeatures.findIndex( _id => _id === featureInput.id) === -1) {
             newState.features[level].push(featureInput.id);
         }
         setInputs(newState);
@@ -76,12 +76,27 @@ export default function ClassFormTable({inputs, setInputs}) {
         });
     }
 
+    const handleRemoveFeature = (event, id, level) => {
+        event.preventDefault();
+        const newState = merge({}, inputs);
+        newState.features[level] = newState.features[level].filter( _id => _id !== id);
+        console.log(newState.features[level]);
+        setInputs(newState);
+    }
+
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
         const levelFeatures = inputs.features[level]
         .map( (id) => {
             const feature = classFeatures.find(feat => feat._id === id);
-            return <PanelLink key={id} panelType={entityTypes.FEATURES} id={id} text={feature.name}/>
+            return (
+                <FeatureBubble key={id}>
+                    <FeatureText>{feature.name}</FeatureText>
+                    <RemoveFeatureButton onClick={(e) => handleRemoveFeature(e, id, level)}>
+                        <i className="fas fa-times"></i>
+                    </RemoveFeatureButton>
+                </FeatureBubble>
+            )
         });    
         const extraCols = Object.keys(inputs.tableCols).map( (col, i) => {
             return (
@@ -100,6 +115,7 @@ export default function ClassFormTable({inputs, setInputs}) {
                 <ClassTableRowLeft>{intToOrdinal(level)}</ClassTableRowLeft>
                 <ClassTableRowCenter>{`+ ${getLevelProf(level)}`}</ClassTableRowCenter>
                 <ClassTableRowLeft>
+                    <div className="flex">
                     {levelFeatures}
                     {(addingFeature === level) ?
                         <>
@@ -129,9 +145,10 @@ export default function ClassFormTable({inputs, setInputs}) {
                             className="bg-gray-300 rounded py-0 px-2"
                             onClick={(e) => handleAddingFeature(e, level)}
                         >
-                            +
+                            <i className="fas fa-plus"></i>
                         </BgButton>
                     }
+                    </div>
                 </ClassTableRowLeft>
                 {extraCols}
             </tr>
@@ -204,3 +221,23 @@ const TableInput = tw.input`
     py-0.5
     text-sm
 `;
+
+const FeatureBubble = tw.div`
+    flex
+    items-center
+    bg-gray-300
+    rounded
+    px-2
+    mr-2
+`
+
+const FeatureText = tw.span`
+    font-bold
+    mr-2
+`
+
+const RemoveFeatureButton = tw(Button)`
+    text-sm
+    text-red-500
+`
+

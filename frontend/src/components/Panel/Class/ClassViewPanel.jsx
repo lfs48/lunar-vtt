@@ -5,6 +5,7 @@ import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { intToOrdinal } from '../../../util/functions/utilFunctions';
 import { ClassFeatureView } from './ClassFeatureView';
+import SplitText from '../../Util/SplitText';
 
 export default function ClassViewPanel({dndClass, styleData}) {
 
@@ -27,7 +28,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
 
     return(
         <div style={styleData} className={panelContentClasses}>
-            <p className="italic mb-6">{dndClass.description}</p>
+            <SplitText text={dndClass.description} className="italic mb-6"/>
             <ClassTable dndClass={dndClass} features={classFeatures}/>
             <PanelSectionHeader>Class Features</PanelSectionHeader>
             <p className="mb-2">{`As a ${dndClass.name.toLowerCase()}, you get the following class features.`}</p>
