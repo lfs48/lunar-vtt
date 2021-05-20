@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { DiceRoll } from 'rpg-dice-roller';
-import ClassTable from './ClassTable';
-import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
-import DieSelect from '../../Util/DieSelect';
+import { panelContentClasses } from '../styles';
 import { handleInput } from '../../../util/functions/utilFunctions';
 import { Button, ClearInput, Input, Label, TextArea } from '../../../styles/components';
 import ClassFormTable from './ClassFormTable';
-import { ClassFeatureForm } from './ClassFeatureForm';
 import { merge } from 'lodash';
+import Select from '../../Util/Select';
+
+const dieOptions = ["1d6", "1d8", "1d10", "1d12"];
 
 export default function ClassFormPanel({dndClass, styleData, preloadedInputs=null, inputs, setInputs}) {
 
@@ -20,10 +19,6 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
 
     const [gearInput, setGearInput] = useState("");
     const [addingGear, setAddingGear] = useState(false);
-
-    const {features} = useSelector( (state) => ({
-        features: state.entities.features
-    }));
 
     const saveGearLine = (event) => {
         event.preventDefault();
@@ -45,7 +40,7 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
                     onChange={e => handleInput(e, 'name', inputs, setInputs)}
                 ></ClearInput>
                 <Label>Hit Die: </Label>
-                <DieSelect field={'hitDie'} state={inputs} setState={setInputs} />
+                <Select optionList={dieOptions} field={'hitDie'} state={inputs} setState={setInputs} />
             </div>
             <div className="flex flex-col">
                 <div>

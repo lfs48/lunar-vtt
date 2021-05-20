@@ -1,11 +1,11 @@
 import { handleInput } from "../../util/functions/utilFunctions"
 
-export default function DieSelect({field, state, setState}) {
+export default function Select({optionList, field, state, setState}) {
 
-    const options = ['1d4', '1d6', '1d8', '1d10', '1d12'].map( (die, i)=> {
+    const options = optionList.map( (opt, i)=> {
         return(
-            <option key={i} value={die}>
-                {die}
+            <option key={i} value={opt}>
+                {opt}
             </option>
         )
     })
