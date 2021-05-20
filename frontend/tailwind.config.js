@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
@@ -9,18 +11,9 @@ module.exports = {
         '120': '30rem',
         '140': '35rem',
         '160': '40rem',
-      },
+      }
     },
   },
-  variants: {
-    extend: {
-      backgroundColor: ['active', 'even', 'odd', 'disabled'],
-      backgroundOpacity: ['even', 'odd'],
-      cursor: ['disabled'],
-      textColor: ['active'],
-      margin: ['first', 'last'],
-      padding: ['first', 'last', 'hover']
-    },
-  },
+  variants: {},
   plugins: [],
 }
