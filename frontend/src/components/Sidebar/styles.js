@@ -10,6 +10,7 @@ export const SidebarLi = tw.li`
     ${ p => p.open ? "bg-green-500" : "bg-black even:bg-opacity-20 odd:bg-opacity-10"}
     border-b
     border-black
+    font-bold
 `
 
 export const TabHeader = tw.div`

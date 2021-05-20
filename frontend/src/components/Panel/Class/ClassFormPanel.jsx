@@ -8,6 +8,7 @@ import { merge } from 'lodash';
 import Select from '../../Util/Select';
 
 const dieOptions = ["1d6", "1d8", "1d10", "1d12"];
+const spellcastingOptions = ["None", "Full", "Half", "HalfPlus", "Third"];
 
 export default function ClassFormPanel({dndClass, styleData, preloadedInputs=null, inputs, setInputs}) {
 
@@ -41,6 +42,8 @@ export default function ClassFormPanel({dndClass, styleData, preloadedInputs=nul
                 ></ClearInput>
                 <Label>Hit Die: </Label>
                 <Select optionList={dieOptions} field={'hitDie'} state={inputs} setState={setInputs} />
+                <Label>Spellcasting: </Label>
+                <Select optionList={spellcastingOptions} field={'spellcasting'} state={inputs} setState={setInputs}/>
             </div>
             <div className="flex flex-col">
                 <div>

@@ -44,6 +44,11 @@ const DndClassSchema = new Schema({
         type: [String],
         default: []
     },
+    spellcasting: {
+        type: String,
+        enum: ['None', 'Third', 'Half', 'HalfPlus', 'TwoThirds', 'Full'],
+        default: 'None'
+    },
     tableCols: {
         type: Map,
         of: [String],

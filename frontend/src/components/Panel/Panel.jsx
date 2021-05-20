@@ -60,7 +60,7 @@ const _handleDrag = ({event, styleData, setStyleData, id, dispatch}) => {
     }
 };
 
-const handleDrag = throttle(_handleDrag, 30);
+const handleDrag = throttle(_handleDrag, 15);
 
 const handleDragEnd = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -168,7 +168,8 @@ const initialInputs = (data, panelType) => {
                 skills: data.skills,
                 equipment: data.equipment,
                 tableCols: data.tableCols,
-                features: data.features
+                features: data.features,
+                spellcasting: data.spellcasting
             });
         case(entityTypes.FEATURES):
             return({

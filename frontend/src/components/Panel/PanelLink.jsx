@@ -35,4 +35,5 @@ const StyledPanelLink = tw.p`
     px-2
     font-bold
     mr-2
+    my-0.5
 `
