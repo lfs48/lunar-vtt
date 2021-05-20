@@ -10,26 +10,22 @@ const FeatureSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
+        default: ""
     },
     featureType: {
         type: String,
-        required: true,
+        default: 'Action',
         enum: ['Action', 'Bonus Action', 'Reaction', 'Passive', 'Triggered', 'Other']
     },
     sources: [{
         type: Schema.Types.ObjectId,
-        required: true,
+        default: [],
         refPath: 'sourceModel'
     }],
     sourceModel: {
         type: String,
-        required: true,
+        default: 'DndClass',
         enum: ['DndClass', 'Subclass', 'Race', 'Background', 'Feat']
-    },
-    level: {
-        type: Number,
-        required: false
     }
 
 }, {

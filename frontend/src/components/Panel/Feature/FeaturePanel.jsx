@@ -4,6 +4,7 @@ import entityTypes from '../../../util/types/entityTypes';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { pick, findKey } from 'lodash';
 import PanelLink from '../PanelLink';
+import SplitText from '../../Util/SplitText';
 
 export default function FeaturePanel({feature, styleData}) {
 
@@ -26,7 +27,7 @@ export default function FeaturePanel({feature, styleData}) {
 
     return(
         <div style={styleData} className={panelContentClasses}>
-            <p>{feature.description}</p>
+            <SplitText text={feature.description} />
             <p>Sources: </p>
             {sourceLinks}
         </div>

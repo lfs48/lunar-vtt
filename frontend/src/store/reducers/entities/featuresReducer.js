@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import entityTypes from "../../../util/types/entityTypes";
-import { receiveAllClasses } from "./classesReducer";
+import { receiveAllClasses, receiveClass } from "./classesReducer";
 
 const featuresSlice = createSlice({
   name: "features",
   initialState: {},
   reducers: {
       createFeature: state => state,
+      editFeature: state => state,
       receiveAllFeatures: (state, action) => {
         const newState = {};
         action.payload.features.forEach( (feature) => {
@@ -24,10 +25,15 @@ const featuresSlice = createSlice({
         action.payload.features.forEach( (feature) => {
             state[feature._id] = feature;
         });
-    }
+    },
+    [receiveClass.type]: (state, action) => {
+      action.payload.features.forEach( (feature) => {
+          state[feature._id] = feature;
+      });
+  }
   }
 });
 
-export const { createFeature, receiveAllFeatures, receiveFeature } = featuresSlice.actions;
+export const { createFeature, editFeature, receiveAllFeatures, receiveFeature } = featuresSlice.actions;
 export const featureSliceName = featuresSlice.name;
 export default featuresSlice.reducer;

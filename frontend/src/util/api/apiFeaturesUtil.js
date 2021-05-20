@@ -13,7 +13,7 @@ export async function getAllFeatures() {
   
   // Create feature
   // POST /features
-  export async function postClass({formData}) {
+  export async function postFeature({formData}) {
     const url = `/api/features`;
     const req = {
       method: 'POST',
@@ -30,7 +30,7 @@ export async function getAllFeatures() {
   
   // Edit feature
   // PATCH /features/:featureId
-  export async function patchClass({id, formData}) {
+  export async function patchFeature({id, formData}) {
     const url = `/api/features/${id}`;
     const req = {
       method: 'PATCH',
