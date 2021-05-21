@@ -14,11 +14,9 @@ export function ClassFeatureView({feature, level}) {
         <FeatureHeader>
             <div className="flex justify-between items-end pr-6">
                 {feature.name}
-                <FeatureHeaderSub>
+                <FeatureHeaderSub onClick={() => setCollapsed(!collapsed)}>
                     <span className="mr-6">{`${intToOrdinal(level)} Level`}</span>
-                    <Button onClick={() => setCollapsed(!collapsed)}>
-                        <i className={collapsed ? "fas fa-caret-right" : "fas fa-caret-down"}></i>
-                    </Button>
+                    <i className={`fas fa-caret-right transform origin-center transition-transform duration-500 ${collapsed ? "" : "rotate-90"}`}></i>
                 </FeatureHeaderSub>
             </div>
         </FeatureHeader>

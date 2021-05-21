@@ -63,6 +63,7 @@ export const FeatureHeader = tw.h4`
 export const FeatureHeaderSub = tw.span`
     text-sm
     italic
+    cursor-pointer
 `
 
 export const Block = tw.div`
