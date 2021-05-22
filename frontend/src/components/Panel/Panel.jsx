@@ -302,9 +302,8 @@ export default function Panel({data, panelType, edit}) {
     }, []);
 
     return(
-        
+
         <article 
-            draggable="true" 
             className={`${panelClass} 
             ${ styleData.stage < 2 ? "transition-all duration-700 ease-in-out" : ""} `} 
             style={styleData}
