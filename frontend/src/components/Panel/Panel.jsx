@@ -302,6 +302,7 @@ export default function Panel({data, panelType, edit}) {
     }, []);
 
     return(
+        
         <article 
             draggable="true" 
             className={`${panelClass} 
@@ -314,79 +315,81 @@ export default function Panel({data, panelType, edit}) {
             })}
         >
 
-            <div className="resize-areas-container">
-
-                <PanelHeaderContainer 
-                    draggable="true" 
-                    onDrag={e => handleDrag({
-                        event: e,
-                        styleData: styleData, 
-                        setStyleData: setStyleData,
-                        id: data._id,
-                        dispatch: dispatch
-                    })} 
-                    onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}
-                >
-                    <PanelHeader className="font-fancy flex items-center">
-                        <i className={`mr-2 fas fa-${data.icon}`}></i>
-                        <p>{data.name}</p>
-                    </PanelHeader>
-                    <div>
-                        <Button onClick={e => handleClose({
+            <PanelHeaderContainer 
+                draggable="true" 
+                onDrag={e => handleDrag({
+                    event: e,
+                    styleData: styleData, 
+                    setStyleData: setStyleData,
+                    id: data._id,
+                    dispatch: dispatch
+                })} 
+                onDragEnd={e => handleDragEnd(e, styleData, setStyleData)}
+            >
+                <PanelHeader className="font-fancy flex items-center">
+                    <i className={`mr-2 fas fa-${data.icon}`}></i>
+                    <p>{data.name}</p>
+                </PanelHeader>
+                <div>
+                    <Button 
+                        onClick={e => handleClose({
                             event: e,
                             styleData: styleData,
                             setStyleData: setStyleData,
                             dispatch: dispatch,
                             id: data._id
                         })}>
-                            <i className="ml-4 fas fa-times text-lg"/>
-                        </Button>
-                    </div>
-                </PanelHeaderContainer>
-                {getContent(panelType, edit, data, inputs, setInputs, user.gm ? styleData.height - 100 : styleData.height -50)}
+                        <i className="ml-4 fas fa-times text-lg"/>
+                    </Button>
+                </div>
+            </PanelHeaderContainer>
 
-                {user.gm ?
-                    <PanelFooterContainer>
-                        {edit ? (
-                            <>
-                            <Button 
-                                onClick={e => handleSave({
-                                    event: e,
-                                    inputs: inputs,
-                                    id: data._id,
-                                    panelType: panelType,
-                                    dispatch: dispatch
+            {getContent(panelType, edit, data, inputs, setInputs, user.gm ? styleData.height - 100 : styleData.height -50)}
+
+            {user.gm ?
+                <PanelFooterContainer>
+                    {edit ? (
+                        <>
+                        <Button 
+                            onClick={e => handleSave({
+                                event: e,
+                                inputs: inputs,
+                                id: data._id,
+                                panelType: panelType,
+                                dispatch: dispatch
+                            })}
+                            className="text-green-500"
+                        >
+                            Save
+                        </Button>
+                        <Button 
+                                onClick={e => handleCancel({
+                                event: e,
+                                id: data._id,
+                                dispatch: dispatch
                                 })}
-                                className="text-green-500"
-                            >
-                                Save
-                            </Button>
-                            <Button 
-                                    onClick={e => handleCancel({
-                                    event: e,
-                                    id: data._id,
-                                    dispatch: dispatch
-                                    })}
-                                    className="text-red-500"
-                            >
-                                Cancel
-                            </Button>
-                            </>
-                        ) : (
-                            <Button 
-                                onClick={e => handleEdit({
-                                    event: e,
-                                    setInputs: setInputs,
-                                    data: data,
-                                    panelType: panelType,
-                                    dispatch: dispatch
-                                })}
-                            >
-                                Edit
-                            </Button>
-                        )}
-                    </PanelFooterContainer>
-                :<></>}
+                                className="text-red-500"
+                        >
+                            Cancel
+                        </Button>
+                        </>
+                    ) : (
+                        <Button 
+                            onClick={e => handleEdit({
+                                event: e,
+                                setInputs: setInputs,
+                                data: data,
+                                panelType: panelType,
+                                dispatch: dispatch
+                            })}
+                        >
+                            Edit
+                        </Button>
+                    )}
+                </PanelFooterContainer>
+            :<></>}
+
+            <div>
 
                 <div draggable="true" className="resize-area resize-top" onDrag={ e => resize(e, {top: true}, styleData, setStyleData ) } ></div>
                 <div draggable="true" className="resize-area resize-left" onDrag={ e => resize(e, {left: true}, styleData, setStyleData ) }></div>
@@ -398,6 +401,7 @@ export default function Panel({data, panelType, edit}) {
                 <div draggable="true" className="resize-area resize-corner resize-topleft" onDrag={ e => resize(e, {top: true, left: true}, styleData, setStyleData ) }></div>
 
             </div>
+
         </article>
     );
 
