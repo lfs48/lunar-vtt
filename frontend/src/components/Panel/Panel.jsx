@@ -6,14 +6,14 @@ import { faEdit, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { editPanel, viewPanel, closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
-import ClassViewPanel from './Class/ClassViewPanel';
+import ClassViewPanel from './Class/ClassPanel';
 import { DraggableArea, PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './Feature/FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
-import ClassFormPanel from './Class/ClassFormPanel';
+import ClassFormPanel from './Class/EditClassPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
-import FeatureForm from './Feature/FeaturForm';
+import FeatureForm from './Feature/EditFeaturePanel';
 import { editFeature } from '../../store/reducers/entities/featuresReducer';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {

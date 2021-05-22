@@ -4,7 +4,7 @@ import { DiceRoll } from 'rpg-dice-roller';
 import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { intToOrdinal } from '../../../util/functions/utilFunctions';
-import { ClassFeatureView } from './ClassFeatureView';
+import { ClassFeatureView } from './ClassFeature';
 import SplitText from '../../Util/SplitText';
 
 export default function ClassViewPanel({dndClass, styleData}) {

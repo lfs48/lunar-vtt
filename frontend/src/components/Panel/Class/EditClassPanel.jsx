@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { panelContentClasses } from '../styles';
 import { handleInput } from '../../../util/functions/utilFunctions';
 import { Button, ClearInput, Input, Label, TextArea } from '../../../styles/components';
-import ClassFormTable from './ClassFormTable';
+import ClassFormTable from './EditClassTable';
 import { merge } from 'lodash';
 import Select from '../../Util/Select';
 

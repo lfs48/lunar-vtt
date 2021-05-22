@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { BgButton, Button, ClearInput, Input } from '../../../styles/components';
 import { getLevelProf, handleInput, intToOrdinal } from '../../../util/functions/utilFunctions';
 import entityTypes from '../../../util/types/entityTypes';
-import PanelLink from '../PanelLink';
 import { merge } from 'lodash';
 import { useSelector } from 'react-redux';
 import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from './styles';
 import tw from 'tailwind-styled-components';
-import FeatureAutocomplete from '../../FeatureAutocomplete/FeatureAutocomplete';
+import EntityAutocomplete from '../../EntityAutocomplete/EntityAutocomplete';
 
 export default function ClassFormTable({inputs, setInputs}) {
 
@@ -119,14 +118,15 @@ export default function ClassFormTable({inputs, setInputs}) {
                     {levelFeatures}
                     {(addingFeature === level) ?
                         <>
-                        <FeatureAutocomplete
+                        <EntityAutocomplete
                             className="bg-none w-48 border border-black rounded px-2 py-0.5 text-sm"
+                            entityType={entityTypes.FEATURES}
                             input={featureInput.name}
                             handleInput={(e) => handleInput(e, 'name', featureInput, setFeatureInput)}
                             handleSelect={(feature) => handleSelectFeature(feature)}
                         >
 
-                        </FeatureAutocomplete>
+                        </EntityAutocomplete>
                         <Button 
                             className="text-red-500 mx-2"
                             onClick={e => cancelAddingFeature(e)}
