@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import { Input, DropDown } from '../../styles/components';
-import { merge } from 'lodash';
 
 const openList = (event, setOpen) => {
     event.stopPropagation();
@@ -24,24 +23,24 @@ const _handleSelect = (event, feature, handleSelect, setOpen) => {
     handleSelect(feature);
 }
 
-export default function FeatureAutocomplete({input, handleInput, className, handleSelect}) {
+export default function EntityAutocomplete({entityType, input, handleInput, className, handleSelect}) {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const {features} = useSelector( (state) => ({
-        features: state.entities.features
+    const {entities} = useSelector( (state) => ({
+        entities: state.entities[entityType]
     }));
 
-    const filteredFeatures = Object.values(features)
-    .filter( (feature) => feature.name.toLowerCase().startsWith(input.toLowerCase()) )
-    .map( (feature) => {
+    const filteredEntities = Object.values(entities)
+    .filter( (entity) => entity.name.toLowerCase().startsWith(input.toLowerCase()) )
+    .map( (entity) => {
         return(
-            <FeatureLi 
-                key={feature._id}
-                onClick={(e) => _handleSelect(e, feature, handleSelect, setDropdownOpen)}
+            <Li 
+                key={entity._id}
+                onClick={(e) => _handleSelect(e, entity, handleSelect, setDropdownOpen)}
             >
-                {feature.name}
-            </FeatureLi>
+                {entity.name}
+            </Li>
         );
     });
 
@@ -61,14 +60,14 @@ export default function FeatureAutocomplete({input, handleInput, className, hand
             className=""
         >
             <ul>
-                {filteredFeatures}
+                {filteredEntities}
             </ul>
         </DropDown>
         </div>
     )
 }
 
-const FeatureLi = tw.li`
+const Li = tw.li`
     px-1
     py-0.5
     hover:bg-gray-200
