@@ -8,8 +8,8 @@ export default function SidebarTabs({state, setState}) {
 
     const tabs = Object.values(entityTypes).map( (type, i) => {
         return(
-            <TabButton key={i} className="has-tooltip" onClick={() => setState(type)}>
-                <i class={`${getEntityIcon(type)}`}></i>
+            <TabButton key={i} activeTab={state === type} onClick={() => setState(type)}>
+                <i className={`${getEntityIcon(type)}`}></i>
                 <p className="tooltip">{getEntityName(type)}</p>
             </TabButton>
         )
@@ -24,4 +24,13 @@ export default function SidebarTabs({state, setState}) {
 
 const TabButton = tw(Button)`
     text-xl
+    has-tooltip 
+    transition-colors 
+    duration-500 
+    rounded-full 
+    w-8 
+    h-8 
+    bg-opacity-70
+    ${p => p.activeTab ? "bg-green-500" : "bg-none hover:bg-gray-200"}
+
 `

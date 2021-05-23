@@ -21,4 +21,5 @@ export const TabHeader = tw.div`
     h-16
     flex
     items-center
+    mb-2
 `

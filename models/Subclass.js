@@ -42,13 +42,13 @@ SubclassSchema.post("findOneAndDelete", async (document) => {
     const subclassId = document._id;
     await Feature.updateMany(
         { 
-            sources: { 
+            subclasses: { 
                 $in: [subclassId] 
             }
         },
         { 
             $pull: {
-                sources: subclassId
+                subclasses: subclassId
             } 
         }
     )
