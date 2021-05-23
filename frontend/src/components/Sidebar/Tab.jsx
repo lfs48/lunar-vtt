@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPanel, togglePanel } from '../../store/reducers/UI/panelsReducer';
 import { Button, Input } from '../../styles/components';
-import { getCreateEntityActionType, getEntityName} from '../../util/types/entityTypes';
+import entityTypes, { getCreateEntityActionType, getEntityName} from '../../util/types/entityTypes';
 import { SidebarLi, TabHeader } from './styles';
+import { getCreateForm } from './CreateForm/index';
 
 export default function Tab({entityType}) {
 
     const dispatch = useDispatch();
-
-    const [creating, setCreating] = useState(false);
-    const [newName, setNewName] = useState("");
 
     const {entities, openEntities, user} = useSelector( (state) => ({
         entities: state.entities[entityType],
@@ -41,56 +39,11 @@ export default function Tab({entityType}) {
         )
     });
 
-    const handleCreate = () => {
-        const action = {
-            type: getCreateEntityActionType(entityType),
-            payload: {
-                formData: {
-                    name: newName
-                }
-            }
-        };
-        dispatch(action);
-        handleCancelCreate();
-    }
-
-    const handleCancelCreate = () => {
-        setCreating(false);
-        setNewName("");
-    }
-
     return(
         <div>
             <TabHeader>
                 {user.gm ?
-                    creating ? (
-                        <div>
-                            <Input
-                                type="text"
-                                value={newName}
-                                onChange={e => setNewName(e.target.value)}
-                                className=""
-                            >
-                            </Input>
-                            <Button
-                                className="mx-2"
-                                onClick={() => handleCancelCreate()}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={() => handleCreate()}
-                            >
-                                Create
-                            </Button>
-                        </div>
-                    ) : (
-                        <Button
-                            onClick={() => setCreating(true)}
-                        >
-                            {`Add`}
-                        </Button>
-                    )
+                    getCreateForm(entityType)
                 :<></>}
             </TabHeader>
             <ul>

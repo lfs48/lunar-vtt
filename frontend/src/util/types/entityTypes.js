@@ -9,7 +9,7 @@ const entityTypes = {
     RACES: "races",
     BACKGROUNDS: 'backgrounds',
     FEATS: "feats",
-    FEATURES: "features",
+    FEATURES: featuresSliceName,
     SPELLS: "spells",
     ITEMS: "items",
     MONSTERS: "monsters",

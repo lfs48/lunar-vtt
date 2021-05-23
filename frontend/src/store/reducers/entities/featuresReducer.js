@@ -35,5 +35,5 @@ const featuresSlice = createSlice({
 });
 
 export const { createFeature, editFeature, receiveAllFeatures, receiveFeature } = featuresSlice.actions;
-export const featureSliceName = featuresSlice.name;
+export const featuresSliceName = featuresSlice.name;
 export default featuresSlice.reducer;

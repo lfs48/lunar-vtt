@@ -271,10 +271,10 @@ export default function Panel({data, panelType, edit}) {
     }));
 
     const [styleData, setStyleData] = useState({
-        left: Math.random() * (window.innerWidth - getInitialWidth(panelType) - 20),
-        top: Math.random() * (window.innerHeight - getInitialHeight(panelType) - 10),
-        width: getInitialWidth(panelType),
-        height: getInitialHeight(panelType),
+        left: Math.random() * (window.innerWidth - 600 - 20),
+        top: Math.random() * (window.innerHeight - 800 - 10),
+        width: 600,
+        height: 800,
         minHeight: 50,
         minWidth: 200,
         dragging: false,

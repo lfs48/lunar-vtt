@@ -41,9 +41,7 @@ function* createClassWorker(action) {
         if (res.success) {
             yield put({
                 type: receiveClass.type,
-                payload: {
-                    dndClass: res.dndClass
-                }
+                payload: res
             });
             yield put({
                 type: openPanel.type,

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { receiveSubclass } from "./subclassesReducer";
 
 const classesSlice = createSlice({
   name: 'dndClasses',
@@ -17,6 +18,14 @@ const classesSlice = createSlice({
     receiveClass: (state, action) => {
         const dndClass = action.payload.dndClass
         state[dndClass._id] = dndClass;
+    }
+  },
+  extraReducers: {
+    [receiveSubclass.type]: (state, action) => {
+      const subclass = action.payload.subclass;
+      if ( !state[subclass.dndClass].subclasses.includes(subclass._id) ) {
+        state[subclass.dndClass].subclasses.push(subclass._id);
+      }
     }
   }
 });
