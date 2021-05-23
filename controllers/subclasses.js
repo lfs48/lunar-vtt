@@ -1,27 +1,39 @@
 const { Model } = require('mongoose');
 const DndClassModel = require('../models/DndClass');
 const FeatureModel = require('../models/Feature');
+const SubclassModel = require('../models/Subclass');
 
-const DndClassController = {
+const SubclassController = {
     index: async (req, res) => {
-        const allClasses = await DndClassModel.find({})
-        const classFeatures = await Feature.find({sourceModel: 'DndClass'})
+        const allSubclasses = await SubclassModel.find({});
+        const subclassFeatures = await Feature.find({sourceModel: 'Subclass'});
         res
         .status(200)
         .json({
             success: true,
-            classes: allClasses,
-            features: classFeatures
+            subclasses: allSubclasses,
+            features: subclassFeatures
         });
     },
     create: async (req, res) => {
         try {
-            const newClass = await DndClass.create(classParams(req.body));
+            const params = subclassParams(req.body);
+            const newSubclass = await Subclass.create(params);
+            await DndClassModel.updateOne(
+                {
+                    _id: params.dndClass
+                },
+                {
+                    $addToSet: {
+                        subclasses: newSubclass._id
+                    }
+                }
+            );
             res
             .status(201)
             .json({
                 success: true,
-                dndClass: newClass,
+                subclass: newSubclass,
                 features: []
             });
         } catch (e) {
@@ -36,10 +48,10 @@ const DndClassController = {
     update: async (req, res) => {
         try {
             // Update class with request params
-            const params = classParams(req.body);
-            const foundClass = await DndClassModel.findById(req.params.classId);
-            await foundClass.update(params);
-            const newClass = await DndClassModel.findById(req.params.classId);
+            const params = subclassParams(req.body);
+            const foundClass = await SubclassModel.findById(req.params.subclassId);
+            await foundClass.update(subclassParams(req.body));
+            const newClass = await DndClassModel.findById(req.params.subclassId);
 
             // Cascade updates to features added/removed in update
             if ("features" in params) {
@@ -86,7 +98,7 @@ const DndClassController = {
             .status(200)
             .json({
                 success: true,
-                dndClass: newClass,
+                subclass: newClass,
                 features: classFeatures
             });
         } catch(e) {
@@ -100,12 +112,12 @@ const DndClassController = {
     },
     delete: async (req, res) => {
         try {
-            const deletedClass = await DndClassModel.findOneAndDelete({_id: req.params.classId});
+            const deletedClass = await SubclassModel.findOneAndDelete({_id: req.params.subclassId});
             res
             .status(200)
             .json({
                 success: true,
-                data: deletedClass
+                subclass: deletedClass
             });
         } catch (e) {
             res
@@ -117,20 +129,20 @@ const DndClassController = {
         }
     },
     show: async (req, res) => {
-        const foundClass = await DndClassModel.findById(req.params.classId);
+        const foundClass = await SubclassModel.findById(req.params.classId);
         const foundFeatures = await FeatureModel.find({source: foundClass._id});
         res
         .status(200)
         .json({
-            dndClass: foundClass,
+            subclass: foundClass,
             features: foundFeatures
         });
     }
 }
 
-module.exports = DndClassController;
+module.exports = SubclassController;
 
-function classParams(params) {
-    const validParams = {name, description, hitDie, armor, weapons, tools, saves, skills, equipment, spellcasting, tableCols, features} = params;
+function subclassParams(params) {
+    const validParams = {name, description, dndClass, spellcasting, features} = params;
     return validParams;
 }

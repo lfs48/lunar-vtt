@@ -61,7 +61,12 @@ const DndClassSchema = new Schema({
             ref: 'Feature'
         },
         default: defaultFeatures
-    }
+    },
+    subclasses: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Subclass',
+        default: []
+    }]
 }, {
     timestamps: true
 });

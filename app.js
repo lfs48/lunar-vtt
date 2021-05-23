@@ -7,6 +7,7 @@ const passport = require('passport');
 const users = require("./routes/api/users");
 const classes = require("./routes/api/classes");
 const features = require("./routes/api/features");
+const subclasses = require("./routes/api/subclasses");
 
 const app = express();
 
@@ -26,6 +27,7 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/classes", classes);
 app.use("/api/features", features);
+app.use("/api/subclasses", subclasses);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'));
