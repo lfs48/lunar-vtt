@@ -32,13 +32,14 @@ export default function SubclassesTab() {
 
     const sections = Object.values(dndClasses).map( (dndClass) => {
         return(
-            <Collapsable 
+            <ClassSectionContainer>
+                <Collapsable 
                 key={dndClass._id}
                 header={
-                    <span>{dndClass.name}</span>
+                    <ClassSectionHeader>{dndClass.name}</ClassSectionHeader>
                 }
                 >
-                <ul>
+                <SubclassList>
                     {dndClass.subclasses.map( (id) => {
                         const subclass = subclasses[id];
                         return(
@@ -47,8 +48,9 @@ export default function SubclassesTab() {
                             </SubclassLi>
                         )
                     })}
-                </ul>
+                </SubclassList>
             </Collapsable>
+            </ClassSectionContainer>
         )
     });
 
@@ -64,60 +66,17 @@ export default function SubclassesTab() {
     )
 }
 
-function ClassSection ({dndClass, subclasses, openSubclasses}) {
-
-    const dispatch = useDispatch();
-
-    const handleLiClick = (event, id) => {
-        event.preventDefault();
-        const action = {
-            type: openPanel.type,
-            payload: {
-                panelType: entityTypes.SUBCLASSES,
-                id: id
-            }
-        };
-        dispatch(action);
-    }
-
-    return(
-        <ClassSectionContainer>
-            <ClassSectionHeader>
-                {dndClass.name}
-                <i className="fas fa-caret-right"></i>
-            </ClassSectionHeader>
-            <ul>
-                {dndClass.subclasses.map( (id) => {
-                    const subclass = subclasses[id];
-                    return(
-                        <SubclassLi key={id} open={openSubclasses.includes(id)} onClick={(e) => handleLiClick(e, id)}>
-                            {subclass.name}
-                        </SubclassLi>
-                    )
-                })}
-            </ul>
-        </ClassSectionContainer>
-    );
-}
-
 const ClassSectionContainer = tw.div`
     mx-2
     mb-2
-    border-b
-    border-black
 `
 
 const ClassSectionHeader = tw.h1`
     text-lg
     font-bold
-    border-b
-    border-black
-    border-opacity-50
-    flex
-    justify-between
-    items-center
-    pr-4
-    cursor-pointer
+    pl-2
+`
+const SubclassList = tw.ul`
 `
 
 const SubclassLi = tw(SidebarLi)`

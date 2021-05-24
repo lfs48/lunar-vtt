@@ -35,7 +35,7 @@ export default function ClassViewPanel({dndClass, styleData}) {
                         </span>
                     }
                 >
-                    <SplitText text={feature.description}/>
+                    <SplitText text={feature.description} className="pt-2"/>
                 </Collapsable>
             )
         })

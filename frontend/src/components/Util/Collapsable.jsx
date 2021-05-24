@@ -35,7 +35,6 @@ const CollapsableHeader = tw.header`
     border-b
     border-black
     pb-1
-    mb-1
     w-full
     cursor-pointer
     flex
