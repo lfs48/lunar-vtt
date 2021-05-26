@@ -51,7 +51,7 @@ const SubclassController = {
             const params = subclassParams(req.body);
             const foundClass = await SubclassModel.findById(req.params.subclassId);
             await foundClass.update(subclassParams(req.body));
-            const newClass = await DndClassModel.findById(req.params.subclassId);
+            const newClass = await SubclassModel.findById(req.params.subclassId);
 
             // Cascade updates to features added/removed in update
             if ("features" in params) {

@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Feature = require('./Feature');
-
-let defaultFeatures = {};
-[...Array(20).keys()].forEach( (n) => {
-    defaultFeatures[(n+1).toString()] = []
-});
+const DndClass = require('./DndClass');
 
 const SubclassSchema = new Schema({
     name: {
@@ -32,7 +28,7 @@ const SubclassSchema = new Schema({
             type: [Schema.Types.ObjectId],
             ref: 'Feature'
         },
-        default: defaultFeatures
+        default: {}
     }
 }, {
     timestamps: true
@@ -41,6 +37,18 @@ const SubclassSchema = new Schema({
 SubclassSchema.post("findOneAndDelete", async (document) => {
     const subclassId = document._id;
     await Feature.updateMany(
+        { 
+            sources: { 
+                $in: [subclassId] 
+            }
+        },
+        { 
+            $pull: {
+                sources: subclassId
+            } 
+        }
+    )
+    await DndClass.updateOne(
         { 
             subclasses: { 
                 $in: [subclassId] 

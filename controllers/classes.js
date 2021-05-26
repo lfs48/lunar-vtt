@@ -1,11 +1,12 @@
 const { Model } = require('mongoose');
 const DndClassModel = require('../models/DndClass');
 const FeatureModel = require('../models/Feature');
+const SubclassModel = require('../models/Subclass');
 
 const DndClassController = {
     index: async (req, res) => {
-        const allClasses = await DndClassModel.find({})
-        const classFeatures = await Feature.find({sourceModel: 'DndClass'})
+        const allClasses = await DndClassModel.find({});
+        const classFeatures = await FeatureModel.find({sourceModel: 'DndClass'});
         res
         .status(200)
         .json({

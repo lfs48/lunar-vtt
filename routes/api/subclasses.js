@@ -7,15 +7,15 @@ const router = express.Router();
 router.get('/', SubclassController.index);
 
 // Get existing class
-router.get('/:classId', SubclassController.show);
+router.get('/:subclassId', SubclassController.show);
 
 // Create new class
 router.post('/', SubclassController.create);
 
 // Update existing class
-router.patch('/:classId', SubclassController.update);
+router.patch('/:subclassId', SubclassController.update);
 
 // Delete class
-router.delete('/:classId', SubclassController.delete);
+router.delete('/:subclassId', SubclassController.delete);
 
 module.exports = router;
