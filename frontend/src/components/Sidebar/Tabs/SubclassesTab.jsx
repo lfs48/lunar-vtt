@@ -68,7 +68,7 @@ export default function SubclassesTab() {
 
 const ClassSectionContainer = tw.div`
     mx-2
-    mb-2
+    mt-2
 `
 
 const ClassSectionHeader = tw.h1`

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import SidebarTabs from './SidebarTabs';
 import entityTypes from '../../util/types/entityTypes';
-import Tab from './Tab';
 import { getEntityTab } from './Tabs/index';
 
 export default function Sidebar() {

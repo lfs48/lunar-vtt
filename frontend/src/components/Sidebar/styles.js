@@ -6,7 +6,7 @@ export const SidebarLi = tw.li`
     py-1
     cursor-pointer
     transition-all
-    duration-500
+    duration-[300ms]
     ${ p => p.open ? "bg-green-500" : "bg-black even:bg-opacity-20 odd:bg-opacity-10"}
     border-b
     border-black
@@ -16,10 +16,11 @@ export const SidebarLi = tw.li`
 export const TabHeader = tw.div`
     px-4
     py-1
-    border-b-2
-    border-black
+    border-b
+    border-gray-500
+    border-opacity-50
     h-16
     flex
+    justify-between
     items-center
-    mb-2
 `

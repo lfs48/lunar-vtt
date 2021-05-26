@@ -8,7 +8,7 @@ import { CreateFormWrapper } from './CreateFormWrapper';
 import { merge } from 'lodash';
 import { createSubclass } from '../../../store/reducers/entities/subclassesReducer';
 
-export function CreateSubclassForm({actionType}) {
+export function CreateSubclassForm({}) {
 
     const dispatch = useDispatch();
 
@@ -26,18 +26,19 @@ export function CreateSubclassForm({actionType}) {
     }
 
     const form = (
-        <div>
+        <div className="flex items-center">
             <Input
                 type="text"
                 value={inputs.name}
                 onChange={e => handleInput(e, 'name', inputs, setInputs)}
-                className=""
+                className="w-1/2 h-8 mr-2"
             ></Input>
             <EntityAutocomplete 
                 entityType={entityTypes.CLASSES}
                 input={inputs.className}
                 handleInput={(e) => handleInput(e, 'className', inputs, setInputs)}
                 handleSelect={(dndClass) => handleSelect(dndClass)}
+                className="w-1/2 h-8"
             />
         </div>
     );
@@ -55,7 +56,9 @@ export function CreateSubclassForm({actionType}) {
 
     const handleCancel = () => {
         setInputs({
-            name: ""
+            name: "",
+            className: "",
+            dndClass: ""
         });
     }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import tw from 'tailwind-styled-components';
 import { Button, Input } from '../../../styles/components';
 
 export function CreateFormWrapper({form, handleCreate, handleCancel}) {
@@ -17,7 +18,7 @@ export function CreateFormWrapper({form, handleCreate, handleCancel}) {
 
     return(
         creating ? (
-            <div>
+            <FormContainer>
                 {form}
                 <Button
                     className="mx-2"
@@ -30,13 +31,25 @@ export function CreateFormWrapper({form, handleCreate, handleCancel}) {
                 >
                     Create
                 </Button>
-            </div>
+            </FormContainer>
         ) : (
-            <Button
+            <FormButton
                 onClick={() => setCreating(true)}
             >
                 {`Add`}
-            </Button>
+            </FormButton>
         )
     )
 }
+
+const FormContainer = tw.div`
+    flex
+    p-2
+`
+
+const FormButton = tw(Button)`
+    bg-gray-300
+    px-2
+    py-1
+    rounded
+`

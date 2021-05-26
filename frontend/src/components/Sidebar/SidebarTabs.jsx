@@ -10,7 +10,7 @@ export default function SidebarTabs({state, setState}) {
         return(
             <TabButton key={i} activeTab={state === type} onClick={() => setState(type)}>
                 <i className={`${getEntityIcon(type)}`}></i>
-                <p className="tooltip">{getEntityName(type)}</p>
+                <p className="tooltip text-black">{getEntityName(type)}</p>
             </TabButton>
         )
     });
@@ -30,7 +30,6 @@ const TabButton = tw(Button)`
     rounded-full 
     w-8 
     h-8 
-    bg-opacity-70
-    ${p => p.activeTab ? "bg-green-500" : "bg-none hover:bg-gray-200"}
+    ${p => p.activeTab ? "text-black" : "text-gray-300"}
 
 `
