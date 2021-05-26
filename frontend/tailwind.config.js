@@ -6,6 +6,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        parchment: {
+          light: "#FFFCF2",
+          DEFAULT: "#E6D6A9",
+          dark: "#786B3D"
+        }
+      },
       spacing: {
         '100': '25rem',
         '120': '30rem',
