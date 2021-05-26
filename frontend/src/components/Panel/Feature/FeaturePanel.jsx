@@ -20,7 +20,7 @@ export default function FeaturePanel({feature, styleData}) {
                 key={source._id}
                 panelType={slice}
                 id={source._id}
-                text={`${source.name}${slice === entityTypes.CLASSES ? " " + findKey( source.features, arr => arr.includes(feature._id) ): ""}`}
+                text={`${source.name}${slice === entityTypes.CLASSES || slice === entityTypes.SUBCLASSES ? " " + findKey( source.features, arr => arr.includes(feature._id) ): ""}`}
             />
         )
     });
@@ -37,7 +37,8 @@ export default function FeaturePanel({feature, styleData}) {
 function sourceModelToSlice(source) {
     const sourcesToModels = {
         'DndClass': entityTypes.CLASSES,
-        'Feature': entityTypes.FEATURES
+        'Feature': entityTypes.FEATURES,
+        'Subclass': entityTypes.SUBCLASSES
     }
     return sourcesToModels[source];
 }
