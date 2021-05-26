@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import entityTypes from "../../../util/types/entityTypes";
 import { receiveAllClasses, receiveClass } from "./classesReducer";
+import { receiveAllSubclasses, receiveSubclass } from "./subclassesReducer";
 
 const featuresSlice = createSlice({
   name: "features",
@@ -30,7 +31,17 @@ const featuresSlice = createSlice({
       action.payload.features.forEach( (feature) => {
           state[feature._id] = feature;
       });
-  }
+    },
+    [receiveAllSubclasses.type]: (state, action) => {
+        action.payload.features.forEach( (feature) => {
+            state[feature._id] = feature;
+        });
+    },
+    [receiveSubclass.type]: (state, action) => {
+        action.payload.features.forEach( (feature) => {
+            state[feature._id] = feature;
+        });
+    }
   }
 });
 
