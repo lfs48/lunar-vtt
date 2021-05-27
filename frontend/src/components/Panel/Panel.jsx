@@ -11,10 +11,13 @@ import { DraggableArea, PanelFooterContainer, PanelHeader, PanelHeaderContainer 
 import {throttle} from 'lodash';
 import FeaturePanel from './Feature/FeaturePanel';
 import entityTypes from '../../util/types/entityTypes';
-import ClassFormPanel from './Class/EditClassPanel';
+import EditClassPanel from './Class/EditClassPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
-import FeatureForm from './Feature/EditFeaturePanel';
+import EditFeaturePanel from './Feature/EditFeaturePanel';
 import { editFeature } from '../../store/reducers/entities/featuresReducer';
+import { editSubclass } from '../../store/reducers/entities/subclassesReducer';
+import EditSubclassPanel from './Subclass/EditSubclassPanel';
+import SubclassPanel from './Subclass/SubclassPanel';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -105,29 +108,11 @@ const _resize = (event, dirs, styleData, setStyleData) => {
 
 const resize = throttle(_resize, 20);
 
-const getInitialWidth = (panelType) => {
-    switch(panelType) {
-        case(entityTypes.CLASSES):
-            return 800;
-        case(entityTypes.FEATURES):
-            return 500;
-    }
-}
-
-const getInitialHeight = (panelType) => {
-    switch(panelType) {
-        case(entityTypes.CLASSES):
-            return 600;
-        case(entityTypes.FEATURES):
-            return 300;
-    }
-}
-
 const getContent = (panelType, edit, data, inputs, setInputs, height) => {
     switch(panelType) {
         case(entityTypes.CLASSES):
             if (edit) {
-                return <ClassFormPanel 
+                return <EditClassPanel 
                     dndClass={data} 
                     inputs={inputs}
                     setInputs={setInputs}
@@ -142,7 +127,7 @@ const getContent = (panelType, edit, data, inputs, setInputs, height) => {
             }
         case(entityTypes.FEATURES):
             if (edit) {
-                return <FeatureForm 
+                return <EditFeaturePanel 
                     inputs={inputs} 
                     setInputs={setInputs} 
                     preloadedInputs={initialInputs(data, panelType, true)}
@@ -150,6 +135,17 @@ const getContent = (panelType, edit, data, inputs, setInputs, height) => {
                     />
             } else {
                 return <FeaturePanel feature={data} styleData={{height: height}}/>;
+            }
+        case(entityTypes.SUBCLASSES):
+            if (edit) {
+                return <EditSubclassPanel
+                    inputs={inputs} 
+                    setInputs={setInputs} 
+                    preloadedInputs={initialInputs(data, panelType, true)}
+                    styleData={{height: height}}
+                />
+            } else {
+                return <SubclassPanel subclass={data} styleData={{height: height}} />
             }
     }
 }
@@ -177,6 +173,13 @@ const initialInputs = (data, panelType) => {
                 description: data.description,
                 featureType: data.featureType,
                 sourceModel: data.sourceModel
+            });
+        case(entityTypes.SUBCLASSES):
+            return({
+                name: data.name,
+                description: data.description,
+                spellcasting: data.spellcasting,
+                features: data.features
             })
     }
 }
@@ -187,6 +190,8 @@ const saveType = (panelType) => {
             return editClass.type;
         case(entityTypes.FEATURES):
             return editFeature.type;
+        case(entityTypes.SUBCLASSES):
+            return editSubclass.type
     }
 }
 
@@ -415,4 +420,5 @@ const panelClass = `
     z-50
     overflow-y-hidden
     overflow-x-hidden
+    rounded
 `
