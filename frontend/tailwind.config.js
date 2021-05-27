@@ -11,6 +11,9 @@ module.exports = {
           light: "#FFFCF2",
           DEFAULT: "#E6D6A9",
           dark: "#786B3D"
+        },
+        maroon: {
+          DEFAULT: "#58170D"
         }
       },
       spacing: {
