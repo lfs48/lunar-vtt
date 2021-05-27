@@ -13,8 +13,8 @@ export const Label = tw.label`
 export const Input = tw.input`
     bg-gray-100
     rounded
-    px-4
-    py-2
+    px-2
+    py-1
     border
     border-black
 `;
