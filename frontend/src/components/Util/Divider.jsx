@@ -18,6 +18,7 @@ const DividerContainer = tw.div`
 
 const DividerLine = tw.div`
     border-b
-    border-opacity-10
+    border-black
+    border-opacity-30
     w-2/3
 `
