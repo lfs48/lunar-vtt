@@ -3,13 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openPanel } from '../../../store/reducers/UI/panelsReducer';
 import { SidebarLi, TabHeader } from '../styles';
 import { getCreateForm } from '../CreateForm/index';
-import { ClearInput, Input } from '../../../styles/components';
+import { Button, ClearInput, Input } from '../../../styles/components';
+import { openModal } from '../../../store/reducers/UI/modalReducer';
+import { modalTypes } from '../../../util/types/modalTypes';
+import SearchInput from '../../Util/SearchInput';
 
 export default function DefaultTab({entityType}) {
 
     const dispatch = useDispatch();
 
-    const [searchInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = useState({
+        value: ""
+    });
 
     const {entities, openEntities, user} = useSelector( (state) => ({
         entities: state.entities[entityType],
@@ -18,7 +23,7 @@ export default function DefaultTab({entityType}) {
     }));
 
     const filteredEntities = Object.values(entities)
-    .filter( (entity) => entity.name.toLowerCase().startsWith(searchInput.toLowerCase()) )
+    .filter( (entity) => entity.name.toLowerCase().startsWith(searchInput.value.toLowerCase()) )
     .sort( (feature1, feature2) => {
         const a = feature1.name.toLowerCase();
         const b = feature2.name.toLowerCase();
@@ -50,21 +55,31 @@ export default function DefaultTab({entityType}) {
         )
     });
 
+    const handleCreate = () => {
+        const action = {
+            type: openModal.type,
+            payload: {
+                modalType: modalTypes.CLASSFORM
+            }
+        }
+        dispatch(action);
+    }
+
     return(
         <div>
             <TabHeader>
-                <div className="bg-gray-300 flex items-center py-1 px-2 rounded">
-                    <i className="fas fa-search mr-2"></i>
-                    <input
-                        type="text"
-                        value={searchInput}
-                        placeholder="Search"
-                        onChange={e => setSearchInput(e.target.value)}
-                        className="bg-gray-300 focus:outline-none"
-                    ></input>
-                </div>
+                <SearchInput
+                    field="value"
+                    input={searchInput}
+                    setInput={setSearchInput}
+                    className="w-2/3"
+                />
                 {user.gm ?
-                    getCreateForm(entityType)
+                    <Button
+                        onClick={() => handleCreate()}
+                    >
+                        Add
+                    </Button>
                 :<></>}
             </TabHeader>
             <ul>

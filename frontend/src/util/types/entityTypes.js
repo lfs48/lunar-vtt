@@ -1,6 +1,7 @@
 import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised, faMonument, faDna, faStar, faTheaterMasks } from '@fortawesome/free-solid-svg-icons';
 import { classesSliceName, createClass } from '../../store/reducers/entities/classesReducer';
 import { featuresSliceName, createFeature } from '../../store/reducers/entities/featuresReducer';
+import { modalTypes } from './modalTypes';
 
 const entityTypes = {
     CHARACTERS: "characters",
@@ -53,55 +54,6 @@ export function getEntityIcon(entityType) {
     }
 };
 
-// export function getEntityIcon(entityType) {
-//     let res;
-//     switch(entityType) {
-//         case(entityTypes.CHARACTERS):
-//             res = faAddressBook;
-//             break;
-//         case(entityTypes.CLASSES):
-//             res = faHatWizard;
-//             break;
-//         case(entityTypes.RACES):
-//             res = faDna;
-//             break;
-//         case(entityTypes.SPELLS):
-//             res = faMeteor;
-//             break;
-//         case(entityTypes.ITEMS):
-//             res = faRing;
-//             break;
-//         case(entityTypes.RULES):
-//             res = faBookReader;
-//             break;
-//         case(entityTypes.MONSTERS):
-//             res = faSpider;
-//             break;
-//         case(entityTypes.SETTINGS):
-//             res = faCog;
-//             break;
-//         case(entityTypes.FEATURES):
-//             res = faStar;
-//             break;
-//         case(entityTypes.FEATS):
-//             res = faAward;
-//             break;
-//         case(entityTypes.ROLLABLE):
-//             res = faDiceD20;
-//             break;
-//         case(entityTypes.SUBCLASSES):
-//             res = faTheaterMasks;
-//             break;
-//         case(entityTypes.BACKGROUNDS):
-//             res = faMonument;
-//             break;
-//         default:
-//             res = <></>;
-//             break;
-//     }
-//     return res;
-// };
-
 export function getEntityName(entityType) {
     switch(entityType) {
         case(entityTypes.CHARACTERS):
@@ -141,6 +93,39 @@ export function getCreateEntityActionType(entityType) {
             return 'Character';
         case(entityTypes.CLASSES):
             return createClass.type;
+        case(entityTypes.RACES):
+            return 'Race';
+        case(entityTypes.SPELLS):
+            return 'Spell';
+        case(entityTypes.ITEMS):
+            return 'Item';
+        case(entityTypes.RULES):
+            return 'Rule';
+        case(entityTypes.MONSTERS):
+            return 'Monster';
+        case(entityTypes.SETTINGS):
+            return 'Setting';
+        case(entityTypes.FEATURES):
+            return createFeature.type
+        case(entityTypes.FEATS):
+            return 'Feat';
+        case(entityTypes.ROLLABLE):
+            return 'Rollable Table';
+        case(entityTypes.BACKGROUNDS):
+            return 'Background';
+        case(entityTypes.SUBCLASSES):
+            return 'Subclass';
+        default:
+            return null;
+    }
+};
+
+export function getEntityModalType(entityType) {
+    switch(entityType) {
+        case(entityTypes.CHARACTERS):
+            return 'Character';
+        case(entityTypes.CLASSES):
+            return modalTypes.CLASSFORM
         case(entityTypes.RACES):
             return 'Race';
         case(entityTypes.SPELLS):

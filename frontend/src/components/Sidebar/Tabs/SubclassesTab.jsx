@@ -6,10 +6,17 @@ import { getCreateForm } from '../CreateForm/index';
 import entityTypes from '../../../util/types/entityTypes';
 import tw from 'tailwind-styled-components';
 import Collapsable from '../../Util/Collapsable';
+import SearchInput from '../../Util/SearchInput';
+import { merge } from 'lodash';
 
 export default function SubclassesTab() {
 
     const dispatch = useDispatch();
+
+    const [filters, setFilters] = useState({
+        search: "",
+        sourceType: null
+    });
 
     const {dndClasses, subclasses, openSubclasses, user} = useSelector( (state) => ({
         dndClasses: state.entities.dndClasses,
@@ -30,26 +37,53 @@ export default function SubclassesTab() {
         dispatch(action);
     }
 
+    const matchesFilters = (subclass) => {
+        return ( subclass.name.toLowerCase().includes(filters.search.toLocaleLowerCase() ) )
+    }
+    const filteredSubclasses = Object.values(subclasses)
+    .filter( (subclass) => subclass.name.toLowerCase().startsWith(filters.search.toLowerCase()) )
+    .sort( (sub1, sub2) => {
+        const a = sub1.name.toLowerCase();
+        const b = sub2.name.toLowerCase();
+        if (a > b) { return 1; }
+        else if (b > a) { return -1; }
+        else { return 0; }
+    });
+
     const sections = Object.values(dndClasses).map( (dndClass) => {
         return(
             <ClassSectionContainer>
                 <Collapsable 
-                key={dndClass._id}
-                header={
-                    <ClassSectionHeader>{dndClass.name}</ClassSectionHeader>
-                }
+                    key={dndClass._id}
+                    header={
+                        <ClassSectionHeader>{dndClass.name}</ClassSectionHeader>
+                    }
                 >
-                <SubclassList>
-                    {dndClass.subclasses.map( (id) => {
-                        const subclass = subclasses[id];
-                        return(
-                            <SubclassLi key={id} open={openSubclasses.includes(id)} onClick={(e) => handleLiClick(e, id)}>
-                                {subclass.name}
-                            </SubclassLi>
-                        )
-                    })}
-                </SubclassList>
-            </Collapsable>
+                    <SubclassList>
+                        {
+                        merge([], dndClass.subclasses)
+                        .sort( (id1, id2) => {
+                            const sub1 = subclasses[id1].name.toLowerCase();
+                            const sub2 = subclasses[id2].name.toLowerCase();
+                            if (sub1 > sub2) { return 1; }
+                            else if (sub2 > sub1) { return -1; }
+                            else { return 0; }
+                        })
+                        .map( (id) => {
+                            const subclass = subclasses[id];
+                                return(
+                                    <SubclassLi 
+                                        key={id} 
+                                        open={openSubclasses.includes(id)} 
+                                        onClick={(e) => handleLiClick(e, id)}
+                                        matchesFilters={matchesFilters(subclass)}
+                                    >
+                                        {subclass.name}
+                                    </SubclassLi>
+                                )
+                        })}
+                    </SubclassList>
+                </Collapsable>
             </ClassSectionContainer>
         )
     });
@@ -57,6 +91,12 @@ export default function SubclassesTab() {
     return(
         <div>
             <TabHeader>
+                <SearchInput 
+                    field="search"
+                    input={filters}
+                    setInput={setFilters}
+                    className="w-2/3"
+                />
                 {user.gm ?
                     getCreateForm(entityTypes.SUBCLASSES)
                 :<></>}
@@ -81,4 +121,6 @@ const SubclassList = tw.ul`
 
 const SubclassLi = tw(SidebarLi)`
     border-none
+    transition-all
+    ${p => p.matchesFilters ? "" : "hidden"}
 `
