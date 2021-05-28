@@ -1,34 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Button } from '../../styles/components';
 
-export default function Collapsable({header, children, className=""}) {
+export default function Collapsable({header, children, className="", update=null}) {
 
+    const foobar = update;
     const [collapsed, setCollapsed] = useState(false);
+    const [transitioning, setTransitioning] = useState(false);
     const [id, _] = useState(Math.random());
-    const height = document.getElementById(`collapsable-${id}`)?.firstChild.offsetHeight;
+    const [height, setHeight] = useState(document.getElementById(`collapsable-${id}`)?.firstChild.offsetHeight)
+    
+    useEffect( () => {
+        setHeight(document.getElementById(`collapsable-${id}`)?.firstChild.offsetHeight);
+    });
+
+    const handleCollapseToggle = (bool) => {
+        setTransitioning(true);
+        setCollapsed(bool);
+        setTimeout( () => {
+            setTransitioning(false)
+        }, 500);
+    }
 
     return(
-        <CollapsableContainer className={className}>
-            <CollapsableHeader onClick={() => setCollapsed(!collapsed)}>
+        <div className={className}>
+            <CollapsableHeader onClick={() => handleCollapseToggle(!collapsed)}>
                 {header}
-                <Button onClick={() => setCollapsed(!collapsed)}>
-                    <CollapseIcon collapsed={collapsed}></CollapseIcon>
-                </Button>
+                <CollapseIcon collapsed={collapsed}></CollapseIcon>
             </CollapsableHeader>
-        <div 
+        <CollapsableContainer 
             id={`collapsable-${id}`} 
-            className={`block overflow-hidden transition-all ease-in duration-500`} 
+            className={`block overflow-hidden ${transitioning ? "transition-all ease-in duration-500" : ""}`} 
             style={collapsed ? {height: 0} : {height: height}}
         >
             {children}
-        </div>
-    </CollapsableContainer>
+        </CollapsableContainer>
+    </div>
     )
 }
 
 const CollapsableContainer = tw.div`
-
+    block
+    overflow-hidden
+    ${p => p.transitioning ? 
+        `
+            transition-all
+            ease-in
+            duration-500
+        ` 
+    : "" }
 `
 
 const CollapsableHeader = tw.header`
