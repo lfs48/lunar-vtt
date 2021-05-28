@@ -17,13 +17,36 @@ const DndClassController = {
     },
     create: async (req, res) => {
         try {
-            const newClass = await DndClass.create(classParams(req.body));
+            const params = classParams(req.body);
+            const newClass = await DndClass.create(params);
+            let newFeatures = [];
+            if ("features" in params) {
+                [...newClass.features.values()].forEach( (arr) => arr.forEach( (el) => newFeatures.push(el._id) ) );
+                await FeatureModel.updateMany(
+                    {
+                        _id: {
+                            $in: newFeatures
+                        }
+                    },
+                    {
+                        $addToSet: {
+                            sources: newClass._id
+                        }
+                    }
+                )
+            }
+            const classFeatures = await FeatureModel
+            .find({
+                _id: {
+                    $in: newFeatures
+                }
+            });
             res
             .status(201)
             .json({
                 success: true,
                 dndClass: newClass,
-                features: []
+                features: classFeatures
             });
         } catch (e) {
             res
@@ -102,6 +125,20 @@ const DndClassController = {
     delete: async (req, res) => {
         try {
             const deletedClass = await DndClassModel.findOneAndDelete({_id: req.params.classId});
+            let orphanedFeatures = [];
+            [...deletedClass.features.values()].forEach( (arr) => arr.forEach( (el) => orphanedFeatures.push(el._id) ) );
+            await FeatureModel.updateMany(
+                {
+                    _id: {
+                        $in: orphanedFeatures
+                    }
+                },
+                {
+                    $pull: {
+                        sources: deletedClass._id
+                    }
+                }
+            );
             res
             .status(200)
             .json({
