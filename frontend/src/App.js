@@ -9,11 +9,13 @@ import Navbar from './components/Navbar/Navbar';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Dashboard from './components/Dashboard/Dashboard';
 import Wrapper from './components/Wrapper/Wrapper';
+import Modal from './components/Modal/Modal';
 
 function App() {
 
-  const {loggedIn} = useSelector( (state) => ({
-    loggedIn: state.session.loggedIn
+  const {loggedIn, modal} = useSelector( (state) => ({
+    loggedIn: state.session.loggedIn,
+    modal: state.UI.modal
   }));
 
   return (
@@ -25,6 +27,9 @@ function App() {
       </Helmet>
       <div className="overflow-hidden">
       <Wrapper>
+        {modal.open ?
+          <Modal modalType={modal.modalType} />
+        :<></>}
         <Switch>
           <ProtectedRoute exact path="/dashboard" component={Dashboard} />
           <AuthRoute exact path="/register" component={Register} />
