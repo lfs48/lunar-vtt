@@ -9,6 +9,11 @@
     font-family: 'MedievalSharp', cursive
   }
 
+  .has-tooltip{
+    @apply
+      relative
+  }
+
   .tooltip {
     @apply 
       invisible
