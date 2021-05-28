@@ -10,7 +10,7 @@ import ClassViewPanel from './Class/ClassPanel';
 import { DraggableArea, PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './Feature/FeaturePanel';
-import entityTypes from '../../util/types/entityTypes';
+import entityTypes, { getEntityModalType } from '../../util/types/entityTypes';
 import EditClassPanel from './Class/EditClassPanel';
 import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
 import EditFeaturePanel from './Feature/EditFeaturePanel';
@@ -18,6 +18,8 @@ import { editFeature } from '../../store/reducers/entities/featuresReducer';
 import { editSubclass } from '../../store/reducers/entities/subclassesReducer';
 import EditSubclassPanel from './Subclass/EditSubclassPanel';
 import SubclassPanel from './Subclass/SubclassPanel';
+import { openModal } from '../../store/reducers/UI/modalReducer';
+import { modalTypes } from '../../util/types/modalTypes';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -195,13 +197,16 @@ const saveType = (panelType) => {
     }
 }
 
-const handleEdit = ({event, setInputs, data, panelType, dispatch}) => {
+const handleEdit = ({event, entity, entityType, dispatch}) => {
     event.preventDefault();
-    setInputs(initialInputs(data, panelType, true));
     const action = {
-        type: editPanel.type,
+        type: openModal.type,
         payload: {
-            id: data._id
+            modalType: getEntityModalType(entityType),
+            data: {
+                entity: entity,
+                edit: true
+            }
         }
     };
     dispatch(action);
@@ -252,7 +257,7 @@ const handleClose = ({event, styleData, setStyleData, dispatch, id}) => {
             }
         };
         dispatch(action);
-    }, 720);
+    }, 350);
 };
 
 
@@ -276,10 +281,10 @@ export default function Panel({data, panelType, edit}) {
     }));
 
     const [styleData, setStyleData] = useState({
-        left: Math.random() * (window.innerWidth - 600 - 20),
-        top: Math.random() * (window.innerHeight - 800 - 10),
-        width: 600,
-        height: 800,
+        left: Math.random() * (window.innerWidth - 1400),
+        top: Math.random() * (window.innerHeight - 610 ),
+        width: 800,
+        height: 600,
         minHeight: 50,
         minWidth: 200,
         dragging: false,
@@ -381,9 +386,8 @@ export default function Panel({data, panelType, edit}) {
                         <Button 
                             onClick={e => handleEdit({
                                 event: e,
-                                setInputs: setInputs,
-                                data: data,
-                                panelType: panelType,
+                                entity: data,
+                                entityType: panelType,
                                 dispatch: dispatch
                             })}
                         >
@@ -417,7 +421,7 @@ const panelClass = `
     border-black
     bg-white
     shadow-xl
-    z-50
+    z-40
     overflow-y-hidden
     overflow-x-hidden
     rounded

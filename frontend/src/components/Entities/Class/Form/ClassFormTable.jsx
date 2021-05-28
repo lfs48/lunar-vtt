@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { BgButton, Button, ClearInput, Input } from '../../../styles/components';
-import { getLevelProf, handleInput, intToOrdinal } from '../../../util/functions/utilFunctions';
-import entityTypes from '../../../util/types/entityTypes';
+import { BgButton, Button, ClearInput, Input } from '../../../../styles/components';
+import { getLevelProf, handleInput, intToOrdinal } from '../../../../util/functions/utilFunctions';
+import entityTypes from '../../../../util/types/entityTypes';
 import { merge } from 'lodash';
 import { useSelector } from 'react-redux';
-import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from './styles';
+import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from '../../../Panel/Class/styles';
 import tw from 'tailwind-styled-components';
-import EntityAutocomplete from '../../EntityAutocomplete/EntityAutocomplete';
+import EntityAutocomplete from '../../../EntityAutocomplete/EntityAutocomplete';
 
 export default function ClassFormTable({inputs, setInputs}) {
 
