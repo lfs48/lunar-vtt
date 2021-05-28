@@ -1,6 +1,6 @@
 import { handleInput } from "../../util/functions/utilFunctions"
 
-export default function Select({optionList, field, state, setState}) {
+export default function Select({optionList, field, state, setState, className=""}) {
 
     const options = optionList.map( (opt, i)=> {
         return(
@@ -11,7 +11,11 @@ export default function Select({optionList, field, state, setState}) {
     })
 
     return(
-        <select value={state[field]} onChange={e => handleInput(e, field, state, setState)}>
+        <select 
+            value={state[field]} 
+            onChange={e => handleInput(e, field, state, setState)}
+            className={className}
+        >
             {options}
         </select>
     )
