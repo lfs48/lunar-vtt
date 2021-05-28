@@ -15,8 +15,6 @@ export const Input = tw.input`
     rounded
     px-2
     py-1
-    border
-    border-black
 `;
 
 export const ClearInput = tw.input`
@@ -53,15 +51,11 @@ export const TextButton1 = tw(TextButton)`
 
 export const TextArea = tw.textarea`
     resize-none
-    w-full
-    h-32
     overflow-auto
-    bg-gray-300
-    py-2
-    px-4
+    bg-gray-100
+    py-1
+    px-2
     rounded
-    border
-    border-black
 `
 
 export const DropDown = tw.div`
