@@ -60,4 +60,5 @@ export const panelContentClasses = `
     p-6
     overflow-y-auto
     overflow-x-hidden
+    scroll
 `

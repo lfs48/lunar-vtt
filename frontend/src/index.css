@@ -16,7 +16,7 @@
 
   .tooltip {
     @apply 
-      invisible
+      hidden
       absolute 
       text-xs
       font-normal
@@ -27,7 +27,9 @@
   }
     
   .has-tooltip:hover .tooltip {
-    @apply visible z-50
+    @apply 
+      block
+      z-[99]
   }
 
   .resizable {
@@ -39,30 +41,30 @@
   }
 
   .resize-top {
-    top: -5px;
+    top: -0.5rem;
     left: 0;
     width: 100%;
-    height: 10px;
+    height: 1rem;
   }
 
   .resize-right {
     top: 0;
-    right: -5px;
-    width: 10px;
+    right: -0.5px;
+    width: 1rem;
     height: 100%;
   }
 
   .resize-bottom {
-    bottom: -5px;
+    bottom: -0.5rem;
     left: 0;
     width: 100%;
-    height: 10px;
+    height: 1rem;
   }
 
   .resize-left {
     top: 0;
-    left: -5px;
-    width: 10px;
+    left: -0.5rem;
+    width: 1rem;
     height: 100%;
   }
 
@@ -72,23 +74,23 @@
   }
 
   .resize-bottomright {
-    bottom: -5px;
-    right: -5px;
+    bottom: -0.5rem;
+    right: -0.5rem;
   }
 
   .resize-bottomleft {
-    bottom: -5px;
-    left: -5px;
+    bottom: -0.5rem;
+    left: -0.5rem;
   }
 
   .resize-topright {
-    top: -5px;
-    right: -5px;
+    top: -0.5rem;
+    right: -0.5rem;
   }
 
   .resize-topleft {
-    top: -5px;
-    left: -5px;
+    top: -0.5rem;
+    left: -0.5rem;
   }
 
   .resize-top:hover, .resize-bottom:hover {
@@ -113,5 +115,20 @@
 
   .resize-topleft:hover {
     cursor: nw-resize;
+  }
+
+  .scroll::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  .scroll::-webkit-scrollbar-track {
+      background: #f1f1f1;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    background-clip: padding-box;
   }
 }
