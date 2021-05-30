@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
-import SidebarTabs from './SidebarTabs';
+import SidebarHeader from './SidebarHeader';
 import entityTypes from '../../util/types/entityTypes';
 import { getEntityTab } from './Tabs/index';
 
@@ -11,7 +11,7 @@ export default function Sidebar() {
     return(
         <StyledSidebar>
             <div className="relative">
-                <SidebarTabs state={tab} setState={setTab}/>
+                <SidebarHeader state={tab} setState={setTab}/>
                 <div className="">
                     {getEntityTab(tab)}
                 </div>
