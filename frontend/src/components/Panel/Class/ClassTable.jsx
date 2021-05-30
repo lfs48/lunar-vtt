@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
 import { getLevelProf, getSpellSlots, intToOrdinal } from '../../../util/functions/utilFunctions';
 import entityTypes from '../../../util/types/entityTypes';
-import PanelLink from '../PanelLink';
+import EntityLink from '../../Entities/EntityLink';
 import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from './styles';
 
 export default function ClassTable({dndClass, features}) {
@@ -23,7 +23,9 @@ export default function ClassTable({dndClass, features}) {
         const levelFeatures = dndClass.features[level]
         .map( (id) => {
             const feature = features.find(feat => feat._id === id);
-            return <PanelLink key={id} panelType={entityTypes.FEATURES} id={id} text={feature.name}/>
+            return <EntityLink key={id} entityType={entityTypes.FEATURES} id={id}>
+                {feature.name}
+            </EntityLink>
         });
         const extraCols = Object.keys(dndClass.tableCols).map( (col, i) => {
             return <ClassTableRowCenter key={i}>{dndClass.tableCols[col][n]}</ClassTableRowCenter>

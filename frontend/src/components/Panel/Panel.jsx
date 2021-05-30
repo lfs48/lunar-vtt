@@ -1,25 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { merge } from 'lodash';
-import { Button, TextButton, TextButton1 } from '../../styles/components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { editPanel, viewPanel, closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
+import { Button } from '../../styles/components';
+import { closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import tw from 'tailwind-styled-components';
 import ClassViewPanel from './Class/ClassPanel';
-import { DraggableArea, PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
+import { PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from './Feature/FeaturePanel';
 import entityTypes, { getEntityModalType } from '../../util/types/entityTypes';
-import EditClassPanel from './Class/EditClassPanel';
-import { createClass, editClass } from '../../store/reducers/entities/classesReducer';
-import EditFeaturePanel from './Feature/EditFeaturePanel';
-import { editFeature } from '../../store/reducers/entities/featuresReducer';
-import { editSubclass } from '../../store/reducers/entities/subclassesReducer';
-import EditSubclassPanel from './Subclass/EditSubclassPanel';
 import SubclassPanel from './Subclass/SubclassPanel';
 import { openModal } from '../../store/reducers/UI/modalReducer';
-import { modalTypes } from '../../util/types/modalTypes';
 import Resize from '../Util/Resize';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {

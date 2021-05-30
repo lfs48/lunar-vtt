@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import entityTypes from '../../../util/types/entityTypes';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { pick, findKey } from 'lodash';
-import PanelLink from '../PanelLink';
 import MarkdownText from '../../Util/MarkdownText';
+import EntityLink from '../../Entities/EntityLink';
 
 const FeaturePanel = React.memo(function FeaturePanel({feature, className=""}) {
 
@@ -16,12 +16,13 @@ const FeaturePanel = React.memo(function FeaturePanel({feature, className=""}) {
 
     const sourceLinks = sources.map( (source) => {
         return(
-            <PanelLink 
+            <EntityLink
                 key={source._id}
-                panelType={slice}
+                entityType={slice}
                 id={source._id}
-                text={`${source.name}${slice === entityTypes.CLASSES || slice === entityTypes.SUBCLASSES ? " " + findKey( source.features, arr => arr.includes(feature._id) ): ""}`}
-            />
+            >
+                {`${source.name}${slice === entityTypes.CLASSES || slice === entityTypes.SUBCLASSES ? " " + findKey( source.features, arr => arr.includes(feature._id) ): ""}`}
+            </EntityLink>
         )
     });
 

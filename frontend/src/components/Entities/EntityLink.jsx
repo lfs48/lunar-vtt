@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { openPanel } from '../../store/reducers/UI/panelsReducer';
 import tw from 'tailwind-styled-components';
 
-export default function PanelLink({panelType, id, text}) {
+export default function EntityLink({entityType, id, children, className=""}) {
 
     const dispatch = useDispatch();
     
@@ -13,7 +13,7 @@ export default function PanelLink({panelType, id, text}) {
         const action = {
             type: openPanel.type,
             payload: {
-                panelType: panelType,
+                panelType: entityType,
                 id: id
             }
         };
@@ -21,12 +21,17 @@ export default function PanelLink({panelType, id, text}) {
     }
 
     return(
-        <StyledPanelLink onClick={(e) => handleClick(e)}>{text}</StyledPanelLink>
+        <StyledLink 
+            onClick={(e) => handleClick(e)}
+            className={className}
+        >
+            {children}
+        </StyledLink>
     )
 
 }
 
-const StyledPanelLink = tw.p`
+const StyledLink = tw.p`
     cursor-pointer
     text-blue-500
     bg-gray-300
