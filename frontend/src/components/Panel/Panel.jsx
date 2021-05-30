@@ -50,7 +50,7 @@ const _handleDrag = ({event, styleData, setStyleData, id, dispatch}) => {
         }
         if (event.pageY > 0) {
             newState.top += event.pageY - styleData.dragPrevY;
-            newState.top = Math.min(newState.top, window.innerHeight - styleData.height - 5);
+            newState.top = Math.min(newState.top, window.innerHeight - styleData.height - 7);
             newState.top = Math.max(newState.top, 0);
             newState.dragPrevY = event.pageY;
         }
