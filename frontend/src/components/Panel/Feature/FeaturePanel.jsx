@@ -4,9 +4,9 @@ import entityTypes from '../../../util/types/entityTypes';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { pick, findKey } from 'lodash';
 import PanelLink from '../PanelLink';
-import SplitText from '../../Util/SplitText';
+import MarkdownText from '../../Util/MarkdownText';
 
-export default function FeaturePanel({feature, styleData}) {
+const FeaturePanel = React.memo(function FeaturePanel({feature, className=""}) {
 
     const slice = sourceModelToSlice(feature.sourceModel);
 
@@ -26,13 +26,15 @@ export default function FeaturePanel({feature, styleData}) {
     });
 
     return(
-        <div style={styleData} className={panelContentClasses}>
-            <SplitText text={feature.description} />
+        <div className={className}>
+            <MarkdownText text={feature.description} />
             <p>Sources: </p>
             {sourceLinks}
         </div>
     )
-}
+});
+
+export default FeaturePanel;
 
 function sourceModelToSlice(source) {
     const sourcesToModels = {

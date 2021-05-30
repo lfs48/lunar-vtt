@@ -66,7 +66,7 @@ const _handleDrag = ({event, styleData, setStyleData, id, dispatch}) => {
     }
 };
 
-const handleDrag = throttle(_handleDrag, 15);
+const handleDrag = throttle(_handleDrag, 10);
 
 const handleDragEnd = (event, styleData, setStyleData) => {
     event.preventDefault();
@@ -80,90 +80,30 @@ const handleDragEnd = (event, styleData, setStyleData) => {
     }, 20);
 };
 
-const getContent = (panelType, edit, data, inputs, setInputs, height) => {
+const getContent = (panelType, data, gm) => {
+
+    const panelClasses = `p-6
+    ${gm ? "h-[calc(100%-6rem)]" : "h-[calc(100%-3rem)]"}
+    overflow-y-auto
+    overflow-x-hidden
+    scroll`;
+
     switch(panelType) {
         case(entityTypes.CLASSES):
-            if (edit) {
-                return <EditClassPanel 
-                    dndClass={data} 
-                    inputs={inputs}
-                    setInputs={setInputs}
-                    preloadedInputs={initialInputs(data, panelType, true)} 
-                    styleData={{height: height}}
-                />;
-            } else {
                 return <ClassViewPanel 
                     dndClass={data} 
-                    styleData={{height: height}}
+                    className={panelClasses}
                 />;
-            }
         case(entityTypes.FEATURES):
-            if (edit) {
-                return <EditFeaturePanel 
-                    inputs={inputs} 
-                    setInputs={setInputs} 
-                    preloadedInputs={initialInputs(data, panelType, true)}
-                    styleData={{height: height}}
-                    />
-            } else {
-                return <FeaturePanel feature={data} styleData={{height: height}}/>;
-            }
+                return <FeaturePanel 
+                    feature={data} 
+                    className={panelClasses}
+                />;
         case(entityTypes.SUBCLASSES):
-            if (edit) {
-                return <EditSubclassPanel
-                    inputs={inputs} 
-                    setInputs={setInputs} 
-                    preloadedInputs={initialInputs(data, panelType, true)}
-                    styleData={{height: height}}
+                return <SubclassPanel 
+                    subclass={data} 
+                    className={panelClasses} 
                 />
-            } else {
-                return <SubclassPanel subclass={data} styleData={{height: height}} />
-            }
-    }
-}
-
-const initialInputs = (data, panelType) => {
-    switch(panelType) {
-        case(entityTypes.CLASSES):
-            return({
-                name: data.name,
-                description: data.description,
-                hitDie: data.hitDie,
-                armor: data.armor,
-                weapons: data.weapons,
-                tools: data.tools,
-                saves: data.saves,
-                skills: data.skills,
-                equipment: data.equipment,
-                tableCols: data.tableCols,
-                features: data.features,
-                spellcasting: data.spellcasting
-            });
-        case(entityTypes.FEATURES):
-            return({
-                name: data.name,
-                description: data.description,
-                featureType: data.featureType,
-                sourceModel: data.sourceModel
-            });
-        case(entityTypes.SUBCLASSES):
-            return({
-                name: data.name,
-                description: data.description,
-                spellcasting: data.spellcasting,
-                features: data.features
-            })
-    }
-}
-
-const saveType = (panelType) => {
-    switch(panelType) {
-        case(entityTypes.CLASSES):
-            return editClass.type;
-        case(entityTypes.FEATURES):
-            return editFeature.type;
-        case(entityTypes.SUBCLASSES):
-            return editSubclass.type
     }
 }
 
@@ -181,36 +121,6 @@ const handleEdit = ({event, entity, entityType, dispatch}) => {
     };
     dispatch(action);
 };
-
-const handleSave = ({event, inputs, id, panelType, dispatch}) => {
-    event.preventDefault();
-    const action = {
-        type: saveType(panelType),
-        payload: {
-            id: id,
-            formData: inputs
-        }
-    };
-    const otherAction = {
-        type: viewPanel.type,
-        payload: {
-            id: id
-        }
-    };
-    dispatch(action);
-    dispatch(otherAction);
-};
-
-const handleCancel = ({event, id, dispatch}) => {
-    event.preventDefault();
-    const action = {
-        type: viewPanel.type,
-        payload: {
-            id: id
-        }
-    };
-    dispatch(action);
-}
 
 const handleClose = ({event, styleData, setStyleData, dispatch, id}) => {
     event.preventDefault();
@@ -242,7 +152,7 @@ const handleSelect = ({event, id, dispatch}) => {
     dispatch(action);
 }
 
-export default function Panel({data, panelType, edit}) {
+export default function Panel({data, panelType}) {
 
     const dispatch = useDispatch();
 
@@ -263,8 +173,6 @@ export default function Panel({data, panelType, edit}) {
         stage: 0,
         opacity: 0,
     });
-
-    const [inputs, setInputs] = useState(initialInputs(data, panelType, false));
 
     useEffect(() => {
         const newState = merge({}, styleData);
@@ -323,47 +231,20 @@ export default function Panel({data, panelType, edit}) {
                 </div>
             </PanelHeaderContainer>
 
-            {getContent(panelType, edit, data, inputs, setInputs, user.gm ? styleData.height - 100 : styleData.height - 53)}
+            {getContent(panelType, data, user.gm)}
 
             {user.gm ?
                 <PanelFooterContainer>
-                    {edit ? (
-                        <>
-                        <Button 
-                            onClick={e => handleSave({
-                                event: e,
-                                inputs: inputs,
-                                id: data._id,
-                                panelType: panelType,
-                                dispatch: dispatch
-                            })}
-                            className="text-green-500"
-                        >
-                            Save
-                        </Button>
-                        <Button 
-                                onClick={e => handleCancel({
-                                event: e,
-                                id: data._id,
-                                dispatch: dispatch
-                                })}
-                                className="text-red-500"
-                        >
-                            Cancel
-                        </Button>
-                        </>
-                    ) : (
-                        <Button 
-                            onClick={e => handleEdit({
-                                event: e,
-                                entity: data,
-                                entityType: panelType,
-                                dispatch: dispatch
-                            })}
-                        >
-                            Edit
-                        </Button>
-                    )}
+                    <Button 
+                        onClick={e => handleEdit({
+                            event: e,
+                            entity: data,
+                            entityType: panelType,
+                            dispatch: dispatch
+                        })}
+                    >
+                        Edit
+                    </Button>
                 </PanelFooterContainer>
             :<></>}
 
@@ -376,7 +257,7 @@ export default function Panel({data, panelType, edit}) {
 
 const panelClass = `
     absolute
-    border
+    border-2
     border-black
     bg-white
     shadow-xl

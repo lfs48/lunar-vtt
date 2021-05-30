@@ -4,12 +4,12 @@ import { DiceRoll } from 'rpg-dice-roller';
 import ClassTable from './ClassTable';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses } from '../styles';
 import { intToOrdinal } from '../../../util/functions/utilFunctions';
-import SplitText from '../../Util/SplitText';
+import MarkdownText from '../../Util/MarkdownText';
 import Collapsable from "../../Util/Collapsable";
 import tw from 'tailwind-styled-components';
 import Divider from '../../Util/Divider';
 
-export default function ClassViewPanel({dndClass, styleData}) {
+const ClassPanel = React.memo( function({dndClass, className=""}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 
@@ -35,17 +35,17 @@ export default function ClassViewPanel({dndClass, styleData}) {
                         </span>
                     }
                 >
-                    <SplitText text={feature.description} className="pt-2"/>
+                    <MarkdownText className="pt-2" text={feature.description} />
                 </Collapsable>
             )
         })
     });;
 
     return(
-        <div style={styleData} className={panelContentClasses}>
-            <SplitText text={dndClass.description} className="italic mb-6"/>
+        <div className={className}>
+            <MarkdownText className="italic mb-6" text={dndClass.description} />
             <ClassTable dndClass={dndClass} features={classFeatures}/>
-            <ClassInfoContainer>
+            <div>
                 <PanelSectionHeader>Class Features</PanelSectionHeader>
                 <p className="mb-2">{`As a ${dndClass.name.toLowerCase()}, you get the following class features.`}</p>
                 <PanelSubsectionHeader>Hit Points</PanelSubsectionHeader>
@@ -99,13 +99,11 @@ export default function ClassViewPanel({dndClass, styleData}) {
                         </ul>
                     </div>
                 </Block>
-            </ClassInfoContainer>
+            </div>
             <Divider />
             {featureSections}
         </div>
     )
-}
+})
 
-const ClassInfoContainer = tw.div`
-
-`
+export default ClassPanel;

@@ -4,6 +4,8 @@ export const PanelHeaderContainer = tw.header`
     flex
     justify-between
     sticky
+    w-full
+    h-12
     top-0
     bg-white
     px-6
@@ -17,7 +19,7 @@ export const PanelFooterContainer = tw.footer`
     flex
     flex-row-reverse
     justify-between
-    sticky
+    absolute
     bottom-0
     bg-white
     px-12
@@ -26,6 +28,7 @@ export const PanelFooterContainer = tw.footer`
     border-t
     border-gray-200
     border-black
+    w-full
     h-12
 `
 
@@ -58,6 +61,7 @@ export const Block = tw.div`
 `
 export const panelContentClasses = `
     p-6
+    h-[calc(100%-6rem)]
     overflow-y-auto
     overflow-x-hidden
     scroll
