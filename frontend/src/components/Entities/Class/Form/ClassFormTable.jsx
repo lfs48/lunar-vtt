@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { BgButton, Button, ClearInput, Input } from '../../../../styles/components';
+import { BgButton, Button, ClearInput, DropDown, Input } from '../../../../styles/components';
 import { getLevelProf, handleInput, intToOrdinal } from '../../../../util/functions/utilFunctions';
 import entityTypes from '../../../../util/types/entityTypes';
 import { merge } from 'lodash';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from '../../../Panel/Class/styles';
 import tw from 'tailwind-styled-components';
 import EntityAutocomplete from '../../../EntityAutocomplete/EntityAutocomplete';
 
 export default function ClassFormTable({inputs, setInputs}) {
 
-    const [addingCol, setAddingCol] = useState(false);
-    const [colInput, setColInput] = useState("");
+    const [colMenu, setColMenu] = useState(-1);
 
     const [addingFeature, setAddingFeature] = useState(false);
     const [featureInput, setFeatureInput] = useState({
         name: "",
         id: ""
+    });
+    const [renamingCol, setRenamingCol] = useState({
+        input: "",
+        col: ""
     });
 
     const {features} = useSelector( (state) => ({
@@ -31,8 +34,167 @@ export default function ClassFormTable({inputs, setInputs}) {
         })
     });;
 
+    useEffect( () => {
+        if (colMenu !== -1) {
+
+            function closeMenu() {
+                setColMenu(-1);
+            }
+
+            window.addEventListener("click", closeMenu);
+    
+            return function cleanupMenuListener() {
+                window.removeEventListener("click", closeMenu);
+            }
+        }
+    }, [colMenu]);
+
+    const handleColRightClick = (event, index) =>  {
+        event.preventDefault();
+        setColMenu(index);
+    }
+
+    const handleDeleteCol = (event, col) => {
+        event.preventDefault();
+        const newState = merge({}, inputs);
+        delete newState.tableCols[col];
+        setInputs(newState);
+    }
+
+    const handleMoveColLeft = (event, index) => {
+        event.preventDefault();
+        const newState = merge({}, inputs);
+        const newCols = {};
+        let temp;
+        Object.keys(newState.tableCols).forEach( (col, i) => {
+            if (i === index - 1) {
+                temp = {
+                    [col]: newState.tableCols[col]
+                }
+            } else if (i === index) {
+                newCols[col] = newState.tableCols[col];
+                Object.assign(newCols, temp);
+            } else {
+                newCols[col] = newState.tableCols[col];
+            }
+        });
+        newState.tableCols = newCols;
+        setInputs(newState);
+    }
+
+    const handleMoveColRight = (event, index) => {
+        event.preventDefault();
+        const newState = merge({}, inputs);
+        const newCols = {};
+        let temp;
+        Object.keys(newState.tableCols).forEach( (col, i) => {
+            if (i === index) {
+                temp = {
+                    [col]: newState.tableCols[col]
+                }
+            } else if (i === index + 1) {
+                newCols[col] = newState.tableCols[col];
+                Object.assign(newCols, temp);
+            } else {
+                newCols[col] = newState.tableCols[col];
+            }
+        });
+        newState.tableCols = newCols;
+        setInputs(newState);
+    };
+
+    const handleRenameCol = (event, col) => {
+        event.preventDefault();
+        setRenamingCol({
+            name: col,
+            col: col
+        });
+    };
+
+    const handleRenameSave = (col) => {
+        if (! (renamingCol.name in inputs.tableCols) ) {
+            const newState = merge({}, inputs);
+            const newCols = newState.tableCols;
+            delete Object.assign(newCols, {[renamingCol.name]: newCols[renamingCol.col] })[renamingCol.col];
+            newState.tableCols = newCols;
+            setInputs(newState);
+        }
+        handleRenameCancel();
+    };
+
+    const handleRenameCancel = () => {
+        setRenamingCol({
+            name: "",
+            col: ""
+        });
+    };
+
     const extraHeaders = Object.keys(inputs.tableCols).map( (col, i) => {
-        return <ClassTableHeaderCenter key={i}>{col}</ClassTableHeaderCenter>
+        if (col === renamingCol.col) {
+            return(
+                <ClassTableHeaderCenter key={i}>
+                    <div className="flex w-full relative">
+                        <Input
+                            value={renamingCol.name}
+                            onChange={e => handleInput(e, 'name', renamingCol, setRenamingCol)}
+                            className="mr-2 w-full pr-16"
+                        >
+                        </Input>
+                        <div className="absolute right-6 h-full flex items-center">
+                            <Button
+                                onClick={() => handleRenameSave(col)}
+                                className="mr-4"
+                            >
+                                <i className="fas fa-check text-green-300"></i>
+                            </Button>
+                            <Button
+                                onClick={() => handleRenameCancel()}
+                            >
+                                <i className="fas fa-times text-red-500"></i>
+                            </Button>
+                        </div>
+                    </div>
+                </ClassTableHeaderCenter>
+            )
+        } else {
+            return (
+                <ClassTableHeaderCenter key={i}>
+                    <Button
+                        onContextMenu={e => handleColRightClick(e, i)}
+                    >
+                        {col}
+                    </Button>
+                    <DropDown 
+                        open={colMenu === i}
+                        className="bg-gray-200"
+                    >
+                        <div className="flex flex-col">
+                            <ColMenuButton
+                                onClick={e => handleMoveColLeft(e, i)}
+                            >
+                                Move Left
+                            </ColMenuButton>
+                            <ColMenuButton
+                                onClick={e => handleMoveColRight(e, i)}
+                            >
+                                Move Right
+                            </ColMenuButton>
+                            <ColMenuButton
+                                onClick={e => handleRenameCol(e, col)}
+                            >
+                                Rename
+                            </ColMenuButton>
+                            <ColMenuButton
+                                onClick={e => handleDeleteCol(e, col)}
+                                className="text-red-600"
+                            >
+                                Delete
+                            </ColMenuButton>
+                        </div>
+                    </DropDown>
+                </ClassTableHeaderCenter>
+            )
+        }
     });
 
     const handleAddingFeature = (event, level) => {
@@ -161,15 +323,6 @@ export default function ClassFormTable({inputs, setInputs}) {
         setInputs(newState);
     };
 
-    const addCol = () => {
-        const newState = merge({}, inputs);
-        const newCols = merge({}, newState.tableCols);
-        newCols[colInput] = [...Array(20).keys()];
-        newState.tableCols = newCols;
-        setInputs(newState);
-        setAddingCol(false);
-    };
-
     return(
         <table className="w-full mb-6">
             <thead className="border-b-2 border-black">
@@ -178,29 +331,6 @@ export default function ClassFormTable({inputs, setInputs}) {
                     <ClassTableHeaderCenter>Prof</ClassTableHeaderCenter>
                     <ClassTableHeaderLeft>Features</ClassTableHeaderLeft>
                     {extraHeaders}
-                    <ClassTableHeaderCenter>
-                        {addingCol ?
-                            <>
-                            <Input
-                                type="text"
-                                className="w-32 h-8"
-                                value={colInput}
-                                onChange={(e) => setColInput(e.target.value)}
-                            ></Input>
-                            <BgButton 
-                                className="bg-gray-200 h-8"
-                                onClick={() => addCol()}
-                            >Save</BgButton>
-                            </>
-                        :
-                            <Button 
-                                className="text-blue-500"
-                                onClick={() => setAddingCol(true)}
-                            >
-                                Add Col
-                            </Button>
-                        }
-                    </ClassTableHeaderCenter>
                 </tr>
             </thead>
             <tbody>
@@ -238,5 +368,12 @@ const FeatureText = tw.span`
 const RemoveFeatureButton = tw(Button)`
     text-sm
     text-red-500
+`
+
+const ColMenuButton = tw(Button)`
+    hover:bg-gray-300
+    border-b
+    border-gray-300
+    last:border-none
 `
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { handleInput } from '../../../../util/functions/utilFunctions';
-import { Button, ClearInput, Input, Label, TextArea } from '../../../../styles/components';
+import { BgButton, Button, ClearInput, Input, Label, TextArea } from '../../../../styles/components';
 import ClassFormTable from './ClassFormTable';
 import { merge } from 'lodash';
 import Select from '../../../Util/Select';
@@ -9,6 +9,7 @@ import tw from 'tailwind-styled-components';
 import EquipmentSection from './EquipmentSection';
 import { createClass, editClass } from '../../../../store/reducers/entities/classesReducer';
 import { useDispatch } from 'react-redux';
+import { Field } from '../../styles';
 
 const dieOptions = ["1d6", "1d8", "1d10", "1d12"];
 const spellcastingOptions = ["None", "Full", "Half", "HalfPlus", "Third"];
@@ -39,6 +40,7 @@ export default function ClassForm({dndClass=null, edit=false}) {
         tableCols: {},
         features: getInitialFeatures()
     });
+    const [colInput, setColInput] = useState("");
 
     useEffect( () => {
         if (edit) {
@@ -56,9 +58,20 @@ export default function ClassForm({dndClass=null, edit=false}) {
         };
         dispatch(action);
     }
+
+    const handleAddCol = () => {
+        const newState = merge({}, inputs);
+        if (! (colInput in newState.tableCols) ) {
+            const newCols = merge({}, newState.tableCols);
+            newCols[colInput] = [...Array(20)].map( _ => "");
+            newState.tableCols = newCols;
+        }
+        setInputs(newState);
+        setColInput("");
+    }
     
     return(
-        <div className="relative bg-white w-2/3 h-5/6">
+        <div className="relative bg-white w-[60rem] h-5/6">
             <div className="flex flex-col bg-white w-full h-[calc(100%-3rem)] overflow-y-auto p-6">
                 <div className="grid grid-cols-4 gap-x-12 gap-y-4 mb-12">
                     <Field>
@@ -146,7 +159,18 @@ export default function ClassForm({dndClass=null, edit=false}) {
                         ></Input>
                     </Field>
                 </div>
-                <div className="flex flex-col">
+                <div className="w-full flex justify-end mb-4">
+                    <Input
+                        value={colInput}
+                        onChange={e => setColInput(e.target.value)}
+                        className="mr-4"
+                    ></Input>
+                    <BgButton
+                        onClick={() => handleAddCol()}
+                        className="bg-gray-200"
+                    >   
+                        Add Column
+                    </BgButton>
                 </div>
                 <ClassFormTable dndClass={dndClass} inputs={inputs} setInputs={setInputs}/>
                 </div>
@@ -156,12 +180,3 @@ export default function ClassForm({dndClass=null, edit=false}) {
         </div>
     )
 }
-
-const Field = tw.div`
-    flex
-    flex-col
-`
-
-const FormInput = tw(Input)`
-    
-`
