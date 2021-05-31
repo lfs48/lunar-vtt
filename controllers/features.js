@@ -1,5 +1,6 @@
 const FeatureModel = require('../models/Feature');
 const DndClassModel = require('../models/DndClass');
+const { getModelByName } = require('../util/modelsUtil');
 
 const FeatureController = {
     index: async (req, res) => {
@@ -41,13 +42,12 @@ const FeatureController = {
     create: async (req, res) => {
         try{
             const params = featureParams(req.body);
-            const newFeature = new Feature(params);
-            const savedFeature = await newFeature.save();
+            const newFeature = await Feature.create(params);
         res
         .status(201)
         .json({
             success: true,
-            feature: savedFeature
+            feature: newFeature
         });
         } catch(e) {
             res
