@@ -17,7 +17,6 @@ export const PanelHeaderContainer = tw.header`
 
 export const PanelFooterContainer = tw.footer`
     flex
-    flex-row-reverse
     justify-between
     absolute
     bottom-0

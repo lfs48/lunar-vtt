@@ -7,6 +7,10 @@ const subclassesSlice = createSlice({
     createSubclass: state => state,
     editSubclass: state => state,
     fetchAllSubclasses: state => state,
+    requestDeleteSubclass: state => state,
+    deleteSubclassSuccess: (state, action) => {
+      delete state[action.payload.subclass._id];
+    },
     receiveAllSubclasses: (state, action) => {
       const newState = {};
       action.payload.subclasses.forEach( (subclass) => {
@@ -21,6 +25,6 @@ const subclassesSlice = createSlice({
   }
 });
 
-export const { createSubclass, editSubclass, receiveSubclass, receiveAllSubclasses, fetchAllSubclasses } = subclassesSlice.actions;
+export const { createSubclass, editSubclass, receiveSubclass, receiveAllSubclasses, fetchAllSubclasses, deleteSubclassSuccess, requestDeleteSubclass } = subclassesSlice.actions;
 export const subclassesSliceName = subclassesSlice.name;
 export default subclassesSlice.reducer;

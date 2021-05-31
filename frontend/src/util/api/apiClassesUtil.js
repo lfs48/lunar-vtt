@@ -44,3 +44,16 @@ export async function patchClass({id, formData}) {
   .then( data => data )
   .catch( (err) => err );
 }
+
+// Delete class
+// DELETE /classes/:classId
+export async function deleteClass({id}) {
+  const url = `/api/classes/${id}`;
+  const req = {
+    method: 'DELETE',
+  };
+  return fetch(url, req)
+  .then( (res) => res.json() )
+  .then( data => data )
+  .catch( (err) => err );
+}

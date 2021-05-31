@@ -9,7 +9,7 @@ const modelsByName = {
 };
 
 function getModelByName(name){
-    return modelsByName(name);
+    return modelsByName[name];
 }
 
 module.exports = getModelByName;

@@ -1,13 +1,12 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { getAllSubclasses, patchSubclass, postSubclass } from '../../../util/api/apiSubclassesUtil';
+import { deleteSubclass, getAllSubclasses, patchSubclass, postSubclass } from '../../../util/api/apiSubclassesUtil';
 import entityTypes from '../../../util/types/entityTypes';
-import { receiveSubclass, editSubclass, createSubclass, receiveAllSubclasses, fetchAllSubclasses } from '../../reducers/entities/subclassesReducer';
+import { receiveSubclass, editSubclass, createSubclass, receiveAllSubclasses, fetchAllSubclasses, deleteSubclassSuccess, requestDeleteSubclass } from '../../reducers/entities/subclassesReducer';
 import { openPanel } from '../../reducers/UI/panelsReducer';
 
 function* fetchSubclassesWorker(action) {
     try {
         const res = yield call(getAllSubclasses);
-        // Dispatch userFetchSucceeded action with user data from response to add user to redux store state
         yield put({
             type: receiveAllSubclasses.type, 
             payload: {
@@ -16,7 +15,6 @@ function* fetchSubclassesWorker(action) {
             } 
         });
     } catch (e) {
-        // If there's an error, dispatch userFetchFailed action to add error to redux store state
         console.log(e);
     }
 };
@@ -57,6 +55,20 @@ function* createSubclassWorker(action) {
     }
 }
 
+function* deleteSubclassWorker(action) {
+    try {
+        const res = yield call(deleteSubclass, action.payload);
+        if (res.success) {
+            yield put({
+                type: deleteSubclassSuccess.type,
+                payload: res
+            })
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 function* fetchSubclassesSaga() {
     yield takeLatest(fetchAllSubclasses.type, fetchSubclassesWorker);
 }
@@ -69,11 +81,16 @@ function* createSubclassSaga() {
     yield takeLatest(createSubclass.type, createSubclassWorker)
 }
 
+function* deleteSubclassSaga() {
+    yield takeLatest(requestDeleteSubclass.type, deleteSubclassWorker);
+}
+
 // Run all user sagas
 export function* subclassesSaga() {
     yield all([
         editSubclassSaga(),
         createSubclassSaga(),
-        fetchSubclassesSaga()
+        fetchSubclassesSaga(),
+        deleteSubclassSaga()
     ])
 };

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { receiveSubclass } from "./subclassesReducer";
 
 const classesSlice = createSlice({
@@ -8,6 +8,10 @@ const classesSlice = createSlice({
     fetchAllClassesRequested: state => state,
     createClass: state => state,
     editClass: state => state,
+    requestDeleteClass: state => state,
+    deleteClassSuccess: (state, action) => {
+      delete state[action.payload.dndClass._id]
+    },
     receiveAllClasses: (state, action) => {
         const newState = {};
         action.payload.classes.forEach( (dndClass) => {
@@ -20,16 +24,31 @@ const classesSlice = createSlice({
         state[dndClass._id] = dndClass;
     }
   },
-  extraReducers: {
-    [receiveSubclass.type]: (state, action) => {
+  extraReducers: (builder) => {
+    builder
+    .addCase( createAction('receiveSubclass'), (state, action) => {
       const subclass = action.payload.subclass;
       if ( !state[subclass.dndClass].subclasses.includes(subclass._id) ) {
         state[subclass.dndClass].subclasses.push(subclass._id);
       }
-    }
+    })
+    .addCase( createAction('deleteFeatureSuccess'), (state, action) => {
+
+      const feature =  action.payload.feature;
+      if (feature.sourceModel === "DndClass") {
+        feature.sources.forEach( (id) => {
+          const dndClass = state[id];
+          const newFeatures = {};
+          Object.entries(dndClass.features).forEach( ([level, arr]) => {
+            newFeatures[level] = arr.filter( featureId => featureId !== feature._id);
+          });
+        });
+      }
+
+    })
   }
 });
 
-export const { fetchAllClassesRequested, receiveAllClasses, createClass, editClass, receiveClass } = classesSlice.actions;
+export const { fetchAllClassesRequested, receiveAllClasses, createClass, editClass, receiveClass, requestDeleteClass, deleteClassSuccess } = classesSlice.actions;
 export const classesSliceName = classesSlice.name;
 export default classesSlice.reducer;

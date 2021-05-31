@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteClassSuccess } from "../entities/classesReducer";
+import { deleteFeatureSuccess } from "../entities/featuresReducer";
+import { deleteSubclassSuccess } from "../entities/subclassesReducer";
 
 const panelsSlice = createSlice({
   name: 'panels',
@@ -31,6 +34,17 @@ const panelsSlice = createSlice({
         const i = state.findIndex( (panel) => panel.id === action.payload.id);
         state.push(state.splice(i, 1)[0]);
       }
+  },
+  extraReducers: {
+    [deleteClassSuccess.type]: (state, action) => {
+      return state.filter( (panel) => panel.id !== action.payload.dndClass._id);
+    },
+    [deleteFeatureSuccess.type]: (state, action) => {
+      return state.filter( (panel) => panel.id !== action.payload.feature._id);
+    },
+    [deleteSubclassSuccess.type]: (state, action) => {
+      return state.filter( (panel) => panel.id !== action.payload.subclass._id);
+    }
   }
 });
 

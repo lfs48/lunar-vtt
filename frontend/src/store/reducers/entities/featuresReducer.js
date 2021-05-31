@@ -1,20 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import entityTypes from "../../../util/types/entityTypes";
-import { receiveAllClasses, receiveClass } from "./classesReducer";
+import { deleteClassSuccess, receiveAllClasses, receiveClass } from "./classesReducer";
 import { receiveAllSubclasses, receiveSubclass } from "./subclassesReducer";
 
 const featuresSlice = createSlice({
   name: "features",
   initialState: {},
   reducers: {
-      createFeature: state => state,
-      editFeature: state => state,
-      receiveAllFeatures: (state, action) => {
-        const newState = {};
-        action.payload.features.forEach( (feature) => {
-            newState[feature._id] = feature;
-        });
-        return newState;
+    createFeature: state => state,
+    editFeature: state => state,
+    requestDeleteFeature: state => state,
+    deleteFeatureSuccess: (state, action) => {
+        delete state[action.payload.feature._id];
+    },
+    receiveAllFeatures: (state, action) => {
+    const newState = {};
+    action.payload.features.forEach( (feature) => {
+        newState[feature._id] = feature;
+    });
+    return newState;
     },
     receiveFeature: (state, action) => {
         const feature = action.payload.feature
@@ -41,10 +45,22 @@ const featuresSlice = createSlice({
         action.payload.features.forEach( (feature) => {
             state[feature._id] = feature;
         });
+    },
+    [deleteClassSuccess.type]: (state, action) => {
+
+        const dndClass = action.payload.dndClass;
+        Object.values(dndClass.features).forEach( (arr) => {
+            arr.forEach( (id) => {
+                const feature = state[id];
+                feature.sources = feature.sources.filter(sourceId => sourceId !== dndClass._id);
+                state[id] = feature;
+            });
+        });
+        
     }
   }
 });
 
-export const { createFeature, editFeature, receiveAllFeatures, receiveFeature } = featuresSlice.actions;
+export const { createFeature, editFeature, receiveAllFeatures, receiveFeature, deleteFeatureSuccess, requestDeleteFeature } = featuresSlice.actions;
 export const featuresSliceName = featuresSlice.name;
 export default featuresSlice.reducer;

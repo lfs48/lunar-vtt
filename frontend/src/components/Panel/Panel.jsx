@@ -11,6 +11,7 @@ import entityTypes, { getEntityModalType } from '../../util/types/entityTypes';
 import SubclassPanel from '../Entities/Subclass/Panel/SubclassPanel';
 import { openModal } from '../../store/reducers/UI/modalReducer';
 import Resize from '../Util/Resize';
+import { modalTypes } from '../../util/types/modalTypes';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -106,6 +107,21 @@ const handleEdit = ({event, entity, entityType, dispatch}) => {
             data: {
                 entity: entity,
                 edit: true
+            }
+        }
+    };
+    dispatch(action);
+};
+
+const handleDelete = ({event, entity, entityType, dispatch}) => {
+    event.preventDefault();
+    const action = {
+        type: openModal.type,
+        payload: {
+            modalType: modalTypes.DELETE_CONFIRMATION,
+            data: {
+                entity: entity,
+                entityType: entityType
             }
         }
     };
@@ -225,6 +241,16 @@ export default function Panel({data, panelType}) {
 
             {user.gm ?
                 <PanelFooterContainer>
+                    <Button 
+                        onClick={e => handleDelete({
+                            event: e,
+                            entity: data,
+                            entityType: panelType,
+                            dispatch: dispatch
+                        })}
+                    >
+                        Delete
+                    </Button>
                     <Button 
                         onClick={e => handleEdit({
                             event: e,
