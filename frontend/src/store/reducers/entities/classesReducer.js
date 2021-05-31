@@ -1,5 +1,4 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import { receiveSubclass } from "./subclassesReducer";
 
 const classesSlice = createSlice({
   name: 'dndClasses',
@@ -24,16 +23,14 @@ const classesSlice = createSlice({
         state[dndClass._id] = dndClass;
     }
   },
-  extraReducers: (builder) => {
-    builder
-    .addCase( createAction('receiveSubclass'), (state, action) => {
+  extraReducers: {
+    [ createAction("subclasses/receiveSubclass") ]: (state, action) => {
       const subclass = action.payload.subclass;
       if ( !state[subclass.dndClass].subclasses.includes(subclass._id) ) {
         state[subclass.dndClass].subclasses.push(subclass._id);
       }
-    })
-    .addCase( createAction('deleteFeatureSuccess'), (state, action) => {
-
+    },
+    [ createAction("features/deleteFeatureSuccess") ]: (state, action) => {
       const feature =  action.payload.feature;
       if (feature.sourceModel === "DndClass") {
         feature.sources.forEach( (id) => {
@@ -42,10 +39,11 @@ const classesSlice = createSlice({
           Object.entries(dndClass.features).forEach( ([level, arr]) => {
             newFeatures[level] = arr.filter( featureId => featureId !== feature._id);
           });
+          dndClass.features = newFeatures;
         });
       }
 
-    })
+    }
   }
 });
 

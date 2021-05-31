@@ -1,7 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import entityTypes from "../../../util/types/entityTypes";
-import { deleteClassSuccess, receiveAllClasses, receiveClass } from "./classesReducer";
-import { receiveAllSubclasses, receiveSubclass } from "./subclassesReducer";
 
 const featuresSlice = createSlice({
   name: "features",
@@ -26,27 +24,27 @@ const featuresSlice = createSlice({
     }
   },
   extraReducers: {
-    [receiveAllClasses.type]: (state, action) => {
+    [ createAction("dndClasses/receiveAllClasses") ]: (state, action) => {
         action.payload.features.forEach( (feature) => {
             state[feature._id] = feature;
         });
     },
-    [receiveClass.type]: (state, action) => {
+    [ createAction("dndClasses/receiveClass") ]: (state, action) => {
       action.payload.features.forEach( (feature) => {
           state[feature._id] = feature;
       });
     },
-    [receiveAllSubclasses.type]: (state, action) => {
+    [ createAction("subclasses/receiveAllSubclasses") ]: (state, action) => {
         action.payload.features.forEach( (feature) => {
             state[feature._id] = feature;
         });
     },
-    [receiveSubclass.type]: (state, action) => {
+    [ createAction("subclasses/receiveSubclass") ]: (state, action) => {
         action.payload.features.forEach( (feature) => {
             state[feature._id] = feature;
         });
     },
-    [deleteClassSuccess.type]: (state, action) => {
+    [ createAction("dndclasses/deleteClassSuccess") ]: (state, action) => {
 
         const dndClass = action.payload.dndClass;
         Object.values(dndClass.features).forEach( (arr) => {
