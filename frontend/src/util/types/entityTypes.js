@@ -139,7 +139,7 @@ export function getEntityModalType(entityType) {
         case(entityTypes.SETTINGS):
             return 'Setting';
         case(entityTypes.FEATURES):
-            return createFeature.type
+            return modalTypes.FEATUREFORM
         case(entityTypes.FEATS):
             return 'Feat';
         case(entityTypes.ROLLABLE):
@@ -152,3 +152,21 @@ export function getEntityModalType(entityType) {
             return null;
     }
 };
+
+export function sourceModelToEntityType(sourceType) {
+    const modelsToEntities = {
+        'DndClass': entityTypes.CLASSES,
+        'Feature': entityTypes.FEATURES,
+        'Subclass': entityTypes.SUBCLASSES
+    }
+    return modelsToEntities[sourceType];
+}
+
+export function entityTypeToSourceModel(entityType) {
+    const entitiesToModels = {
+        [entityTypes.CLASSES]: 'DndClass',
+        [entityTypes.FEATURE]: 'Feature',
+        [entityTypes.SUBCLASSES]: 'Subclass'
+    }
+    return entitiesToModels[entityType];
+}
