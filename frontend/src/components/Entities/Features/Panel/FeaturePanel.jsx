@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import entityTypes from '../../../util/types/entityTypes';
+import entityTypes, { sourceModelToEntityType } from '../../../util/types/entityTypes';
 import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses, FeatureHeader, FeatureHeaderSub } from '../styles';
 import { pick, findKey } from 'lodash';
 import MarkdownText from '../../Util/MarkdownText';
@@ -8,7 +8,7 @@ import EntityLink from '../../Entities/EntityLink';
 
 const FeaturePanel = React.memo(function FeaturePanel({feature, className=""}) {
 
-    const slice = sourceModelToSlice(feature.sourceModel);
+    const slice = sourceModelToEntityType(feature.sourceModel);
 
     const {sources} = useSelector( (state) => ({
         sources: Object.values( pick(state.entities[slice], feature.sources) )
@@ -36,12 +36,3 @@ const FeaturePanel = React.memo(function FeaturePanel({feature, className=""}) {
 });
 
 export default FeaturePanel;
-
-function sourceModelToSlice(source) {
-    const sourcesToModels = {
-        'DndClass': entityTypes.CLASSES,
-        'Feature': entityTypes.FEATURES,
-        'Subclass': entityTypes.SUBCLASSES
-    }
-    return sourcesToModels[source];
-}

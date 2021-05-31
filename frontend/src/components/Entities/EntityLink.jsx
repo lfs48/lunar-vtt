@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { openPanel } from '../../store/reducers/UI/panelsReducer';
 import tw from 'tailwind-styled-components';
 
-export default function EntityLink({entityType, id, children, className=""}) {
+export default function EntityLink({entityType, id, children, className="", inline=false}) {
 
     const dispatch = useDispatch();
     
@@ -24,6 +24,7 @@ export default function EntityLink({entityType, id, children, className=""}) {
         <StyledLink 
             onClick={(e) => handleClick(e)}
             className={className}
+            inline={inline}
         >
             {children}
         </StyledLink>
@@ -34,11 +35,18 @@ export default function EntityLink({entityType, id, children, className=""}) {
 const StyledLink = tw.p`
     cursor-pointer
     text-blue-500
-    bg-gray-300
-    rounded
+    ${p => p.inline ? 
+        `
+        ` 
+    :
+        `
+            bg-gray-300
+            rounded
+            px-2
+            mr-2
+            my-0.5
+        `
+    }
     inline-block
-    px-2
     font-bold
-    mr-2
-    my-0.5
 `
