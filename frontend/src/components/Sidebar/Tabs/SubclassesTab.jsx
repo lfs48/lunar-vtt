@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPanel } from '../../../store/reducers/UI/panelsReducer';
 import { SidebarLi, TabHeader } from '../styles';
-import { getCreateForm } from '../CreateForm/index';
 import entityTypes from '../../../util/types/entityTypes';
 import tw from 'tailwind-styled-components';
 import Collapsable from '../../Util/Collapsable';
 import SearchInput from '../../Util/SearchInput';
 import { merge } from 'lodash';
+import { openModal } from '../../../store/reducers/UI/modalReducer';
+import { Button } from '../../../styles/components';
 
 export default function SubclassesTab() {
 
@@ -88,6 +89,16 @@ export default function SubclassesTab() {
         )
     });
 
+    const handleCreate = () => {
+        const action = {
+            type: openModal.type,
+            payload: {
+                modalType: entityTypes.SUBCLASSES
+            }
+        }
+        dispatch(action);
+    }
+
     return(
         <div>
             <TabHeader>
@@ -98,7 +109,11 @@ export default function SubclassesTab() {
                     className="w-2/3"
                 />
                 {user.gm ?
-                    getCreateForm(entityTypes.SUBCLASSES)
+                    <Button
+                        onClick={() => handleCreate()}
+                    >
+                        Add
+                    </Button>
                 :<></>}
             </TabHeader>
             {sections}

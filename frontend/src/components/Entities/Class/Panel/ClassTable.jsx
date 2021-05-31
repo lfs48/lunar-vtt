@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import tw from 'tailwind-styled-components';
-import { getLevelProf, getSpellSlots, intToOrdinal } from '../../../util/functions/utilFunctions';
-import entityTypes from '../../../util/types/entityTypes';
-import EntityLink from '../../Entities/EntityLink';
-import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from './styles';
+import { getLevelProf, getSpellSlots, intToOrdinal } from '../../../../util/functions/utilFunctions';
+import entityTypes from '../../../../util/types/entityTypes';
+import EntityLink from '../../EntityLink';
+import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from '../styles';
 
 export default function ClassTable({dndClass, features}) {
 

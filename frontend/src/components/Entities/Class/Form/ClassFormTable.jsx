@@ -4,9 +4,9 @@ import { getLevelProf, handleInput, intToOrdinal } from '../../../../util/functi
 import entityTypes from '../../../../util/types/entityTypes';
 import { merge } from 'lodash';
 import { useSelector, useStore } from 'react-redux';
-import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from '../../../Panel/Class/styles';
+import { ClassTableHeaderCenter, ClassTableHeaderLeft, ClassTableRowCenter, ClassTableRowLeft } from '../styles';
 import tw from 'tailwind-styled-components';
-import EntityAutocomplete from '../../../EntityAutocomplete/EntityAutocomplete';
+import EntityAutocomplete from '../../EntityAutocomplete';
 
 export default function ClassFormTable({inputs, setInputs}) {
 

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createFeature, editFeature } from '../../../store/reducers/entities/featuresReducer';
-import { ClearInput, Input, TextArea } from '../../../styles/components';
-import { handleInput } from '../../../util/functions/utilFunctions';
-import ModalFooter from '../../Modal/ModalFooter';
-import Select from '../../Util/Select';
-import { FormContainer, Field, Label } from '../styles';
-import SourceSection from './SourcesSection';
+import { createFeature, editFeature } from '../../../../store/reducers/entities/featuresReducer';
+import { ClearInput, Input, TextArea } from '../../../../styles/components';
+import { handleInput } from '../../../../util/functions/utilFunctions';
+import ModalFooter from '../../../Modal/ModalFooter';
+import Select from '../../../Util/Select';
+import { FormContainer, Field, Label } from '../../styles';
 
 const featureTypeOptions = ['Action', 'Bonus Action', 'Reaction', 'Passive', 'Triggered', 'Other'];
 const sourceTypeOptions = ['DndClass', 'Subclass', 'Race', 'Background', 'Feat'];

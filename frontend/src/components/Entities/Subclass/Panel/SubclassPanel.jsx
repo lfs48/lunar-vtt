@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MarkdownText from '../../Util/MarkdownText';
+import MarkdownText from '../../../Util/MarkdownText';
 
 const SubclassPanel = React.memo(function SubclassPanel({subclass, className=""}) {
 

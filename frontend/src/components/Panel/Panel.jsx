@@ -3,12 +3,12 @@ import { merge } from 'lodash';
 import { Button } from '../../styles/components';
 import { closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import ClassViewPanel from './Class/ClassPanel';
+import ClassViewPanel from '../Entities/Class/Panel/ClassPanel';
 import { PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
-import FeaturePanel from './Feature/FeaturePanel';
+import FeaturePanel from '../Entities/Features/Panel/FeaturePanel';
 import entityTypes, { getEntityModalType } from '../../util/types/entityTypes';
-import SubclassPanel from './Subclass/SubclassPanel';
+import SubclassPanel from '../Entities/Subclass/Panel/SubclassPanel';
 import { openModal } from '../../store/reducers/UI/modalReducer';
 import Resize from '../Util/Resize';
 

@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { Button, Label } from '../../../styles/components';
+import { Button, Label } from '../../../../styles/components';
 import { merge } from 'lodash';
-import EntityAutocomplete from '../../EntityAutocomplete/EntityAutocomplete';
-import { sourceModelToEntityType } from '../../../util/types/entityTypes';
-import { handleInput } from '../../../util/functions/utilFunctions';
+import EntityAutocomplete from '../../EntityAutocomplete';
+import { sourceModelToEntityType } from '../../../../util/types/entityTypes';
+import { handleInput } from '../../../../util/functions/utilFunctions';
 import { useSelector } from 'react-redux';
 
 export default function SourceSection({inputs, setInputs}) {
 
     const [sourceInput, setSourceInput] = useState({
         name: "",
-        id: ""
+        id: "",
+        level: ""
     });
     const [addingSource, setAddingSource] = useState(false);
 
+    const entityType = sourceModelToEntityType(inputs.sourceModel);
+
     const {entities} = useSelector( (state) => ({
-        entities: state.entities[sourceModelToEntityType(inputs.sourceModel)]
+        entities: state.entities[entityType]
     }));
 
     const saveSource = (event) => {
@@ -80,7 +83,7 @@ export default function SourceSection({inputs, setInputs}) {
                 {addingSource ? 
                     <div className="flex items-center">
                         <EntityAutocomplete
-                            entityType={sourceModelToEntityType(inputs.sourceModel)}
+                            entityType={entityType}
                             input={sourceInput.name}
                             handleInput={e => handleInput(e, 'name', sourceInput, setSourceInput)}
                             handleSelect={(source) => handleSelectSource(source)}

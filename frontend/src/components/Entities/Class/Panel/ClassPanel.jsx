@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { DiceRoll } from 'rpg-dice-roller';
 import ClassTable from './ClassTable';
-import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses } from '../styles';
-import { intToOrdinal } from '../../../util/functions/utilFunctions';
-import MarkdownText from '../../Util/MarkdownText';
-import Collapsable from "../../Util/Collapsable";
+import { Block, PanelSectionHeader, PanelSubsectionHeader, panelContentClasses } from '../../../Panel/styles';
+import { intToOrdinal } from '../../../../util/functions/utilFunctions';
+import MarkdownText from '../../../Util/MarkdownText';
+import Collapsable from "../../../Util/Collapsable";
 import tw from 'tailwind-styled-components';
-import Divider from '../../Util/Divider';
+import Divider from '../../../Util/Divider';
 
 const ClassPanel = React.memo( function({dndClass, className=""}) {
 

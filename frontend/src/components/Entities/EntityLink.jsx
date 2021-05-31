@@ -32,7 +32,7 @@ export default function EntityLink({entityType, id, children, className="", inli
 
 }
 
-const StyledLink = tw.p`
+const StyledLink = tw.span`
     cursor-pointer
     text-blue-500
     ${p => p.inline ? 
@@ -47,6 +47,5 @@ const StyledLink = tw.p`
             my-0.5
         `
     }
-    inline-block
     font-bold
 `

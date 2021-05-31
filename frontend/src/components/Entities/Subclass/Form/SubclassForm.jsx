@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Button, ClearInput, Label, TextArea } from '../../../styles/components';
-import { handleInput, intToOrdinal } from '../../../util/functions/utilFunctions';
-import entityTypes from '../../../util/types/entityTypes';
-import EntityAutocomplete from '../../EntityAutocomplete/EntityAutocomplete';
-import { panelContentClasses } from '../styles';
+import { Button, ClearInput, Label, TextArea } from '../../../../styles/components';
+import { handleInput, intToOrdinal } from '../../../../util/functions/utilFunctions';
+import entityTypes from '../../../../util/types/entityTypes';
+import EntityAutocomplete from '../../../EntityAutocomplete/EntityAutocomplete';
+import { panelContentClasses } from '../../styles';
 import { merge } from 'lodash';
-import EntityLink from '../EntityLink';
+import EntityLink from '../../EntityLink';
 
 
 export default function EditSubclassPanel({inputs, setInputs, styleData}) {

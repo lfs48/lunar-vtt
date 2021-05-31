@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openPanel } from '../../../store/reducers/UI/panelsReducer';
 import { SidebarLi, TabHeader } from '../styles';
-import { getCreateForm } from '../CreateForm/index';
 import { Button, ClearInput, Input } from '../../../styles/components';
 import { openModal } from '../../../store/reducers/UI/modalReducer';
 import { modalTypes } from '../../../util/types/modalTypes';
 import SearchInput from '../../Util/SearchInput';
+import { getEntityModalType } from '../../../util/types/entityTypes';
 
 export default function DefaultTab({entityType}) {
 
@@ -59,7 +59,7 @@ export default function DefaultTab({entityType}) {
         const action = {
             type: openModal.type,
             payload: {
-                modalType: modalTypes.CLASSFORM
+                modalType: getEntityModalType(entityType)
             }
         }
         dispatch(action);
