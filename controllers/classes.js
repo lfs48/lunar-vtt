@@ -143,7 +143,7 @@ const DndClassController = {
             .status(200)
             .json({
                 success: true,
-                data: deletedClass
+                dndClass: deletedClass
             });
         } catch (e) {
             res
