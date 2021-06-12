@@ -31,7 +31,7 @@ export const Button = tw.button`
 `
 export const BgButton = tw(Button)`
     rounded
-    p-2
+    px-2
 `;
 
 export const BgButton1 = tw(BgButton)`

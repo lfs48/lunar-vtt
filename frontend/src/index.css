@@ -49,8 +49,8 @@
 
   .resize-right {
     top: 0;
-    right: -0.5px;
-    width: 1rem;
+    right: -0.5rem;
+    width: 0.5rem;
     height: 100%;
   }
 

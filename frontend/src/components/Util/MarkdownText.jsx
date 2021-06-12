@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from "react-markdown"
 import gfm from 'remark-gfm';
 import tw from "tailwind-styled-components";
+import EntityLink from '../Entities/EntityLink';
 
 const MarkdownText = React.memo( function({text, className="", id=""}) {
 
@@ -9,8 +10,22 @@ const MarkdownText = React.memo( function({text, className="", id=""}) {
         h1: StyledH1,
         h2: StyledH2,
         p: StyledP,
-        ul: styledUl,
-        li: styledLi
+        ul: StyledUl,
+        li: StyledLi,
+        a: ({href, children}) => Link(href, children[0])
+    };
+
+    const Link = (href, title) => {
+        const [entityType, id] = href.split("/");
+        return(
+            <EntityLink
+                entityType={entityType}
+                id={id}
+                inline={true}
+            >
+                {title}
+            </EntityLink>
+        )
     };
 
     return(
@@ -42,12 +57,16 @@ const StyledP = tw.p`
     mb-1
 `
 
-const styledUl = tw.ul`
+const StyledUl = tw.ul`
     list-disc
     mb-1
 `
 
-const styledLi = tw.li`
+const StyledLi = tw.li`
     ml-8
     mb-1
+`
+
+const StyledA = tw.a`
+
 `

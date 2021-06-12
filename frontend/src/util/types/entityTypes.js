@@ -1,4 +1,3 @@
-import { faAddressBook, faDiceD20, faBookReader, faHatWizard, faRing, faMeteor, faSpider, faCog, faMale, faAward, faFistRaised, faMonument, faDna, faStar, faTheaterMasks } from '@fortawesome/free-solid-svg-icons';
 import { classesSliceName, createClass } from '../../store/reducers/entities/classesReducer';
 import { featuresSliceName, createFeature } from '../../store/reducers/entities/featuresReducer';
 import { modalTypes } from './modalTypes';
@@ -147,7 +146,7 @@ export function getEntityModalType(entityType) {
         case(entityTypes.BACKGROUNDS):
             return 'Background';
         case(entityTypes.SUBCLASSES):
-            return 'Subclass';
+            return modalTypes.SUBCLASSFORM
         default:
             return null;
     }

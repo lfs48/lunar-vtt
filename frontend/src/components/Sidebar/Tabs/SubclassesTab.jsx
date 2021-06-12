@@ -9,6 +9,7 @@ import SearchInput from '../../Util/SearchInput';
 import { merge } from 'lodash';
 import { openModal } from '../../../store/reducers/UI/modalReducer';
 import { Button } from '../../../styles/components';
+import { modalTypes } from '../../../util/types/modalTypes';
 
 export default function SubclassesTab() {
 
@@ -93,7 +94,7 @@ export default function SubclassesTab() {
         const action = {
             type: openModal.type,
             payload: {
-                modalType: entityTypes.SUBCLASSES
+                modalType: modalTypes.SUBCLASSFORM,
             }
         }
         dispatch(action);
