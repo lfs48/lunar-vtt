@@ -29,12 +29,30 @@ const SubclassController = {
                     }
                 }
             );
+            await FeatureModel.updateMany(
+                {
+                    _id: {
+                        $in: newSubclass.features()
+                    }
+                },
+                {
+                    $addToSet: {
+                        sources: newSubclass._id
+                    }
+                }
+            );
+            const subclassFeatures = await FeatureModel
+            .find({
+                _id: {
+                    $in: newSubclass.features()
+                }
+            });
             res
             .status(201)
             .json({
                 success: true,
                 subclass: newSubclass,
-                features: []
+                features: subclassFeatures
             });
         } catch (e) {
             res
@@ -54,17 +72,13 @@ const SubclassController = {
             const newClass = await SubclassModel.findById(req.params.subclassId);
 
             // Cascade updates to features added/removed in update
-            if ("features" in params) {
+            if ("levelFeatures" in params) {
                 // Generate list of features added & removed in update
-                let oldFeatures = [];
-                let newFeatures = [];
-                [...foundClass.features.values()].forEach( (arr) => arr.forEach( (el) => oldFeatures.push(el._id) ) );
-                [...newClass.features.values()].forEach( (arr) => arr.forEach( (el) => newFeatures.push(el._id) ) );
-                const oldIds = oldFeatures.map( (feature) => String(feature));
-                const newIds = newFeatures.map( (feature) => String(feature));
-                const addedFeatures = newFeatures.filter(feature => !oldIds.includes(String(feature) ) );
-                const removedFeatures = oldFeatures.filter(feature => !newIds.includes(String(feature) ) );
-
+                let oldFeatures = foundClass.features();
+                let newFeatures = newClass.features();
+                const addedFeatures = newFeatures.filter(feature => !oldFeatures.includes(String(feature) ) );
+                const removedFeatures = oldFeatures.filter(feature => !newFeatures.includes(String(feature) ) );
+                
                 // Remove class from feature source list if it's been updated to no longer have that feature
                 await FeatureModel.updateMany(
                     {
@@ -93,7 +107,12 @@ const SubclassController = {
                 )
             }
             // Load class's associated features
-            const classFeatures = await FeatureModel.find({"sources": newClass._id})
+            const classFeatures = await FeatureModel
+            .find({
+                _id: {
+                    $in: newClass.features()
+                }
+            });
             res
             .status(200)
             .json({
@@ -113,6 +132,18 @@ const SubclassController = {
     delete: async (req, res) => {
         try {
             const deletedClass = await SubclassModel.findOneAndDelete({_id: req.params.subclassId});
+            await FeatureModel.updateMany(
+                {
+                    _id: {
+                        $in: deletedClass.features()
+                    }
+                },
+                {
+                    $pull: {
+                        sources: deletedClass._id
+                    }
+                }
+            );
             res
             .status(200)
             .json({
@@ -143,6 +174,6 @@ const SubclassController = {
 module.exports = SubclassController;
 
 function subclassParams(params) {
-    const validParams = {name, description, dndClass, spellcasting, features} = params;
+    const validParams = {name, description, dndClass, spellcasting, levelFeatures} = params;
     return validParams;
 }

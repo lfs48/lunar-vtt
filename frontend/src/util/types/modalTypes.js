@@ -17,7 +17,7 @@ export function getModalComponent(modalType, data) {
         case(modalTypes.FEATUREFORM):
             return <FeatureForm feature={data?.entity} edit={data?.edit}/>
         case(modalTypes.SUBCLASSFORM):
-            return <SubclassForm subclass={data?.subclass} edit={data?.edit}/>
+            return <SubclassForm subclass={data?.entity} edit={data?.edit}/>
         case(modalTypes.DELETE_CONFIRMATION):
             return <DeleteConfirmation entity={data?.entity} entityType={data?.entityType} />
         default:

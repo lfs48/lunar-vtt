@@ -10,7 +10,6 @@ const features = require("./routes/api/features");
 const subclasses = require("./routes/api/subclasses");
 
 const app = express();
-
 app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -19,26 +19,22 @@ const DndClassController = {
         try {
             const params = classParams(req.body);
             const newClass = await DndClass.create(params);
-            let newFeatures = [];
-            if ("features" in params) {
-                [...newClass.features.values()].forEach( (arr) => arr.forEach( (el) => newFeatures.push(el._id) ) );
-                await FeatureModel.updateMany(
-                    {
-                        _id: {
-                            $in: newFeatures
-                        }
-                    },
-                    {
-                        $addToSet: {
-                            sources: newClass._id
-                        }
+            await FeatureModel.updateMany(
+                {
+                    _id: {
+                        $in: newClass.features()
                     }
-                )
-            }
+                },
+                {
+                    $addToSet: {
+                        sources: newClass._id
+                    }
+                }
+            );
             const classFeatures = await FeatureModel
             .find({
                 _id: {
-                    $in: newFeatures
+                    $in: newClass.features()
                 }
             });
             res
@@ -66,16 +62,12 @@ const DndClassController = {
             const newClass = await DndClassModel.findById(req.params.classId);
 
             // Cascade updates to features added/removed in update
-            if ("features" in params) {
+            if ("levelFeatures" in params) {
                 // Generate list of features added & removed in update
-                let oldFeatures = [];
-                let newFeatures = [];
-                [...foundClass.features.values()].forEach( (arr) => arr.forEach( (el) => oldFeatures.push(el._id) ) );
-                [...newClass.features.values()].forEach( (arr) => arr.forEach( (el) => newFeatures.push(el._id) ) );
-                const oldIds = oldFeatures.map( (feature) => String(feature));
-                const newIds = newFeatures.map( (feature) => String(feature));
-                const addedFeatures = newFeatures.filter(feature => !oldIds.includes(String(feature) ) );
-                const removedFeatures = oldFeatures.filter(feature => !newIds.includes(String(feature) ) );
+                const oldFeatures = foundClass.features();
+                const newFeatures = newClass.features();
+                const addedFeatures = newFeatures.filter(feature => !oldFeatures.includes(String(feature) ) );
+                const removedFeatures = oldFeatures.filter(feature => !newFeatures.includes(String(feature) ) );
 
                 // Remove class from feature source list if it's been updated to no longer have that feature
                 await FeatureModel.updateMany(
@@ -105,7 +97,12 @@ const DndClassController = {
                 )
             }
             // Load class's associated features
-            const classFeatures = await FeatureModel.find({"sources": newClass._id})
+            const classFeatures = await FeatureModel
+            .find({
+                _id: {
+                    $in: newClass.features()
+                }
+            });
             res
             .status(200)
             .json({
@@ -125,12 +122,10 @@ const DndClassController = {
     delete: async (req, res) => {
         try {
             const deletedClass = await DndClassModel.findOneAndDelete({_id: req.params.classId});
-            let orphanedFeatures = [];
-            [...deletedClass.features.values()].forEach( (arr) => arr.forEach( (el) => orphanedFeatures.push(el._id) ) );
             await FeatureModel.updateMany(
                 {
                     _id: {
-                        $in: orphanedFeatures
+                        $in: deletedClass.features()
                     }
                 },
                 {
@@ -169,6 +164,6 @@ const DndClassController = {
 module.exports = DndClassController;
 
 function classParams(params) {
-    const validParams = {name, description, hitDie, armor, weapons, tools, saves, skills, equipment, spellcasting, tableCols, features} = params;
+    const validParams = {name, description, hitDie, armor, weapons, tools, saves, skills, equipment, spellcasting, tableCols, levelFeatures, subclassFeatureLevels} = params;
     return validParams;
 }

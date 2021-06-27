@@ -13,33 +13,31 @@ const ClassPanel = React.memo( function({dndClass, className=""}) {
 
     const roll = new DiceRoll(dndClass.hitDie);
 
-    let classFeatures = [];
-    let featureSections = [];
-
     const {features} = useSelector( (state) => ({
         features: state.entities.features
     }));
 
-    Object.entries(dndClass.features).forEach( ([level, arr]) => {
-        arr.forEach( (id) => {
-            const feature = features[id];
-            classFeatures.push(feature);
-            featureSections.push(
-                <Collapsable
-                    key={id}
-                    className="mb-4"
-                    header={
-                        <span>
-                            <strong className="text-lg mr-2">{feature.name}</strong> 
-                            <i className="text-sm">({intToOrdinal(level)} level)</i>
-                        </span>
-                    }
-                >
-                    <MarkdownText className="pt-2" text={feature.description} />
-                </Collapsable>
-            )
-        })
-    });;
+    const classFeatures = [];
+    const featureSections = dndClass.levelFeatures
+    .map( (levelFeature) => {
+        const level = levelFeature.level;
+        const feature = features[levelFeature.feature];
+        classFeatures.push(feature);
+        return(
+            <Collapsable
+                key={feature.id}
+                className="mb-4"
+                header={
+                    <span>
+                        <strong className="text-lg mr-2">{feature.name}</strong> 
+                        <i className="text-sm">({intToOrdinal(level)} level)</i>
+                    </span>
+                }
+            >
+                <MarkdownText className="pt-2" text={feature.description} />
+            </Collapsable>
+        )
+    });
 
     return(
         <div className={className}>

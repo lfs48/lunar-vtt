@@ -23,7 +23,7 @@ const FeatureController = {
     },
     show: async (req, res) => {
         try {
-            const foundFeature = await FeatureModel.findById(params.featureId);
+            const foundFeature = await FeatureModel.findById(req.params.featureId);
             res
             .status(200)
             .json({

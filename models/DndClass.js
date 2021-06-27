@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Feature = require('./Feature');
 
-let defaultFeatures = {};
-[...Array(20).keys()].forEach( (n) => {
-    defaultFeatures[(n+1).toString()] = []
-});
-
 const DndClassSchema = new Schema({
     name: {
         type: String,
@@ -54,19 +49,25 @@ const DndClassSchema = new Schema({
         of: [String],
         default: {}
     },
-    features: {
-        type: Map,
-        of: {
-            type: [Schema.Types.ObjectId],
-            ref: 'Feature'
-        },
-        default: defaultFeatures
-    },
+    levelFeatures: [{
+        type: new Schema({
+            level: Number,
+            feature: {
+                type: Schema.Types.ObjectId,
+                ref: 'Feature'
+            },
+        }),
+        default: []
+    }],
     subclasses: [{
         type: Schema.Types.ObjectId,
         ref: 'Subclass',
         default: []
-    }]
+    }],
+    subclassFeatureLevels: {
+        type: [Number],
+        default: []
+    }
 }, {
     timestamps: true
 });
@@ -86,6 +87,10 @@ DndClassSchema.post("findOneAndDelete", async (document) => {
         }
     )
 });
+
+DndClassSchema.methods.features = function() {
+    return this.levelFeatures.map( (levelFeature) => levelFeature.feature);
+}
 
 module.exports = DndClass = mongoose.model('DndClass', DndClassSchema);
 

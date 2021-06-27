@@ -14,14 +14,6 @@ import { Field } from '../../styles';
 const dieOptions = ["1d6", "1d8", "1d10", "1d12"];
 const spellcastingOptions = ["None", "Full", "Half", "HalfPlus", "Third"];
 
-function getInitialFeatures() {
-    const initialFeatures = {};
-    [...Array(20).keys()].forEach( (n) => {
-        initialFeatures[(n+1).toString()] = []
-    });
-    return initialFeatures;
-}
-
 export default function ClassForm({dndClass=null, edit=false}) {
 
     const dispatch = useDispatch();
@@ -38,7 +30,7 @@ export default function ClassForm({dndClass=null, edit=false}) {
         spellcasting: "None",
         equipment: [],
         tableCols: {},
-        features: getInitialFeatures()
+        levelFeatures: []
     });
     const [colInput, setColInput] = useState("");
 

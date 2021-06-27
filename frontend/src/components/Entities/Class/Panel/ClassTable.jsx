@@ -20,8 +20,10 @@ export default function ClassTable({dndClass, features}) {
 
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
-        const levelFeatures = dndClass.features[level]
-        .map( (id) => {
+        const levelFeatures = dndClass.levelFeatures
+        .filter( (levelFeature) => levelFeature.level === level)
+        .map( (levelFeature) => {
+            const id = levelFeature.feature;
             const feature = features.find(feat => feat._id === id);
             return <EntityLink key={id} entityType={entityTypes.FEATURES} id={id}>
                 {feature.name}

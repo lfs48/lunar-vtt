@@ -32,15 +32,22 @@ export default function SubclassForm({subclass=null, edit=false}) {
         level: ""
     });
 
+    const {features, dndClass} = useSelector( (state) => ({
+        features: state.entities.features,
+        dndClass: state.entities.dndClasses[inputs.dndClass]
+    }));
+
     useEffect( () => {
         if (edit) {
-            setInputs(subclass);
+            setInputs({
+                name: subclass.name,
+                description: subclass.description,
+                className: dndClass?.name || "",
+                spellcasting: subclass.spellcasting,
+                features: subclass.features
+            });
         }
-    });
-
-    const {features} = useSelector( (state) => ({
-        features: state.entities.features
-    }));
+    }, []);
 
     const subclassFeatures =
     Object.entries(inputs.features)

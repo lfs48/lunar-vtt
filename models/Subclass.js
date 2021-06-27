@@ -22,14 +22,16 @@ const SubclassSchema = new Schema({
         ref: 'DndClass',
         required: true
     },
-    features: {
-        type: Map,
-        of: {
-            type: [Schema.Types.ObjectId],
-            ref: 'Feature'
-        },
-        default: {}
-    }
+    levelFeatures: [{
+        type: new Schema({
+            level: Number,
+            feature: {
+                type: Schema.Types.ObjectId,
+                ref: 'Feature'
+            },
+        }),
+        default: []
+    }],
 }, {
     timestamps: true
 });
@@ -61,6 +63,10 @@ SubclassSchema.post("findOneAndDelete", async (document) => {
         }
     )
 });
+
+SubclassSchema.methods.features = function() {
+    return this.levelFeatures.map( (levelFeature) => levelFeature.feature);
+}
 
 module.exports = Subclass = mongoose.model('Subclass', SubclassSchema);
 

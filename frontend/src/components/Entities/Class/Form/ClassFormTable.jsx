@@ -26,14 +26,6 @@ export default function ClassFormTable({inputs, setInputs}) {
         features: state.entities.features
     }));
 
-    let classFeatures = [];
-    Object.entries(inputs.features).forEach( ([key, arr]) => {
-        arr.forEach( (id) => {
-            const feature = features[id];
-            classFeatures.push(feature);
-        })
-    });;
-
     useEffect( () => {
         if (colMenu !== -1) {
 
@@ -246,9 +238,11 @@ export default function ClassFormTable({inputs, setInputs}) {
 
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
-        const levelFeatures = inputs.features[level]
-        .map( (id) => {
-            const feature = classFeatures.find(feat => feat._id === id);
+        const levelFeatures = inputs.levelFeatures
+        .filter( (levelFeature => levelFeature.level === level))
+        .map( (levelFeature) => {
+            const id = levelFeature.feature
+            const feature = features[id];
             return (
                 <FeatureBubble key={id}>
                     <FeatureText>{feature.name}</FeatureText>
