@@ -10,6 +10,7 @@ import ModalFooter from '../../../Modal/ModalFooter';
 import { Field } from '../../styles';
 import Select from '../../../Util/Select';
 import { createSubclass, editSubclass } from '../../../../store/reducers/entities/subclassesReducer';
+import SubclassFormTable from './SubclassFormTable';
 
 const spellcastingOptions = ["None", "Full", "Half", "HalfPlus", "Third"];
 
@@ -23,7 +24,7 @@ export default function SubclassForm({subclass=null, edit=false}) {
         className: "",
         dndClass: "",
         spellcasting: "None",
-        features: {}
+        levelFeatures: []
     });
 
     const [featureInputs, setFeatureInputs] = useState({
@@ -49,20 +50,7 @@ export default function SubclassForm({subclass=null, edit=false}) {
         }
     }, []);
 
-    const subclassFeatures =
-    Object.entries(inputs.features)
-    .map( ([level, arr]) => {
-        return(
-            <div key={level}>
-                <h1>{intToOrdinal(level)} level features:</h1>
-                {arr.map( (id) => {
-                    return <EntityLink key={id} panelType={entityTypes.FEATURES} id={id}>
-                        {features[id].name}
-                    </EntityLink>
-                })}
-            </div>
-        )
-    });
+    
 
     const handleClassSelect = (dndClass) => {
         const newState = merge({}, inputs);
@@ -148,41 +136,9 @@ export default function SubclassForm({subclass=null, edit=false}) {
                         ></TextArea>
                     </Field>
                 </div>
-                <div className="flex items-end mb-4">
-                    <Field>
-                        <Label>Feature</Label>
-                        <EntityAutocomplete 
-                            entityType={entityTypes.FEATURES}
-                            input={featureInputs.name}
-                            handleInput={e => handleInput(e, 'name', featureInputs, setFeatureInputs)}
-                            handleSelect={feature => handleFeatureSelect(feature)}
-                            className="w-80 mr-2"
-                        />
-                    </Field>
-                    <Field>
-                        <Label>Level</Label>
-                        <Input
-                            type="text"
-                            value={featureInputs.level}
-                            onChange={e => handleInput(e, 'level', featureInputs, setFeatureInputs)}
-                            className="w-20 mr-8"
-                        ></Input>
-                    </Field>
-                    <BgButton
-                        disabled={featureInputs.id.length < 1 || featureInputs.level || 1}
-                        className="bg-gray-200 h-8"
-                        onClick={() => handleAddFeature()}
-                    >
-                        Add Feature
-                    </BgButton>
-                </div>
-                <div className="col-span-1">
-                        {subclassFeatures.length > 0 ?
-                            subclassFeatures
-                        :
-                            <p>No features</p>
-                        }
-                </div>
+                {dndClass?
+                    <SubclassFormTable inputs={inputs} setInputs={setInputs} levels={dndClass.subclassFeatureLevels}/>
+                :<></>}
             </div>
             <ModalFooter handleSave={handleSave}/>
         </div>

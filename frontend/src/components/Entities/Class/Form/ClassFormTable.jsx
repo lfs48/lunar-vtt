@@ -210,10 +210,11 @@ export default function ClassFormTable({inputs, setInputs}) {
     const addFeature = (event, level) => {
         event.preventDefault();
         const newState = merge({}, inputs);
-        const levelFeatures = newState.features[level];
-        if ( levelFeatures.findIndex( _id => _id === featureInput.id) === -1) {
-            newState.features[level].push(featureInput.id);
-        }
+        const levelFeature = {
+            level: level,
+            feature: featureInput.id
+        };
+        newState.levelFeatures.push(levelFeature);
         setInputs(newState);
         setAddingFeature(false);
         setFeatureInput({
