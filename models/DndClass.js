@@ -64,6 +64,10 @@ const DndClassSchema = new Schema({
         ref: 'Subclass',
         default: []
     }],
+    subclassTitle: {
+        type: String,
+        default: ""
+    },
     subclassFeatureLevels: {
         type: [Number],
         default: []

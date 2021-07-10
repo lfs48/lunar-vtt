@@ -237,6 +237,18 @@ export default function ClassFormTable({inputs, setInputs}) {
         setInputs(newState);
     }
 
+    const addSubclassFeatureLevel = (level) => {
+        const newState = merge({}, inputs);
+        newState.subclassFeatureLevels.push(level);
+        setInputs(newState);
+    }
+
+    const removeSubclassFeatureLevel = (level) => {
+        const newState = merge({}, inputs);
+        newState.subclassFeatureLevels = newState.subclassFeatureLevels.filter(el => el !== level);
+        setInputs(newState);
+    }
+
     const trows = [...Array(20).keys()].map( (n) => {
         const level = n+1;
         const levelFeatures = inputs.levelFeatures
@@ -306,6 +318,21 @@ export default function ClassFormTable({inputs, setInputs}) {
                     }
                     </div>
                 </ClassTableRowLeft>
+                <ClassTableRowCenter>
+                    {inputs.subclassFeatureLevels.includes(level) ?
+                        <Button
+                            onClick={e => removeSubclassFeatureLevel(level)}
+                        >
+                            <i className="text-green-500 fas fa-check"></i>
+                        </Button>
+                    :
+                        <Button
+                            onClick={e => addSubclassFeatureLevel(level)}
+                        >
+                            <i className="text-yellow-500 fas fa-plus"></i>
+                        </Button>
+                    }
+                </ClassTableRowCenter>
                 {extraCols}
             </tr>
         )
@@ -325,6 +352,7 @@ export default function ClassFormTable({inputs, setInputs}) {
                     <ClassTableHeaderLeft>Level</ClassTableHeaderLeft>
                     <ClassTableHeaderCenter>Prof</ClassTableHeaderCenter>
                     <ClassTableHeaderLeft>Features</ClassTableHeaderLeft>
+                    <ClassTableHeaderCenter>Subclass Feature?</ClassTableHeaderCenter>
                     {extraHeaders}
                 </tr>
             </thead>

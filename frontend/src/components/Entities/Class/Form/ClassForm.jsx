@@ -30,7 +30,8 @@ export default function ClassForm({dndClass=null, edit=false}) {
         spellcasting: "None",
         equipment: [],
         tableCols: {},
-        levelFeatures: []
+        levelFeatures: [],
+        subclassFeatureLevels: []
     });
     const [colInput, setColInput] = useState("");
 
@@ -147,6 +148,15 @@ export default function ClassForm({dndClass=null, edit=false}) {
                             type="text"
                             value={inputs.skills}
                             onChange={e => handleInput(e, 'skills', inputs, setInputs)}
+                            className="h-full"
+                        ></Input>
+                    </Field>
+                    <Field className="col-span-2">
+                        <Label>Subclass Title </Label>
+                        <Input
+                            type="text"
+                            value={inputs.subclassTitle}
+                            onChange={e => handleInput(e, 'subclassTitle', inputs, setInputs)}
                             className="h-full"
                         ></Input>
                     </Field>

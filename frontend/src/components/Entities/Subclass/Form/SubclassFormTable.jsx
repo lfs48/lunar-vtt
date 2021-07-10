@@ -86,7 +86,6 @@ export default function SubclassFormTable({inputs, setInputs, levels}) {
         return(
             <tr key={level} className="border-b border-gray-400">
                 <ClassTableRowLeft>{intToOrdinal(level)}</ClassTableRowLeft>
-                <ClassTableRowCenter>{`+ ${getLevelProf(level)}`}</ClassTableRowCenter>
                 <ClassTableRowLeft>
                     <div className="flex">
                     {levelFeatures}

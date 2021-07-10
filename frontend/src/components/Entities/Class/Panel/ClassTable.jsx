@@ -44,7 +44,12 @@ export default function ClassTable({dndClass, features}) {
             <tr key={n} className="border-b border-gray-400">
                 <ClassTableRowLeft>{intToOrdinal(level)}</ClassTableRowLeft>
                 <ClassTableRowCenter>{`+ ${getLevelProf(level)}`}</ClassTableRowCenter>
-                <ClassTableRowLeft>{levelFeatures}</ClassTableRowLeft>
+                <ClassTableRowLeft>
+                    {levelFeatures}
+                    {dndClass.subclassFeatureLevels.includes(level) ?
+                        <span>{dndClass.subclassTitle} Feature</span>
+                    :<></>}
+                </ClassTableRowLeft>
                 {extraCols}
                 {spellCols}
             </tr>

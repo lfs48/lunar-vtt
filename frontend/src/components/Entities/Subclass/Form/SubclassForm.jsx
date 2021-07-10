@@ -45,7 +45,7 @@ export default function SubclassForm({subclass=null, edit=false}) {
                 description: subclass.description,
                 className: dndClass?.name || "",
                 spellcasting: subclass.spellcasting,
-                features: subclass.features
+                levelFeatures: subclass.levelFeatures
             });
         }
     }, []);
