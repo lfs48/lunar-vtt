@@ -27,13 +27,7 @@ export default function SubclassForm({subclass=null, edit=false}) {
         levelFeatures: []
     });
 
-    const [featureInputs, setFeatureInputs] = useState({
-        name: "",
-        id: "",
-        level: ""
-    });
-
-    const {features, dndClass} = useSelector( (state) => ({
+    const {dndClass} = useSelector( (state) => ({
         features: state.entities.features,
         dndClass: state.entities.dndClasses[inputs.dndClass]
     }));
@@ -43,6 +37,7 @@ export default function SubclassForm({subclass=null, edit=false}) {
             setInputs({
                 name: subclass.name,
                 description: subclass.description,
+                dndClass: subclass.dndClass,
                 className: dndClass?.name || "",
                 spellcasting: subclass.spellcasting,
                 levelFeatures: subclass.levelFeatures
@@ -58,30 +53,6 @@ export default function SubclassForm({subclass=null, edit=false}) {
         newState.dndClass = dndClass._id;
         setInputs(newState);
     }
-
-    const handleFeatureSelect = (feature) => {
-        const newState = merge({}, featureInputs);
-        newState.name = feature.name;
-        newState.id = feature._id;
-        setFeatureInputs(newState);
-    };
-
-    const handleAddFeature = () => {
-        const newState = merge({}, inputs);
-        if (! (featureInputs.level in newState.features) ) {
-            newState.features[featureInputs.level] = [featureInputs.id];
-        }
-        else if (!newState.features[featureInputs.level].includes(featureInputs.id)) {
-            newState.features[featureInputs.level].push(featureInputs.id);
-        }
-        console.log(newState);
-        setInputs(newState);
-        setFeatureInputs({
-            name: "",
-            id: "",
-            level: ""
-        });
-    };
 
     const handleSave = () => {
         const action = {

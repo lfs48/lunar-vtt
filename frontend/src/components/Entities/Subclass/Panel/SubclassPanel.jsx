@@ -35,7 +35,7 @@ const SubclassPanel = React.memo(function SubclassPanel({subclass, className=""}
     
     return(
         <div className={className}>
-            <MarkdownText text={subclass.description} />
+            <MarkdownText text={subclass.description} className="italic"/>
             {featureSections}
         </div>
     )

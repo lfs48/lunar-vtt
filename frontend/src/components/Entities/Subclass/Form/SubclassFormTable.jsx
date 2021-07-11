@@ -61,10 +61,10 @@ export default function SubclassFormTable({inputs, setInputs, levels}) {
         });
     }
 
-    const handleRemoveFeature = (event, id, level) => {
+    const handleRemoveFeature = (event, id) => {
         event.preventDefault();
         const newState = merge({}, inputs);
-        newState.features[level] = newState.features[level].filter( _id => _id !== id);
+        newState.levelFeatures = newState.levelFeatures.filter( ({feature}) => feature !== id);
         setInputs(newState);
     }
 
@@ -77,7 +77,7 @@ export default function SubclassFormTable({inputs, setInputs, levels}) {
             return (
                 <FeatureBubble key={id}>
                     <FeatureText>{feature.name}</FeatureText>
-                    <RemoveFeatureButton onClick={(e) => handleRemoveFeature(e, id, level)}>
+                    <RemoveFeatureButton onClick={(e) => handleRemoveFeature(e, id)}>
                         <i className="fas fa-times"></i>
                     </RemoveFeatureButton>
                 </FeatureBubble>
