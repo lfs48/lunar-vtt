@@ -1,4 +1,5 @@
 import { all } from 'redux-saga/effects';
+import { BackgroundsSaga } from './backgroundsSaga';
 import { classesSaga } from './classesSaga';
 import { featuresSaga } from './featuresSaga';
 import { racesSaga } from './racesSaga';
@@ -9,6 +10,7 @@ export default function* entitiesSaga() {
       classesSaga(),
       subclassesSaga(),
       featuresSaga(),
-      racesSaga()
+      racesSaga(),
+      BackgroundsSaga()
     ])
 };

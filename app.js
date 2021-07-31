@@ -9,6 +9,7 @@ const classes = require("./routes/api/classes");
 const features = require("./routes/api/features");
 const subclasses = require("./routes/api/subclasses");
 const races = require("./routes/api/races");
+const backgrounds = require("./routes/api/backgrounds");
 
 const app = express();
 app.use(cors())
@@ -29,6 +30,7 @@ app.use("/api/classes", classes);
 app.use("/api/features", features);
 app.use("/api/subclasses", subclasses);
 app.use("/api/races", races);
+app.use("/api/backgrounds", backgrounds);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'));

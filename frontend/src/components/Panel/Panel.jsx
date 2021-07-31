@@ -13,6 +13,7 @@ import { openModal } from '../../store/reducers/UI/modalReducer';
 import Resize from '../Util/Resize';
 import { modalTypes } from '../../util/types/modalTypes';
 import RacePanel from '../Entities/Races/Panel/RacePanel';
+import BackgroundPanel from '../Entities/Backgrounds/Panel';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -99,6 +100,11 @@ const getContent = (panelType, data, gm) => {
         case(entityTypes.RACES):
             return <RacePanel
                 race={data}
+                className={panelClasses}
+            />
+        case(entityTypes.BACKGROUNDS):
+            return <BackgroundPanel 
+                background={data}
                 className={panelClasses}
             />
     }
