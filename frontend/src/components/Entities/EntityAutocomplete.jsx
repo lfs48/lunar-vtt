@@ -23,7 +23,7 @@ const _handleSelect = (event, feature, handleSelect, setOpen) => {
     handleSelect(feature);
 }
 
-export default function EntityAutocomplete({entityType, input, handleInput, className, handleSelect}) {
+export default function EntityAutocomplete({entityType, input, handleInput, className="", handleSelect}) {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 

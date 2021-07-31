@@ -1,5 +1,7 @@
+import { createBackground } from '../../store/reducers/entities/backgroundsReducer';
 import { classesSliceName, createClass } from '../../store/reducers/entities/classesReducer';
 import { featuresSliceName, createFeature } from '../../store/reducers/entities/featuresReducer';
+import { createRace } from '../../store/reducers/entities/racesReducer';
 import { modalTypes } from './modalTypes';
 
 const entityTypes = {
@@ -93,7 +95,7 @@ export function getCreateEntityActionType(entityType) {
         case(entityTypes.CLASSES):
             return createClass.type;
         case(entityTypes.RACES):
-            return 'Race';
+            return createRace.type
         case(entityTypes.SPELLS):
             return 'Spell';
         case(entityTypes.ITEMS):
@@ -111,7 +113,7 @@ export function getCreateEntityActionType(entityType) {
         case(entityTypes.ROLLABLE):
             return 'Rollable Table';
         case(entityTypes.BACKGROUNDS):
-            return 'Background';
+            return createBackground.type;
         case(entityTypes.SUBCLASSES):
             return 'Subclass';
         default:
@@ -126,7 +128,7 @@ export function getEntityModalType(entityType) {
         case(entityTypes.CLASSES):
             return modalTypes.CLASSFORM
         case(entityTypes.RACES):
-            return 'Race';
+            return modalTypes.RACEFORM;
         case(entityTypes.SPELLS):
             return 'Spell';
         case(entityTypes.ITEMS):
@@ -144,7 +146,7 @@ export function getEntityModalType(entityType) {
         case(entityTypes.ROLLABLE):
             return 'Rollable Table';
         case(entityTypes.BACKGROUNDS):
-            return 'Background';
+            return modalTypes.BACKGROUNDFORM;
         case(entityTypes.SUBCLASSES):
             return modalTypes.SUBCLASSFORM
         default:
