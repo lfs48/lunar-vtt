@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import { Button } from '../../styles/components';
 import { closePanel, selectPanel } from '../../store/reducers/UI/panelsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import ClassViewPanel from '../Entities/Class/Panel/ClassPanel';
+import ClassPanel from '../Entities/Class/Panel/ClassPanel';
 import { PanelFooterContainer, PanelHeader, PanelHeaderContainer } from './styles';
 import {throttle} from 'lodash';
 import FeaturePanel from '../Entities/Features/Panel/FeaturePanel';
@@ -12,6 +12,7 @@ import SubclassPanel from '../Entities/Subclass/Panel/SubclassPanel';
 import { openModal } from '../../store/reducers/UI/modalReducer';
 import Resize from '../Util/Resize';
 import { modalTypes } from '../../util/types/modalTypes';
+import RacePanel from '../Entities/Races/Panel/RacePanel';
 
 const handleDragStart = ({event, styleData, setStyleData, id, dispatch}) => {
     event.preventDefault();
@@ -81,7 +82,7 @@ const getContent = (panelType, data, gm) => {
 
     switch(panelType) {
         case(entityTypes.CLASSES):
-                return <ClassViewPanel 
+                return <ClassPanel 
                     dndClass={data} 
                     className={panelClasses}
                 />;
@@ -95,6 +96,11 @@ const getContent = (panelType, data, gm) => {
                     subclass={data} 
                     className={panelClasses} 
                 />
+        case(entityTypes.RACES):
+            return <RacePanel
+                race={data}
+                className={panelClasses}
+            />
     }
 }
 

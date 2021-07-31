@@ -47,15 +47,32 @@ const featuresSlice = createSlice({
     [ createAction("dndclasses/deleteClassSuccess") ]: (state, action) => {
 
         const dndClass = action.payload.dndClass;
-        Object.values(dndClass.features).forEach( (arr) => {
-            arr.forEach( (id) => {
-                const feature = state[id];
-                feature.sources = feature.sources.filter(sourceId => sourceId !== dndClass._id);
-                state[id] = feature;
-            });
+        dndClass.levelFeatures.forEach( (levelFeature) => {
+            const id = levelFeature.feature
+            const feature = state[id];
+            feature.sources = feature.sources.filter(sourceId => sourceId !== dndClass._id);
+            state[id] = feature;
         });
         
-    }
+    },
+    [ createAction("races/receiveAllRaces") ]: (state, action) => {
+        action.payload.features.forEach( (feature) => {
+            state[feature._id] = feature;
+        });
+    },
+    [ createAction("races/receiveRace") ]: (state, action) => {
+        action.payload.features.forEach( (feature) => {
+            state[feature._id] = feature;
+        });
+    },
+    [ createAction("races/deleteRaceSuccess") ]: (state, action) => {
+        const race = action.payload.race;
+        race.features.forEach( (id) => {
+            const feature = state[id];
+            feature.sources = feature.sources.filter(sourceId => sourceId !== race._id);
+            state[id] = feature;
+        });
+    },
   }
 });
 
