@@ -236,6 +236,12 @@ export default function Panel({data, panelType}) {
                     <p>{data.name}</p>
                 </PanelHeader>
                 <div>
+                    {user.gm &&
+                        <Button 
+                        onClick={e => navigator.clipboard.writeText(`${panelType}/${data._id}`)}>
+                        <i className="ml-4 fas fa-link text-lg"/>
+                        </Button>
+                    }
                     <Button 
                         onClick={e => handleClose({
                             event: e,
