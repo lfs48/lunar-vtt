@@ -13,6 +13,17 @@ const SubclassPanel = React.memo(function SubclassPanel({subclass, className=""}
     }));
 
     const featureSections = subclass.levelFeatures
+    .sort( (f1, f2) => {
+        const l1 = f1.level;
+        const l2 = f2.level;
+        if (l1 > l2) {
+            return 1
+        } else if (l2 > l1) {
+            return -1;
+        } else {
+            return 0;
+        }
+    })
     .map( (levelFeature) => {
         const level = levelFeature.level;
         const feature = features[levelFeature.feature];
