@@ -52,7 +52,15 @@ export default function SubclassesTab() {
         else { return 0; }
     });
 
-    const sections = Object.values(dndClasses).map( (dndClass) => {
+    const sections = [...Object.values(dndClasses)]
+    .sort( (c1, c2) => {
+        const a = c1.name.toLowerCase();
+        const b = c2.name.toLowerCase();
+        if (a > b) { return 1; }
+        else if (b > a) { return -1; }
+        else { return 0; }
+    })
+    .map( (dndClass) => {
         return(
             <ClassSectionContainer>
                 <Collapsable 
