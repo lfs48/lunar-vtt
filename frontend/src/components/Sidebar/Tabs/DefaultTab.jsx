@@ -82,7 +82,7 @@ export default function DefaultTab({entityType}) {
                     </Button>
                 :<></>}
             </TabHeader>
-            <ul>
+            <ul className="overflow-y-scroll h-[calc(100vh-7rem)]">
                 {lis}
             </ul>
         </div>

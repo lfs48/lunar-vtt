@@ -28,6 +28,6 @@ const StyledSidebar = tw.div`
     w-120
     border-l
     border-black
-    overflow-y-scroll
+    overflow-y-hidden
     overflow-x-hidden
 `
