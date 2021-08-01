@@ -8,6 +8,7 @@ import MarkdownText from '../../../Util/MarkdownText';
 import Collapsable from "../../../Util/Collapsable";
 import tw from 'tailwind-styled-components';
 import Divider from '../../../Util/Divider';
+import { merge } from 'lodash';
 
 const ClassPanel = React.memo( function({dndClass, className=""}) {
 
@@ -18,7 +19,7 @@ const ClassPanel = React.memo( function({dndClass, className=""}) {
     }));
 
     const classFeatures = [];
-    const featureSections = dndClass.levelFeatures
+    const sortedFeatures = merge([], dndClass.levelFeatures)
     .sort( (f1, f2) => {
         const l1 = f1.level;
         const l2 = f2.level;
@@ -30,6 +31,7 @@ const ClassPanel = React.memo( function({dndClass, className=""}) {
             return 0;
         }
     })
+    const featureSections = sortedFeatures
     .map( (levelFeature) => {
         const level = levelFeature.level;
         const feature = features[levelFeature.feature];
