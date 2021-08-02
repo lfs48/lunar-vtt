@@ -125,7 +125,7 @@ export default function SubclassesTab() {
                     </Button>
                 :<></>}
             </TabHeader>
-            <div className="overflow-y-scroll h-[calc(100vh-6rem)]">
+            <div className="overflow-y-scroll h-[calc(100vh-8rem)]">
                 {sections}
             </div>
         </div>
